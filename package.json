@@ -3,6 +3,12 @@
   "displayName": "ZS Language",
   "description": "An extension that helps clarify the codes of the ZS language",
   "version": "0.0.1",
+  "publisher": "SuperHero2010",
+  "license": "MIT",
+  "bugs": {
+  "url": "https://github.com/WMZS-Modding/zs-language/issues"
+  },
+  "homepage": "https://github.com/WMZS-Modding/zs-language",
   "repository": {
     "type": "git",
     "url": "https://github.com/WMZS-Modding/zs-language"
