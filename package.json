@@ -2,7 +2,7 @@
   "name": "zs-language",
   "displayName": "ZS Language",
   "description": "An extension that helps clarify the codes of the ZS language",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "publisher": "SuperHero2010",
   "license": "GPL-3.0",
   "bugs": {
@@ -13,6 +13,14 @@
     "type": "git",
     "url": "https://github.com/WMZS-Modding/zs-language"
   },
+  "keywords": [
+    "zs-language",
+    "game-development",
+    "english-like",
+    "syntax-highlighting",
+    "programming-language",
+    "vscode-extension"
+  ],
   "icon": "icons/zs-logo-6.png",
   "engines": {
     "vscode": "^1.54.0"
