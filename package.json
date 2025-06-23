@@ -1,0 +1,39 @@
+{
+  "name": "zs-language",
+  "displayName": "ZS Language",
+  "description": "An extension that helps clarify the codes of the ZS language",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/WMZS-Modding/zs-language"
+  },
+  "icon": "icons/zs-logo-6.png",
+  "engines": {
+    "vscode": "^1.54.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "zs",
+        "aliases": [
+          "ZS",
+          "zs"
+        ],
+        "extensions": [
+          ".zs"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "zs",
+        "scopeName": "source.zs",
+        "path": "./syntaxes/zs.tmLanguage.json"
+      }
+    ]
+  }
+}

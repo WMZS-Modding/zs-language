@@ -1,0 +1,14 @@
+{
+  "iconDefinitions": {
+    "zs-logo-icon": {
+      "iconPath": "icons/zs-logo-6.png"
+    }
+  },
+  "fileExtensions": {
+    "zs": "zs-logo-icon"
+  },
+  "fileNames": {},
+  "languageIds": {},
+  "light": {},
+  "highContrast": {}
+}
