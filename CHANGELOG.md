@@ -1,2 +1,5 @@
 # Change Log
-Fix License and up to version 0.0.2
+- "delele" ---> "delete"
+- Add 1 GIF with link to GIF image
+- Add "keywords"
+- Up to version 0.0.3
