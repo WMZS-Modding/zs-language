@@ -19,7 +19,10 @@ This is an extension for Visual Studio Code. The role of this extension is to cl
 
 ## Features
 
+![Priview](https://raw.githubusercontent.com/SuperHero2010/Test/refs/heads/main/20250623_130911.gif)
+
 Currently, I cannot post illustrations such as PNG/JPG or GIF. I do not have time to create them because this is just a test version. Here're the main features and features that are not supported.
+
 ### Main features:
 - Display text color: This is an important feature, it helps to determine whether the user has written correctly or not and also to make the language interface more standard for programming. If the user writes a misspelling, the feature will not color the word. If the user writes the correct spelling but still sees white, it is okay, as long as the spelling is correct. If you write a verb and it shows green, it is an allowed verb. If you write a verb and it shows red, it is an not allowed verb. Furthermore, blue is the color for nouns, adjectives, pronouns and some other words; cyan is for class variables; purple is for functions; yellow is for numbers
 - Comments: The symbol is "-/". This symbol comes from "//" of C# and "--" of LUA. I have supported block comments as "-/*" and "*-/" but they do not work. I will fix them in the next update
