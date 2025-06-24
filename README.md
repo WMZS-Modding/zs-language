@@ -25,7 +25,7 @@ Currently, I cannot post illustrations such as PNG/JPG or GIF. I do not have tim
 
 ### Main features:
 - Display text color: This is an important feature, it helps to determine whether the user has written correctly or not and also to make the language interface more standard for programming. If the user writes a misspelling, the feature will not color the word. If the user writes the correct spelling but still sees white, it is okay, as long as the spelling is correct. If you write a verb and it shows green, it is an allowed verb. If you write a verb and it shows red, it is an not allowed verb. Furthermore, blue is the color for nouns, adjectives, pronouns and some other words; cyan is for class variables; purple is for functions; yellow is for numbers
-- Comments: The symbol is "-/". This symbol comes from "//" of C# and "--" of LUA. I have supported block comments as "-/*" and "*-/" but they do not work. I will fix them in the next update
+- Comments: The symbol is "-/". This symbol comes from "//" of C# and "--" of LUA. I have supported block comments as "*/-" and "/-*"
 ### Unsupported features:
 - ZS to C# and LUA converter: it is very difficult to create this feature. Since my language is easy to write for non-programmers, creating a TS script to convert ZS code to C# and LUA code is very difficult, even failed and may never be done
 - Suggesting edits, catching errors and warnings for users: I use the feature of displaying text color instead, but there are no suggestions for edits, catching errors and warnings for users like other extensions
