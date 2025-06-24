@@ -65,8 +65,8 @@
       "patterns": [
         {
           "name": "comment.block.zs",
-          "begin": "-/\\*",
-          "end": "\\*-/",
+          "begin": "\\*/-",
+          "end": "/-\\*",
           "patterns": [
             {
               "match": ".",
