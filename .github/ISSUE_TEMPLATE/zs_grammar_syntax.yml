@@ -7,7 +7,7 @@ body:
     id: suggestion
     attributes:
       label: What grammar/syntax should be added or changed?
-      placeholder: Example: Replace `{}` function nouns with `<>` to avoid block conflict
+      placeholder: "Example: Replace `{}` function nouns with `<>` to avoid block conflict"
     validations:
       required: true
   - type: textarea
