@@ -1,5 +1,5 @@
 ---
-name: 📝 General Pull Request
+name: General Pull Request
 about: For non-specific contributions (refactor, cleanup, minor changes)
 title: '[General] '
 labels: enhancement
