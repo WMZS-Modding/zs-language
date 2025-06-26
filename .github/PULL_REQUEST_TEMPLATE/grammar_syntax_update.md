@@ -1,5 +1,5 @@
 ---
-name: 🧠 Grammar/Syntax Update
+name: Grammar/Syntax Update
 about: Update ZS grammar or syntax rules
 title: '[Grammar] '
 labels: grammar
