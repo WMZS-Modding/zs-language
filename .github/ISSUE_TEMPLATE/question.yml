@@ -7,6 +7,6 @@ body:
     id: question
     attributes:
       label: Ask your question
-      placeholder: Example: Can ZS support inline comments?
+      placeholder: "Example: Can ZS support inline comments?"
     validations:
       required: true
