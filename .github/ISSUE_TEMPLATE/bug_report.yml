@@ -8,7 +8,7 @@ body:
     attributes:
       label: What happened?
       description: Clearly describe the issue or incorrect behavior.
-      placeholder: Example: Keyword highlighting fails when using uppercase
+      placeholder: "Example: Keyword highlighting fails when using uppercase"
     validations:
       required: true
   - type: textarea
