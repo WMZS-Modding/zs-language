@@ -1,0 +1,11 @@
+name: "Normal"
+description: "General issue or suggestion not covered by other templates"
+labels: ["normal"]
+body:
+  - type: textarea
+    id: details
+    attributes:
+      label: Describe your request
+      placeholder: Write here...
+    validations:
+      required: true
