@@ -1,0 +1,12 @@
+name: "Question"
+description: Ask any question about the ZS Language or this extension
+title: "[Question] <your topic>"
+labels: ["question"]
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: Ask your question
+      placeholder: Example: Can ZS support inline comments?
+    validations:
+      required: true
