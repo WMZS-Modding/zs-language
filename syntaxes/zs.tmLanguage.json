@@ -10,14 +10,16 @@
     { "include": "#numbers" },
     { "include": "#class-name" },
     { "include": "#invalidGrammar" },
-    { "include": "#truefalse"}
+    { "include": "#true-false"},
+    { "include": "#function-noun" },
+    { "include": "#script-noun" }
   ],
   "repository": {
     "keywords": {
       "patterns": [
         {
           "name": "keyword.control.zs",
-          "match": "\\b([Ww][Hh][Ee][Nn]|[Ii][Ff]|[Tt][Hh][Ee][Nn]|[Ee][Ll][Ss][Ee]|[Ww][Ii][Tt][Hh]|[Ww][Hh][Ii][Ll][Ee]|[Dd][Oo][Nn][Ee]|[Aa][Nn][Dd]|[Tt][Rr][Ii][Gg][Gg][Ee][Rr]|[Ee][Xx][Cc][Ee][Pp][Tt]|[Oo][Nn][Cc][Ee]|[Tt][Ww][Ii][Cc][Ee])\\b"
+          "match": "\\b([Ww][Hh][Ee][Nn]|[Ii][Ff]|[Tt][Hh][Ee][Nn]|[Ee][Ll][Ss][Ee]|[Ww][Ii][Tt][Hh]|[Ww][Hh][Ii][Ll][Ee]|[Dd][Oo][Nn][Ee]|[Aa][Nn][Dd]|[Tt][Rr][Ii][Gg][Gg][Ee][Rr]|[Ee][Xx][Cc][Ee][Pp][Tt]|[Oo][Nn][Cc][Ee]|[Tt][Ww][Ii][Cc][Ee]|[Ss][Ee][Tt])\\b"
         },
         {
           "name": "entity.name.type.zs",
@@ -112,7 +114,7 @@
         }
       ]
     },
-    "truefalse": {
+    "true-false": {
       "patterns": [
         {
           "name": "invalid.illegal.zs",
@@ -121,6 +123,22 @@
         {
           "name": "markup.inserted.zs",
           "match": "\\b([Tt][Rr][Uu][Ee])\\b"
+        }
+      ]
+    },
+    "function-noun": {
+      "patterns": [
+        {
+          "name": "support.function.noun.zs",
+          "match": "<[^<>\\n]+>"
+        }
+      ]
+    },
+    "script-noun": {
+      "patterns": [
+        {
+          "name": "support.function.script.zs",
+          "match": "\\([^()\\n]+\\)"
         }
       ]
     }
