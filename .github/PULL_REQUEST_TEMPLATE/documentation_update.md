@@ -1,5 +1,5 @@
 ---
-name: 📘 Documentation Update
+name: Documentation Update
 about: Improve or add documentation for ZS Language
 title: '[Docs] '
 labels: documentation
