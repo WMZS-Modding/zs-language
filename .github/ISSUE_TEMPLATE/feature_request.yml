@@ -1,0 +1,25 @@
+name: "Feature Request"
+description: Suggest an improvement for ZS Language or the extension
+title: "[Feature] <short description>"
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: What is the feature?
+      placeholder: Example: Support syntax highlight for <> function nouns
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why is it useful?
+      description: Explain the value of this feature for users or AI tools
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - Low
+        - Medium
+        - High
