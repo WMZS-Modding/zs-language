@@ -1,5 +1,5 @@
 ---
-name: 🐞 Bug Fix
+name: Bug Fix
 about: Fix a bug or unintended behavior in ZS Language tools
 title: '[Fix] '
 labels: bug
