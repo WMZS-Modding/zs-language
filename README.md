@@ -19,7 +19,7 @@ This is an extension for Visual Studio Code. The role of this extension is to cl
 
 ## Features
 
-![Priview](https://raw.githubusercontent.com/SuperHero2010/Test/refs/heads/main/20250623_130911.gif)
+![Preview](https://raw.githubusercontent.com/SuperHero2010/Test/refs/heads/main/Archive/20250626_094438_Modified.gif)
 
 Currently, I cannot post illustrations such as PNG/JPG or GIF. I do not have time to create them because this is just a test version. Here're the main features and features that are not supported.
 
