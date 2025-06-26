@@ -7,7 +7,7 @@ body:
     id: description
     attributes:
       label: What is the feature?
-      placeholder: Example: Support syntax highlight for <> function nouns
+      placeholder: "Example: Support syntax highlight for <> function nouns"
     validations:
       required: true
   - type: textarea
