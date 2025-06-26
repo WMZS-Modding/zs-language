@@ -1,5 +1,5 @@
 ---
-name: ✨ Feature Request
+name: Feature Request
 about: Add a new feature to ZS Language or its tools
 title: '[Feature] '
 labels: feature
