@@ -1,3 +1,4 @@
 # Change Log
-- Fix block comment
+- Add GitHub Issue and Pull Request template
+- Add Function noun and Script noun
 - Up to version 0.0.4
