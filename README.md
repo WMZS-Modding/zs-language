@@ -20,9 +20,11 @@ This is an extension for Visual Studio Code. The role of this extension is to cl
 ## Features
 
 ZS-C#:
+
 ![ZS-C#](https://raw.githubusercontent.com/SuperHero2010/Test/refs/heads/main/Archive/20250626_094438_Modified.gif)
 
 ZS-LUA:
+
 ![ZS-LUA](https://raw.githubusercontent.com/SuperHero2010/Test/refs/heads/main/Archive/20250709_120624.gif)
 
 Currently, I cannot post illustrations such as PNG/JPG or GIF. I do not have time to create them because this is just a test version. Here're the main features and features that are not supported.
