@@ -12,7 +12,8 @@
     { "include": "#invalidGrammar" },
     { "include": "#true-false"},
     { "include": "#function-noun" },
-    { "include": "#script-noun" }
+    { "include": "#script-noun" },
+    { "include": "#language-type" }
   ],
   "repository": {
     "keywords": {
@@ -139,6 +140,14 @@
         {
           "name": "support.function.script.zs",
           "match": "\\([^()\\n]+\\)"
+        }
+      ]
+    },
+    "language-type": {
+      "patterns": [
+        {
+          "name": "keyword.other.language-type.zs",
+          "match": "^\\!\\s*(ZS-CSHARP|ZS-LUA)\\b"
         }
       ]
     }
