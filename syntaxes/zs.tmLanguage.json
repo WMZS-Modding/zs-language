@@ -132,7 +132,7 @@
       "patterns": [
         {
           "name" : "support.tilemap.noun.zs",
-          "match": "<\\|[^|>]+\\|>"
+          "match": "/\\|[^|\\\\\\n]+\\|\\\\"
         }
       ]
     },
