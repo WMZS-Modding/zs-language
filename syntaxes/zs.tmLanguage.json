@@ -131,7 +131,7 @@
     "tilemap-noun": {
       "patterns": [
         {
-          "name" : "support.tilemap.noun.zs",
+          "name" : "support.function.noun.zs",
           "match": "/\\|[^|\\\\\\n]+\\|\\\\"
         }
       ]
