@@ -1,4 +1,4 @@
 # Change Log
-- Create 2 Licenses: `LICENSE-MIT` and `LICENSE-GPL`
-- Update `LICENSE`
-- Up to version 0.1.3
+- Add new symbols to replace `'` and `"`
+- Add `for` repeater
+- Up to version 0.1.4
