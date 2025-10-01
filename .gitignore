@@ -1,4 +1,3 @@
 node_modules/
 *.tsbuildinfo
 .vscode-test/
-*.js.map
