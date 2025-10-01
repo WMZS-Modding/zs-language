@@ -1,0 +1,3 @@
+out/**/*.js linguist-generated=false
+
+*.map linguist-generated=true
