@@ -1,4 +1,5 @@
 # Change Log
-- Add new symbols to replace `'` and `"`
-- Add `for` repeater
-- Up to version 0.1.4
+- New feature added: "Verbs error detector"
+- Change color of `true` and `false` and number
+- Add new wrong verbs
+- Up to version 0.1.5
