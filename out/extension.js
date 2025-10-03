@@ -40,26 +40,31 @@ const quotationMarkConverter_1 = require("./quotationMarkConverter");
 const diagnosticProvider_1 = require("./diagnosticProvider");
 let quoteConverter;
 let diagnosticProvider;
+let warningDiagnosticProvider;
 function activate(context) {
     console.log('ZS language extension is now active!');
     // Initialize both components
     quoteConverter = new quotationMarkConverter_1.ZSQuoteConverter();
     diagnosticProvider = new diagnosticProvider_1.ZSDiagnosticProvider(context);
+    warningDiagnosticProvider = new diagnosticProvider_1.ZSDiagnosticProviderWarning();
     // Activate quote converter
     quoteConverter.activate(context);
     // Register diagnostic provider events
     const diagnosticDisposable = vscode.workspace.onDidChangeTextDocument((event) => {
         diagnosticProvider.updateDiagnostics(event.document);
+        warningDiagnosticProvider.updateDiagnostics(event.document);
     });
     const openDisposable = vscode.workspace.onDidOpenTextDocument((document) => {
         if (document.languageId === 'zs') {
             diagnosticProvider.updateDiagnostics(document);
+            warningDiagnosticProvider.updateDiagnostics(document);
         }
     });
     // Initial diagnostics for open documents
     vscode.workspace.textDocuments.forEach(document => {
         if (document.languageId === 'zs') {
             diagnosticProvider.updateDiagnostics(document);
+            warningDiagnosticProvider.updateDiagnostics(document);
         }
     });
     // Register manual conversion command
@@ -74,6 +79,9 @@ function activate(context) {
             if (diagnosticProvider) {
                 diagnosticProvider.dispose();
             }
+            if (warningDiagnosticProvider) {
+                warningDiagnosticProvider.dispose();
+            }
         } });
 }
 function deactivate() {
@@ -82,6 +90,9 @@ function deactivate() {
     }
     if (diagnosticProvider) {
         diagnosticProvider.dispose();
+    }
+    if (warningDiagnosticProvider) {
+        warningDiagnosticProvider.dispose();
     }
 }
 //# sourceMappingURL=extension.js.map

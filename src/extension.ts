@@ -1,9 +1,10 @@
 import * as vscode from 'vscode';
 import { ZSQuoteConverter } from './quotationMarkConverter';
-import { ZSDiagnosticProvider } from './diagnosticProvider';
+import { ZSDiagnosticProvider, ZSDiagnosticProviderWarning } from './diagnosticProvider';
 
 let quoteConverter: ZSQuoteConverter;
 let diagnosticProvider: ZSDiagnosticProvider;
+let warningDiagnosticProvider: ZSDiagnosticProviderWarning;
 
 export function activate(context: vscode.ExtensionContext): void {
     console.log('ZS language extension is now active!');
@@ -11,6 +12,7 @@ export function activate(context: vscode.ExtensionContext): void {
     // Initialize both components
     quoteConverter = new ZSQuoteConverter();
     diagnosticProvider = new ZSDiagnosticProvider(context);
+    warningDiagnosticProvider = new ZSDiagnosticProviderWarning();
 
     // Activate quote converter
     quoteConverter.activate(context);
@@ -18,11 +20,13 @@ export function activate(context: vscode.ExtensionContext): void {
     // Register diagnostic provider events
     const diagnosticDisposable = vscode.workspace.onDidChangeTextDocument((event) => {
         diagnosticProvider.updateDiagnostics(event.document);
+        warningDiagnosticProvider.updateDiagnostics(event.document);
     });
 
     const openDisposable = vscode.workspace.onDidOpenTextDocument((document) => {
         if (document.languageId === 'zs') {
             diagnosticProvider.updateDiagnostics(document);
+            warningDiagnosticProvider.updateDiagnostics(document);
         }
     });
 
@@ -30,6 +34,7 @@ export function activate(context: vscode.ExtensionContext): void {
     vscode.workspace.textDocuments.forEach(document => {
         if (document.languageId === 'zs') {
             diagnosticProvider.updateDiagnostics(document);
+            warningDiagnosticProvider.updateDiagnostics(document);
         }
     });
 
@@ -46,6 +51,7 @@ export function activate(context: vscode.ExtensionContext): void {
         { dispose: () => {
             if (quoteConverter) { quoteConverter.dispose?.(); }
             if (diagnosticProvider) { diagnosticProvider.dispose(); }
+            if (warningDiagnosticProvider) { warningDiagnosticProvider.dispose(); }
         }}
     );
 }
@@ -56,5 +62,8 @@ export function deactivate(): void {
     }
     if (diagnosticProvider) {
         diagnosticProvider.dispose();
+    }
+    if (warningDiagnosticProvider) {
+        warningDiagnosticProvider.dispose();
     }
 }

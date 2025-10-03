@@ -89,3 +89,62 @@ export class ZSDiagnosticProvider {
         this.diagnosticCollection.dispose();
     }
 }
+
+export class ZSDiagnosticProviderWarning {
+    private diagnosticCollection: vscode.DiagnosticCollection;
+    private warningPatterns: RegExp[] = [];
+
+    constructor() {
+        this.diagnosticCollection = vscode.languages.createDiagnosticCollection('zs');
+        this.loadwarningPatterns();
+    }
+
+    private loadwarningPatterns(): void {
+        this.warningPatterns = [
+            /\b(is|are)\b/gi,
+        ];
+    }
+
+    // Update diagnostics for a document
+    public updateDiagnostics(document: vscode.TextDocument): void {
+        if (document.languageId !== 'zs') {
+            return;
+        }
+
+        const diagnostics: vscode.Diagnostic[] = [];
+
+        // Check each line for invalid patterns
+        for (let lineIndex = 0; lineIndex < document.lineCount; lineIndex++) {
+            const line = document.lineAt(lineIndex);
+            const lineText = line.text;
+
+            this.warningPatterns.forEach(pattern => {
+                let match: RegExpExecArray | null;
+                while ((match = pattern.exec(lineText)) !== null) {
+                    const startPos = new vscode.Position(lineIndex, match.index);
+                    const endPos = new vscode.Position(lineIndex, match.index + match[0].length);
+                    const range = new vscode.Range(startPos, endPos);
+
+                    const diagnostic = new vscode.Diagnostic(
+                        range,
+                        `Warning: If you use "${match[0]}", you must be careful. Otherwise, your script is error`,
+                        vscode.DiagnosticSeverity.Warning
+                    );
+
+                    diagnostic.source = 'ZS Language';
+                    diagnostics.push(diagnostic);
+                }
+            });
+        }
+
+        this.diagnosticCollection.set(document.uri, diagnostics);
+    }
+
+    public clearDiagnostics(): void {
+        this.diagnosticCollection.clear();
+    }
+
+    public dispose(): void {
+        this.diagnosticCollection.dispose();
+    }
+}

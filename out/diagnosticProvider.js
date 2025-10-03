@@ -33,7 +33,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZSDiagnosticProvider = void 0;
+exports.ZSDiagnosticProviderWarning = exports.ZSDiagnosticProvider = void 0;
 const vscode = __importStar(require("vscode"));
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
@@ -108,4 +108,47 @@ class ZSDiagnosticProvider {
     }
 }
 exports.ZSDiagnosticProvider = ZSDiagnosticProvider;
+class ZSDiagnosticProviderWarning {
+    constructor() {
+        this.warningPatterns = [];
+        this.diagnosticCollection = vscode.languages.createDiagnosticCollection('zs');
+        this.loadwarningPatterns();
+    }
+    loadwarningPatterns() {
+        this.warningPatterns = [
+            /\b(is|are)\b/gi,
+        ];
+    }
+    // Update diagnostics for a document
+    updateDiagnostics(document) {
+        if (document.languageId !== 'zs') {
+            return;
+        }
+        const diagnostics = [];
+        // Check each line for invalid patterns
+        for (let lineIndex = 0; lineIndex < document.lineCount; lineIndex++) {
+            const line = document.lineAt(lineIndex);
+            const lineText = line.text;
+            this.warningPatterns.forEach(pattern => {
+                let match;
+                while ((match = pattern.exec(lineText)) !== null) {
+                    const startPos = new vscode.Position(lineIndex, match.index);
+                    const endPos = new vscode.Position(lineIndex, match.index + match[0].length);
+                    const range = new vscode.Range(startPos, endPos);
+                    const diagnostic = new vscode.Diagnostic(range, `Warning: If you use "${match[0]}", you must be careful. Otherwise, your script is error`, vscode.DiagnosticSeverity.Warning);
+                    diagnostic.source = 'ZS Language';
+                    diagnostics.push(diagnostic);
+                }
+            });
+        }
+        this.diagnosticCollection.set(document.uri, diagnostics);
+    }
+    clearDiagnostics() {
+        this.diagnosticCollection.clear();
+    }
+    dispose() {
+        this.diagnosticCollection.dispose();
+    }
+}
+exports.ZSDiagnosticProviderWarning = ZSDiagnosticProviderWarning;
 //# sourceMappingURL=diagnosticProvider.js.map
