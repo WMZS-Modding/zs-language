@@ -32,7 +32,7 @@
         },
         {
           "name": "invalid.illegal.zs",
-          "match": "(?i)\\b(am|was|were|had|has|have|may|might|must|shall|should|would|could|did|being|been|feels?|loves?|hates?|dislikes?|prefer|wish|want|need|know|understand|believe|think|remember|forget|own|possess|belong|see|hear|smell|taste|be|seem|appear|look|disappear|care|become|get|grow|stay|remain|will|can)\\b"
+          "match": "(?i)\\b(am|was|were|had|has|have|may|might|must|shall|should|would|could|did|being|been|feels?|loves?|hates?|dislikes?|likes?|prefer|wish|want|need|know|understand|believe|think|remember|forget|own|possess|belong|see|hear|smell|taste|be|seem|appear|look|disappear|care|become|get|grow|stay|remain|will|can)\\b"
         },
         {
           "name": "markup.inserted.zs",
