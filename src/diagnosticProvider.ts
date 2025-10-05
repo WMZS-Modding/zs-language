@@ -52,7 +52,7 @@ export class ZSDiagnosticProvider {
     }
 
     public updateDiagnostics(document: vscode.TextDocument): void {
-        if (document.languageId !== 'zs' || this.invalidPatterns.length === 0) {
+        if (document.languageId !== 'zs') {
             return;
         }
 
@@ -60,25 +60,31 @@ export class ZSDiagnosticProvider {
         const text = document.getText();
 
         this.invalidPatterns.forEach(pattern => {
-            try {
-                const regex = new RegExp(pattern, 'gi');
-                let match: RegExpExecArray | null;
+            let regex: RegExp;
+        
+            if (pattern && (pattern as any).exec && (pattern as any).source) {
+                regex = new RegExp((pattern as any).source, 'gi');
+            } else {
+                const cleanPattern = String(pattern).replace(/^\(\?i\)/, '');
+                regex = new RegExp(cleanPattern, 'gi');
+            }
+        
+            let match: RegExpExecArray | null;
+            regex.lastIndex = 0;
 
-                while ((match = regex.exec(text)) !== null) {
-                    const startPos = document.positionAt(match.index);
-                    const endPos = document.positionAt(match.index + match[0].length);
-                    const range = new vscode.Range(startPos, endPos);
+            while ((match = regex.exec(text)) !== null) {
+                const startPos = document.positionAt(match.index);
+                const endPos = document.positionAt(match.index + match[0].length);
+                const range = new vscode.Range(startPos, endPos);
 
-                    const diagnostic = new vscode.Diagnostic(
-                        range,
-                        `ZS syntax error: "${match[0]}" matches invalid pattern`,
-                        vscode.DiagnosticSeverity.Error
-                    );
+                const diagnostic = new vscode.Diagnostic(
+                    range,
+                    `Invalid ZS syntax: "${match[0]}"`,
+                    vscode.DiagnosticSeverity.Error
+                );
 
-                    diagnostics.push(diagnostic);
-                }
-            } catch (error) {
-                console.warn('Invalid regex pattern:', pattern, error);
+                diagnostic.source = 'ZS';
+                diagnostics.push(diagnostic);
             }
         });
 

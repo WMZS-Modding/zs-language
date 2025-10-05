@@ -20,23 +20,23 @@
       "patterns": [
         {
           "name": "keyword.control.zs",
-          "match": "\\b([Ww][Hh][Ee][Nn]|[Ii][Ff]|[Tt][Hh][Ee][Nn]|[Ee][Ll][Ss][Ee]|[Ww][Ii][Tt][Hh]|[Ww][Hh][Ii][Ll][Ee]|[Dd][Oo][Nn][Ee]|[Aa][Nn][Dd]|[Tt][Rr][Ii][Gg][Gg][Ee][Rr]|[Ee][Xx][Cc][Ee][Pp][Tt]|[Oo][Nn][Cc][Ee]|[Tt][Ww][Ii][Cc][Ee]|[Ss][Ee][Tt]|[Bb][Ee][Ff][Oo][Rr][Ee]|[Aa][Ff][Tt][Ee][Rr]|[Ll][Oo][Cc][Aa][Ll]|[Ff][Oo][Rr])\\b"
+          "match": "(?i)\\b(when|if|then|else|with|while|done|trigger|except|once|twice|set|before|after|local|for)\\b"
         },
         {
           "name": "entity.name.type.zs",
-          "match": "\\b([Pp][Uu][Bb][Ll][Ii][Cc]|[Pp][Rr][Ii][Vv][Aa][Tt][Ee])\\b"
+          "match": "(?i)\\b(public|private)\\b"
         },
         {
           "name": "variable.language.zs",
-          "match": "\\b([Ii][Tt][Ss][Ee][Ll][Ff]|[Mm]ono[Bb]ehaviour|[Uu]nity[Ss]ystem|[Uu][Ii][Ee]vent|[Uu]nity[Ee]ngine|[Ii][Tt]|[Tt][Hh][Ee][Yy]|[Tt][Hh][Ee][Mm]|[Tt][Hh][Ee][Mm][Ss][Ee][Ll][Ff]|[Tt][Rr][Uu][Ee]|[Ff][Aa][Ll][Ss][Ee])\\b"
+          "match": "(?i)\\b(itself|and|monobehaviour|unitysystem|uievent|unityengine|it|they|them|themself|true|false)\\b"
         },
         {
           "name": "invalid.illegal.zs",
-          "match": "\\b([Aa][Mm]|[Ww][Aa][Ss]|[Ww][Ee][Rr][Ee]|[Hh][Aa][Dd]|[Hh][Aa][Ss]|[Hh][Aa][Vv][Ee]|[Mm][Aa][Yy]|[Mm][Ii][Gg][Hh][Tt]|[Mm][Uu][Ss][Tt]|[Ss][Hh][Aa][Ll][Ll]|[Ss][Hh][Oo][Uu][Ll][Dd]|[Ww][Oo][Uu][Ll][Dd]|[Cc][Oo][Uu][Ll][Dd]|[Dd][Ii][Dd]|[Bb][Ee][Ii][Nn][Gg]|[Bb][Ee][Ee][Nn]|[Ff][Ee][Ee][Ll][Ss]|[Ll][Oo][Vv][Ee][Ss]?|[Hh][Aa][Tt][Ee][Ss]?|[Dd][Ii][Ss][Ll][Ii][Kk][Ee][Ss]?|[Pp][Rr][Ee][Ff][Ee][Rr]|[Ww][Ii][Ss][Hh]|[Ww][Aa][Nn][Tt]|[Nn][Ee][Ee][Dd]|[Kk][Nn][Oo][Ww]|[Uu][Nn][Dd][Ee][Rr][Ss][Tt][Aa][Nn][Dd]|[Bb][Ee][Ll][Ii][Ee][Vv][Ee]|[Tt][Hh][Ii][Nn][Kk]|[Rr][Ee][Mm][Ee][Mm][Bb][Ee][Rr]|[Ff][Oo][Rr][Gg][Ee][Tt]|[Oo][Ww][Nn]|[Pp][Oo][Ss][Ss][Ee][Ss][Ss]|[Bb][Ee][Ll][Oo][Nn][Gg]|[Ss][Ee][Ee]|[Hh][Ee][Aa][Rr]|[Ss][Mm][Ee][Ll][Ll]|[Tt][Aa][Ss][Tt][Ee]|[Ff][Ee][Ee][Ll]|[Bb][Ee]|[Ss][Ee][Ee][Mm]|[Aa][Pp][Pp][Ee][Aa][Rr]|[Ll][Oo][Oo][Kk]|[Dd][Ii][Ss][Aa][Pp][Pp][Ee][Aa][Rr]|[Cc][Aa][Rr][Ee]|[Bb][Ee][Cc][Oo][Mm][Ee]|[Gg][Ee][Tt]|[Gg][Rr][Oo][Ww]|[Ss][Tt][Aa][Yy]|[Rr][Ee][Mm][Aa][Ii][Nn]|[Ww][Ii][Ll][Ll]|[Cc][Aa][Nn])\\b"
+          "match": "(?i)\\b(am|was|were|had|has|have|may|might|must|shall|should|would|could|did|being|been|feels?|loves?|hates?|dislikes?|prefer|wish|want|need|know|understand|believe|think|remember|forget|own|possess|belong|see|hear|smell|taste|be|seem|appear|look|disappear|care|become|get|grow|stay|remain|will|can)\\b"
         },
         {
           "name": "markup.inserted.zs",
-          "match": "\\b([Mm][Oo][Vv][Ee]|[Rr][Uu][Nn]|[Pp][Ll][Aa][Yy]|[Tt][Oo][Uu][Cc][Hh]|[Cc][Uu][Tt]|[Ww][Aa][Ii][Tt]|[Dd][Oo][Ee]?[Ss]?|[Bb][Ll][Oo][Ww]|[Ii][Ss]|[Aa][Rr][Ee]|[Ff][Ll][Oo][Ww]|[Ll][Oo][Aa][Dd]|[Cc][Aa][Ll][Ll]|[Ss][Tt][Oo][Pp]|[Dd][Ee][Ll][Ee][Tt][Ee]|[Dd][Ee][Ss][Tt][Rr][Oo][Yy]|[Rr][Ee][Mm][Oo][Vv][Ee]|[Rr][Ee][Pp][Ll][Aa][Cc][Ee])\\b"
+          "match": "(?i)\\b(move|run|play|touch|cut|earse|wait|doe?s?|blow|is|are|flow|load|call|stop|delete|destroy|remove|replace)\\b"
         }
       ]
     },
@@ -102,7 +102,7 @@
       "patterns": [
         {
           "name": "meta.class.zs",
-          "begin": "\\b([Cc][Ll][Aa][Ss][Ss]|[Pp][Rr][Ee][Ff][Aa][Bb])\\b\\s+",
+          "begin": "(?i)\\b(class|prefab)\\b\\s+",
           "beginCaptures": {
             "1": {
               "name": "entity.name.type.class.zs"
@@ -122,7 +122,7 @@
       "patterns": [
         {
           "name": "invalid.illegal.zs",
-          "match": "\\b([Ii]|[Yy][Oo][Uu]|[Hh][Ee]|[Ss][Hh][Ee]|[Ww][Ee]|[Uu][Ss]|[Mm][Ee]|[Hh][Ii][Mm]|[Hh][Ee][Rr]|[Oo][Uu][Rr][Ss]|[Hh][Ii][Ss]|[Hh][Ee][Rr][Ss]|[Yy][Oo][Uu][Rr]|[Mm][Yy]|[Mm][Ii][Nn][Ee]|[Oo][Uu][Rr]|[Tt][Hh][Ee][Ii][Rr]|[Ii][Tt][Ss]|[Tt][Hh][Ee][Ii][Rr][Ss]|[Mm][Yy][Ss][Ee][Ll][Ff]|[Yy][Oo][Uu][Rr][Ss][Ee][Ll][Ff]|[Hh][Ii][Mm][Ss][Ee][Ll][Ff]|[Hh][Ee][Rr][Ss][Ee][Ll][Ff]|[Oo][Uu][Rr][Ss][Ee][Ll][Ff]|[Oo][Uu][Rr][Ss][Ee][Ll][Vv][Ee][Ss]|[Yy][Oo][Uu][Rr][Ss][Ee][Ll][Vv][Ee][Ss]|[Mm][Yy][Ss][Ee][Ll][Vv][Ee][Ss]|[Hh][Ii][Mm][Ss][Ee][Ll][Vv][Ee][Ss]|[Hh][Ee][Rr][Ss][Ee][Ll][Vv][Ee][Ss]|[Tt][Hh][Ee][Mm][Ss][Ee][Ll][Vv][Ee][Ss]|[Ii][Tt][Ss][Ee][Ll][Vv][Ee][Ss])\\b"
+          "match": "(?i)\\b(i|you|he|she|we|us|me|him|hers?|ours?|his|your|my|mine|theirs?|its|myself|yourself|himself|herself|ourself|ourselves|yourselves|myselves|himselves|herselves|themselves|itselves)\\b"
         }
       ]
     },

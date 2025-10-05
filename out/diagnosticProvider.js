@@ -80,25 +80,29 @@ class ZSDiagnosticProvider {
         console.log('Found invalid patterns:', this.invalidPatterns);
     }
     updateDiagnostics(document) {
-        if (document.languageId !== 'zs' || this.invalidPatterns.length === 0) {
+        if (document.languageId !== 'zs') {
             return;
         }
         const diagnostics = [];
         const text = document.getText();
         this.invalidPatterns.forEach(pattern => {
-            try {
-                const regex = new RegExp(pattern, 'gi');
-                let match;
-                while ((match = regex.exec(text)) !== null) {
-                    const startPos = document.positionAt(match.index);
-                    const endPos = document.positionAt(match.index + match[0].length);
-                    const range = new vscode.Range(startPos, endPos);
-                    const diagnostic = new vscode.Diagnostic(range, `ZS syntax error: "${match[0]}" matches invalid pattern`, vscode.DiagnosticSeverity.Error);
-                    diagnostics.push(diagnostic);
-                }
+            let regex;
+            if (pattern && pattern.exec && pattern.source) {
+                regex = new RegExp(pattern.source, 'gi');
             }
-            catch (error) {
-                console.warn('Invalid regex pattern:', pattern, error);
+            else {
+                const cleanPattern = String(pattern).replace(/^\(\?i\)/, '');
+                regex = new RegExp(cleanPattern, 'gi');
+            }
+            let match;
+            regex.lastIndex = 0;
+            while ((match = regex.exec(text)) !== null) {
+                const startPos = document.positionAt(match.index);
+                const endPos = document.positionAt(match.index + match[0].length);
+                const range = new vscode.Range(startPos, endPos);
+                const diagnostic = new vscode.Diagnostic(range, `Invalid ZS syntax: "${match[0]}"`, vscode.DiagnosticSeverity.Error);
+                diagnostic.source = 'ZS';
+                diagnostics.push(diagnostic);
             }
         });
         this.diagnosticCollection.set(document.uri, diagnostics);
