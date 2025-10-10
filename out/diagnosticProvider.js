@@ -48,7 +48,6 @@ class ZSDiagnosticProvider {
             const grammarPath = path.join(context.extensionPath, 'syntaxes', 'zs.tmLanguage.json');
             const grammarContent = await fs.promises.readFile(grammarPath, 'utf8');
             const grammar = JSON.parse(grammarContent);
-            // Extract patterns that trigger invalid.illegal coloring
             this.extractInvalidPatterns(grammar);
         }
         catch (error) {
@@ -56,10 +55,8 @@ class ZSDiagnosticProvider {
         }
     }
     extractInvalidPatterns(grammar) {
-        // Recursively find all patterns with 'invalid.illegal' in their name
         const findInvalidPatterns = (obj, path = []) => {
             if (typeof obj === 'object' && obj !== null) {
-                // Check if this pattern marks text as invalid
                 if (obj.name && obj.name.includes('invalid.illegal')) {
                     if (obj.match) {
                         this.invalidPatterns.push(obj.match);
@@ -68,7 +65,6 @@ class ZSDiagnosticProvider {
                         obj.patterns.forEach((pattern) => findInvalidPatterns(pattern, [...path, 'patterns']));
                     }
                 }
-                // Search in all object properties
                 Object.entries(obj).forEach(([key, value]) => {
                     if (typeof value === 'object') {
                         findInvalidPatterns(value, [...path, key]);
@@ -85,6 +81,8 @@ class ZSDiagnosticProvider {
         }
         const diagnostics = [];
         const text = document.getText();
+        this.detectStraightQuotes(text, /"/g, '“”', diagnostics, document);
+        this.detectStraightQuotes(text, /'/g, '‘’', diagnostics, document);
         this.invalidPatterns.forEach(pattern => {
             let regex;
             if (pattern && pattern.exec && pattern.source) {
@@ -107,6 +105,37 @@ class ZSDiagnosticProvider {
         });
         this.diagnosticCollection.set(document.uri, diagnostics);
     }
+    detectStraightQuotes(text, pattern, expectedQuotes, diagnostics, document) {
+        const lines = text.split('\n');
+        for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
+            const line = lines[lineIndex];
+            if (line.trim().startsWith('-/'))
+                continue;
+            let match;
+            pattern.lastIndex = 0;
+            while ((match = pattern.exec(line)) !== null) {
+                const range = new vscode.Range(new vscode.Position(lineIndex, match.index), new vscode.Position(lineIndex, match.index + 1));
+                const diagnostic = new vscode.Diagnostic(range, `Use ${expectedQuotes} instead of "${match[0]}" in ZS code`, vscode.DiagnosticSeverity.Error);
+                diagnostic.source = 'ZS Quotes';
+                diagnostics.push(diagnostic);
+            }
+        }
+    }
+    provideCodeActions(document, range, context) {
+        const actions = [];
+        context.diagnostics.forEach(diagnostic => {
+            if (diagnostic.source === 'ZS Quotes') {
+                const action = new vscode.CodeAction('Convert to curly quotes', vscode.CodeActionKind.QuickFix);
+                action.diagnostics = [diagnostic];
+                action.edit = new vscode.WorkspaceEdit();
+                const quoteChar = document.getText(diagnostic.range);
+                const replacement = quoteChar === '"' ? '“”' : '‘’';
+                action.edit.replace(document.uri, diagnostic.range, replacement);
+                actions.push(action);
+            }
+        });
+        return actions;
+    }
     dispose() {
         this.diagnosticCollection.dispose();
     }
@@ -123,13 +152,11 @@ class ZSDiagnosticProviderWarning {
             /\b(is|are)\b/gi,
         ];
     }
-    // Update diagnostics for a document
     updateDiagnostics(document) {
         if (document.languageId !== 'zs') {
             return;
         }
         const diagnostics = [];
-        // Check each line for invalid patterns
         for (let lineIndex = 0; lineIndex < document.lineCount; lineIndex++) {
             const line = document.lineAt(lineIndex);
             const lineText = line.text;

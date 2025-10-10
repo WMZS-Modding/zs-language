@@ -17,7 +17,6 @@ export class ZSDiagnosticProvider {
             const grammarContent = await fs.promises.readFile(grammarPath, 'utf8');
             const grammar = JSON.parse(grammarContent);
             
-            // Extract patterns that trigger invalid.illegal coloring
             this.extractInvalidPatterns(grammar);
         } catch (error) {
             console.error('Failed to load grammar for diagnostics:', error);
@@ -25,10 +24,8 @@ export class ZSDiagnosticProvider {
     }
 
     private extractInvalidPatterns(grammar: any): void {
-        // Recursively find all patterns with 'invalid.illegal' in their name
         const findInvalidPatterns = (obj: any, path: string[] = []): void => {
             if (typeof obj === 'object' && obj !== null) {
-                // Check if this pattern marks text as invalid
                 if (obj.name && obj.name.includes('invalid.illegal')) {
                     if (obj.match) {
                         this.invalidPatterns.push(obj.match);
@@ -38,7 +35,6 @@ export class ZSDiagnosticProvider {
                     }
                 }
                 
-                // Search in all object properties
                 Object.entries(obj).forEach(([key, value]) => {
                     if (typeof value === 'object') {
                         findInvalidPatterns(value, [...path, key]);
@@ -58,6 +54,9 @@ export class ZSDiagnosticProvider {
 
         const diagnostics: vscode.Diagnostic[] = [];
         const text = document.getText();
+
+        this.detectStraightQuotes(text, /"/g, '“”', diagnostics, document);
+        this.detectStraightQuotes(text, /'/g, '‘’', diagnostics, document);
 
         this.invalidPatterns.forEach(pattern => {
             let regex: RegExp;
@@ -91,6 +90,68 @@ export class ZSDiagnosticProvider {
         this.diagnosticCollection.set(document.uri, diagnostics);
     }
 
+    private detectStraightQuotes(
+        text: string,
+        pattern: RegExp,
+        expectedQuotes: string,
+        diagnostics: vscode.Diagnostic[],
+        document: vscode.TextDocument
+    ): void {
+        const lines = text.split('\n');
+    
+        for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
+            const line = lines[lineIndex];
+        
+            if (line.trim().startsWith('-/')) continue;
+        
+            let match: RegExpExecArray | null;
+            pattern.lastIndex = 0;
+        
+            while ((match = pattern.exec(line)) !== null) {
+                const range = new vscode.Range(
+                    new vscode.Position(lineIndex, match.index),
+                    new vscode.Position(lineIndex, match.index + 1)
+                );
+
+                const diagnostic = new vscode.Diagnostic(
+                    range,
+                    `Use ${expectedQuotes} instead of "${match[0]}" in ZS code`,
+                    vscode.DiagnosticSeverity.Error
+                );
+            
+                diagnostic.source = 'ZS Quotes';
+                diagnostics.push(diagnostic);
+            }
+        }
+    }
+
+    provideCodeActions(
+        document: vscode.TextDocument, 
+        range: vscode.Range, 
+        context: vscode.CodeActionContext
+    ): vscode.CodeAction[] {
+        const actions: vscode.CodeAction[] = [];
+
+        context.diagnostics.forEach(diagnostic => {
+            if (diagnostic.source === 'ZS Quotes') {
+                const action = new vscode.CodeAction(
+                    'Convert to curly quotes',
+                    vscode.CodeActionKind.QuickFix
+                );
+                action.diagnostics = [diagnostic];
+                action.edit = new vscode.WorkspaceEdit();
+            
+                const quoteChar = document.getText(diagnostic.range);
+                const replacement = quoteChar === '"' ? '“”' : '‘’';
+            
+                action.edit.replace(document.uri, diagnostic.range, replacement);
+                actions.push(action);
+            }
+        });
+
+        return actions;
+    }
+
     public dispose(): void {
         this.diagnosticCollection.dispose();
     }
@@ -111,7 +172,6 @@ export class ZSDiagnosticProviderWarning {
         ];
     }
 
-    // Update diagnostics for a document
     public updateDiagnostics(document: vscode.TextDocument): void {
         if (document.languageId !== 'zs') {
             return;
@@ -119,7 +179,6 @@ export class ZSDiagnosticProviderWarning {
 
         const diagnostics: vscode.Diagnostic[] = [];
 
-        // Check each line for invalid patterns
         for (let lineIndex = 0; lineIndex < document.lineCount; lineIndex++) {
             const line = document.lineAt(lineIndex);
             const lineText = line.text;

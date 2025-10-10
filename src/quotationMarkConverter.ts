@@ -10,7 +10,6 @@ export class ZSQuoteConverter {
 
         this.isActive = true;
         
-        // Listen for text changes in ZS documents
         const disposable = vscode.workspace.onDidChangeTextDocument((event: vscode.TextDocumentChangeEvent) => {
             if (event.document.languageId !== 'zs') {
                 return;
@@ -22,7 +21,6 @@ export class ZSQuoteConverter {
     }
 
     private handleTextChange(event: vscode.TextDocumentChangeEvent): void {
-        // Your existing quote conversion logic here
         if (event.contentChanges.length === 0) {
             return;
         }
@@ -124,8 +122,6 @@ export class ZSQuoteConverter {
         return result;
     }
 
-    // Optional dispose method if needed
     dispose(): void {
-        // Clean up if needed
     }
 }

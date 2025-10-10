@@ -46,6 +46,7 @@ Currently, I cannot post illustrations such as PNG/JPG or GIF. I do not have tim
 - New `‘’` and `“”` to replace `'` and `"`: To add this symbols, just enter `'` or `"`, they'll be inserted
 - "Verbs error detector": This is an important feature. It'll help you detect the wrong verbs with underline them with red underline, and show error. Not only color red on wrong verbs, but also underline with red underline
 - "Warning verbs": This is small feature, but it'll warn you to use `is` and `are` carefully
+- "Quotes detector": This is small feature, but it's important. When you write `'` and/or `"`, it'll underline them with red underline, and then provide QuickFix
 ### Unsupported features:
 - ZS to C# and LUA converter: it is very difficult to create this feature. Since my language is easy to write for non-programmers, creating a TS script to convert ZS code to C# and LUA code is very difficult, even failed and may never be done
 - Spell checking for words: although possible, it is not possible because it still has to be added manually, making me have to search online, wasting time

@@ -43,13 +43,10 @@ let diagnosticProvider;
 let warningDiagnosticProvider;
 function activate(context) {
     console.log('ZS language extension is now active!');
-    // Initialize both components
     quoteConverter = new quotationMarkConverter_1.ZSQuoteConverter();
     diagnosticProvider = new diagnosticProvider_1.ZSDiagnosticProvider(context);
     warningDiagnosticProvider = new diagnosticProvider_1.ZSDiagnosticProviderWarning();
-    // Activate quote converter
     quoteConverter.activate(context);
-    // Register diagnostic provider events
     const diagnosticDisposable = vscode.workspace.onDidChangeTextDocument((event) => {
         diagnosticProvider.updateDiagnostics(event.document);
         warningDiagnosticProvider.updateDiagnostics(event.document);
@@ -60,18 +57,15 @@ function activate(context) {
             warningDiagnosticProvider.updateDiagnostics(document);
         }
     });
-    // Initial diagnostics for open documents
     vscode.workspace.textDocuments.forEach(document => {
         if (document.languageId === 'zs') {
             diagnosticProvider.updateDiagnostics(document);
             warningDiagnosticProvider.updateDiagnostics(document);
         }
     });
-    // Register manual conversion command
     const commandDisposable = vscode.commands.registerCommand('zs.convertQuotes', () => {
         quoteConverter.convertDocumentQuotes();
     });
-    // Add all disposables to context
     context.subscriptions.push(diagnosticDisposable, openDisposable, commandDisposable, { dispose: () => {
             if (quoteConverter) {
                 quoteConverter.dispose?.();
@@ -82,7 +76,9 @@ function activate(context) {
             if (warningDiagnosticProvider) {
                 warningDiagnosticProvider.dispose();
             }
-        } });
+        } }, vscode.languages.registerCodeActionsProvider('zs', diagnosticProvider, {
+        providedCodeActionKinds: [vscode.CodeActionKind.QuickFix]
+    }));
 }
 function deactivate() {
     if (quoteConverter) {
