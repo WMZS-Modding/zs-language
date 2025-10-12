@@ -98,6 +98,9 @@ class ZSDiagnosticProvider {
                 const startPos = document.positionAt(match.index);
                 const endPos = document.positionAt(match.index + match[0].length);
                 const range = new vscode.Range(startPos, endPos);
+                if (this.shouldSkipRange(document, range)) {
+                    continue;
+                }
                 const diagnostic = new vscode.Diagnostic(range, `Invalid ZS syntax: "${match[0]}"`, vscode.DiagnosticSeverity.Error);
                 diagnostic.source = 'ZS';
                 diagnostics.push(diagnostic);
@@ -109,12 +112,17 @@ class ZSDiagnosticProvider {
         const lines = text.split('\n');
         for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
             const line = lines[lineIndex];
-            if (line.trim().startsWith('-/'))
+            if (line.includes('-/') || line.includes('*/-') || line.includes('/-*') ||
+                line.includes('<') || line.includes('(') || line.includes('/|')) {
                 continue;
+            }
             let match;
             pattern.lastIndex = 0;
             while ((match = pattern.exec(line)) !== null) {
                 const range = new vscode.Range(new vscode.Position(lineIndex, match.index), new vscode.Position(lineIndex, match.index + 1));
+                if (this.shouldSkipRange(document, range)) {
+                    continue;
+                }
                 const diagnostic = new vscode.Diagnostic(range, `Use ${expectedQuotes} instead of "${match[0]}" in ZS code`, vscode.DiagnosticSeverity.Error);
                 diagnostic.source = 'ZS Quotes';
                 diagnostics.push(diagnostic);
@@ -135,6 +143,25 @@ class ZSDiagnosticProvider {
             }
         });
         return actions;
+    }
+    shouldSkipRange(document, range) {
+        const text = document.getText(range);
+        const lineText = document.lineAt(range.start.line).text;
+        const lineStart = range.start.line;
+        const charStart = range.start.character;
+        if (lineText.includes('-/') && charStart >= lineText.indexOf('-/'))
+            return true;
+        if (lineText.includes('*/-') || lineText.includes('/-*'))
+            return true;
+        if (lineText.includes('<') && lineText.includes('>'))
+            return true;
+        if (lineText.includes('(') && lineText.includes(')'))
+            return true;
+        if (lineText.includes('/|') && lineText.includes('|\\'))
+            return true;
+        if (text === '“' || text === '”' || text === '‘' || text === '’')
+            return true;
+        return false;
     }
     dispose() {
         this.diagnosticCollection.dispose();
@@ -166,6 +193,9 @@ class ZSDiagnosticProviderWarning {
                     const startPos = new vscode.Position(lineIndex, match.index);
                     const endPos = new vscode.Position(lineIndex, match.index + match[0].length);
                     const range = new vscode.Range(startPos, endPos);
+                    if (this.shouldSkipRange(document, range)) {
+                        continue;
+                    }
                     const diagnostic = new vscode.Diagnostic(range, `Warning: If you use "${match[0]}", you must be careful. Otherwise, your script is error`, vscode.DiagnosticSeverity.Warning);
                     diagnostic.source = 'ZS Language';
                     diagnostics.push(diagnostic);
@@ -173,6 +203,25 @@ class ZSDiagnosticProviderWarning {
             });
         }
         this.diagnosticCollection.set(document.uri, diagnostics);
+    }
+    shouldSkipRange(document, range) {
+        const text = document.getText(range);
+        const lineText = document.lineAt(range.start.line).text;
+        const lineStart = range.start.line;
+        const charStart = range.start.character;
+        if (lineText.includes('-/') && charStart >= lineText.indexOf('-/'))
+            return true;
+        if (lineText.includes('*/-') || lineText.includes('/-*'))
+            return true;
+        if (lineText.includes('<') && lineText.includes('>'))
+            return true;
+        if (lineText.includes('(') && lineText.includes(')'))
+            return true;
+        if (lineText.includes('/|') && lineText.includes('|\\'))
+            return true;
+        if (text === '“' || text === '”' || text === '‘' || text === '’')
+            return true;
+        return false;
     }
     clearDiagnostics() {
         this.diagnosticCollection.clear();

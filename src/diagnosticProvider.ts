@@ -60,14 +60,14 @@ export class ZSDiagnosticProvider {
 
         this.invalidPatterns.forEach(pattern => {
             let regex: RegExp;
-        
+
             if (pattern && (pattern as any).exec && (pattern as any).source) {
                 regex = new RegExp((pattern as any).source, 'gi');
             } else {
                 const cleanPattern = String(pattern).replace(/^\(\?i\)/, '');
                 regex = new RegExp(cleanPattern, 'gi');
             }
-        
+    
             let match: RegExpExecArray | null;
             regex.lastIndex = 0;
 
@@ -75,6 +75,10 @@ export class ZSDiagnosticProvider {
                 const startPos = document.positionAt(match.index);
                 const endPos = document.positionAt(match.index + match[0].length);
                 const range = new vscode.Range(startPos, endPos);
+
+                if (this.shouldSkipRange(document, range)) {
+                    continue;
+                }
 
                 const diagnostic = new vscode.Diagnostic(
                     range,
@@ -98,20 +102,27 @@ export class ZSDiagnosticProvider {
         document: vscode.TextDocument
     ): void {
         const lines = text.split('\n');
-    
+
         for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
             const line = lines[lineIndex];
         
-            if (line.trim().startsWith('-/')) continue;
-        
+            if (line.includes('-/') || line.includes('*/-') || line.includes('/-*') || 
+                line.includes('<') || line.includes('(') || line.includes('/|')) {
+                continue;
+            }
+
             let match: RegExpExecArray | null;
             pattern.lastIndex = 0;
-        
+
             while ((match = pattern.exec(line)) !== null) {
                 const range = new vscode.Range(
                     new vscode.Position(lineIndex, match.index),
                     new vscode.Position(lineIndex, match.index + 1)
                 );
+
+                if (this.shouldSkipRange(document, range)) {
+                    continue;
+                }
 
                 const diagnostic = new vscode.Diagnostic(
                     range,
@@ -152,6 +163,24 @@ export class ZSDiagnosticProvider {
         return actions;
     }
 
+    private shouldSkipRange(document: vscode.TextDocument, range: vscode.Range): boolean {
+        const text = document.getText(range);
+        const lineText = document.lineAt(range.start.line).text;
+        const lineStart = range.start.line;
+        const charStart = range.start.character;
+
+        if (lineText.includes('-/') && charStart >= lineText.indexOf('-/')) return true;
+        if (lineText.includes('*/-') || lineText.includes('/-*')) return true;
+
+        if (lineText.includes('<') && lineText.includes('>')) return true;
+        if (lineText.includes('(') && lineText.includes(')')) return true;
+        if (lineText.includes('/|') && lineText.includes('|\\')) return true;
+
+        if (text === '“' || text === '”' || text === '‘' || text === '’') return true;
+
+        return false;
+    }
+
     public dispose(): void {
         this.diagnosticCollection.dispose();
     }
@@ -190,6 +219,10 @@ export class ZSDiagnosticProviderWarning {
                     const endPos = new vscode.Position(lineIndex, match.index + match[0].length);
                     const range = new vscode.Range(startPos, endPos);
 
+                    if (this.shouldSkipRange(document, range)) {
+                        continue;
+                    }
+
                     const diagnostic = new vscode.Diagnostic(
                         range,
                         `Warning: If you use "${match[0]}", you must be careful. Otherwise, your script is error`,
@@ -203,6 +236,24 @@ export class ZSDiagnosticProviderWarning {
         }
 
         this.diagnosticCollection.set(document.uri, diagnostics);
+    }
+
+    private shouldSkipRange(document: vscode.TextDocument, range: vscode.Range): boolean {
+        const text = document.getText(range);
+        const lineText = document.lineAt(range.start.line).text;
+        const lineStart = range.start.line;
+        const charStart = range.start.character;
+
+        if (lineText.includes('-/') && charStart >= lineText.indexOf('-/')) return true;
+        if (lineText.includes('*/-') || lineText.includes('/-*')) return true;
+
+        if (lineText.includes('<') && lineText.includes('>')) return true;
+        if (lineText.includes('(') && lineText.includes(')')) return true;
+        if (lineText.includes('/|') && lineText.includes('|\\')) return true;
+
+        if (text === '“' || text === '”' || text === '‘' || text === '’') return true;
+
+        return false;
     }
 
     public clearDiagnostics(): void {
