@@ -264,3 +264,141 @@ export class ZSDiagnosticProviderWarning {
         this.diagnosticCollection.dispose();
     }
 }
+
+export class ZSCommaDiagnosticProvider {
+    private diagnosticCollection: vscode.DiagnosticCollection;
+
+    constructor() {
+        this.diagnosticCollection = vscode.languages.createDiagnosticCollection('zs-comma');
+    }
+
+    public updateDiagnostics(document: vscode.TextDocument): void {
+        if (document.languageId !== 'zs') {
+            return;
+        }
+
+        const diagnostics: vscode.Diagnostic[] = [];
+        const text = document.getText();
+
+        this.detectCommasInNouns(text, diagnostics, document);
+
+        this.diagnosticCollection.set(document.uri, diagnostics);
+    }
+
+    private detectCommasInNouns(text: string, diagnostics: vscode.Diagnostic[], document: vscode.TextDocument): void {
+        const nounPatterns = [
+            { regex: /<[^>]*>/g, symbol: '<>' },
+            { regex: /\([^)]*\)/g, symbol: '()' },
+            { regex: /\/\|[^|]*\|\\/g, symbol: '/||\\' }
+        ];
+
+        for (const pattern of nounPatterns) {
+            let match: RegExpExecArray | null;
+            while ((match = pattern.regex.exec(text)) !== null) {
+                const nounContent = match[0];
+
+                let commaIndex = -1;
+                while ((commaIndex = nounContent.indexOf(',', commaIndex + 1)) !== -1) {
+                    const commaPosition = match.index + commaIndex;
+                    const startPos = document.positionAt(commaPosition);
+                    const endPos = document.positionAt(commaPosition + 1);
+                    const range = new vscode.Range(startPos, endPos);
+
+                    const diagnostic = new vscode.Diagnostic(
+                        range,
+                        `Comma not allowed inside ${pattern.symbol} noun symbols`,
+                        vscode.DiagnosticSeverity.Error
+                    );
+
+                    diagnostic.source = 'ZS Nouns';
+                    diagnostics.push(diagnostic);
+                }
+            }
+        }
+    }
+
+    public dispose(): void {
+        this.diagnosticCollection.dispose();
+    }
+}
+
+export class ZSSpaceDiagnosticProvider {
+    private diagnosticCollection: vscode.DiagnosticCollection;
+
+    constructor() {
+        this.diagnosticCollection = vscode.languages.createDiagnosticCollection('zs-space');
+    }
+
+    public updateDiagnostics(document: vscode.TextDocument): void {
+        if (document.languageId !== 'zs') {
+            return;
+        }
+
+        const diagnostics: vscode.Diagnostic[] = [];
+        const text = document.getText();
+
+        this.detectSpacesInNouns(text, diagnostics, document);
+
+        this.detectInvalidSpaces(text, diagnostics, document);
+
+        this.diagnosticCollection.set(document.uri, diagnostics);
+    }
+
+    private detectSpacesInNouns(text: string, diagnostics: vscode.Diagnostic[], document: vscode.TextDocument): void {
+        const nounPatterns = [
+            { regex: /<[^>]*>/g, symbol: '<>' },
+            { regex: /\([^)]*\)/g, symbol: '()' },
+            { regex: /\/\|[^|]*\|\\/g, symbol: '/||\\' }
+        ];
+
+        for (const pattern of nounPatterns) {
+            let match: RegExpExecArray | null;
+            while ((match = pattern.regex.exec(text)) !== null) {
+                const nounContent = match[0];
+
+                for (let i = 0; i < nounContent.length; i++) {
+                    const char = nounContent[i];
+                    if (char === ' ') {
+                        const spacePosition = match.index + i;
+                        const startPos = document.positionAt(spacePosition);
+                        const endPos = document.positionAt(spacePosition + 1);
+                        const range = new vscode.Range(startPos, endPos);
+
+                        const diagnostic = new vscode.Diagnostic(
+                            range,
+                            `Spaces/tabs not allowed inside ${pattern.symbol} noun symbols`,
+                            vscode.DiagnosticSeverity.Error
+                        );
+
+                        diagnostic.source = 'ZS Nouns';
+                        diagnostics.push(diagnostic);
+                    }
+                }
+            }
+        }
+    }
+
+    private detectInvalidSpaces(text: string, diagnostics: vscode.Diagnostic[], document: vscode.TextDocument): void {
+        const multipleSpacesRegex = /  +/g;
+        let match: RegExpExecArray | null;
+    
+        while ((match = multipleSpacesRegex.exec(text)) !== null) {
+            const startPos = document.positionAt(match.index);
+            const endPos = document.positionAt(match.index + match[0].length);
+            const range = new vscode.Range(startPos, endPos);
+
+            const diagnostic = new vscode.Diagnostic(
+                range,
+                `Multiple consecutive spaces not allowed`,
+                vscode.DiagnosticSeverity.Error
+            );
+
+            diagnostic.source = 'ZS Spaces';
+            diagnostics.push(diagnostic);
+        }
+    }
+
+    public dispose(): void {
+        this.diagnosticCollection.dispose();
+    }
+}
