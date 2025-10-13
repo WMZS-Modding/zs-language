@@ -113,7 +113,8 @@ class ZSDiagnosticProvider {
         for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
             const line = lines[lineIndex];
             if (line.includes('-/') || line.includes('*/-') || line.includes('/-*') ||
-                line.includes('<') || line.includes('(') || line.includes('/|')) {
+                line.includes('<') || line.includes('(') || line.includes('/|') ||
+                line.includes('>') || line.includes(')') || line.includes('|\\')) {
                 continue;
             }
             let match;
@@ -146,22 +147,75 @@ class ZSDiagnosticProvider {
     }
     shouldSkipRange(document, range) {
         const text = document.getText(range);
-        const lineText = document.lineAt(range.start.line).text;
-        const lineStart = range.start.line;
-        const charStart = range.start.character;
-        if (lineText.includes('-/') && charStart >= lineText.indexOf('-/'))
+        const lineIndex = range.start.line;
+        const position = range.start.character;
+        const lineText = document.lineAt(lineIndex).text;
+        if (this.isInsideMultiLineComment(document, lineIndex, position)) {
             return true;
-        if (lineText.includes('*/-') || lineText.includes('/-*'))
+        }
+        if (lineText.includes('-/') && position >= lineText.indexOf('-/')) {
             return true;
-        if (lineText.includes('<') && lineText.includes('>'))
+        }
+        if (this.isInsideSymbol(lineText, position, '<', '>'))
             return true;
-        if (lineText.includes('(') && lineText.includes(')'))
+        if (this.isInsideSymbol(lineText, position, '(', ')'))
             return true;
-        if (lineText.includes('/|') && lineText.includes('|\\'))
+        if (this.isInsideSymbol(lineText, position, '/|', '|\\'))
             return true;
         if (text === '“' || text === '”' || text === '‘' || text === '’')
             return true;
         return false;
+    }
+    isInsideMultiLineComment(document, lineIndex, position) {
+        const text = document.getText();
+        const docPosition = document.offsetAt(new vscode.Position(lineIndex, position));
+        let inComment = false;
+        let lastIndex = 0;
+        while (lastIndex < text.length) {
+            const openIndex = text.indexOf('*/-', lastIndex);
+            const closeIndex = text.indexOf('/-*', lastIndex);
+            if (openIndex === -1 && closeIndex === -1)
+                break;
+            let nextIndex = -1;
+            let isOpen = false;
+            if (openIndex !== -1 && closeIndex !== -1) {
+                if (openIndex < closeIndex) {
+                    nextIndex = openIndex;
+                    isOpen = true;
+                }
+                else {
+                    nextIndex = closeIndex;
+                    isOpen = false;
+                }
+            }
+            else if (openIndex !== -1) {
+                nextIndex = openIndex;
+                isOpen = true;
+            }
+            else {
+                nextIndex = closeIndex;
+                isOpen = false;
+            }
+            if (inComment && docPosition < nextIndex) {
+                return true;
+            }
+            if (isOpen) {
+                inComment = true;
+                lastIndex = openIndex + 3;
+            }
+            else {
+                inComment = false;
+                lastIndex = closeIndex + 3;
+            }
+            if (nextIndex > docPosition)
+                break;
+        }
+        return inComment && docPosition >= lastIndex;
+    }
+    isInsideSymbol(lineText, position, startSymbol, endSymbol) {
+        const startIndex = lineText.indexOf(startSymbol);
+        const endIndex = lineText.indexOf(endSymbol, startIndex + startSymbol.length);
+        return startIndex !== -1 && endIndex !== -1 && position > startIndex && position < endIndex;
     }
     dispose() {
         this.diagnosticCollection.dispose();
@@ -206,22 +260,75 @@ class ZSDiagnosticProviderWarning {
     }
     shouldSkipRange(document, range) {
         const text = document.getText(range);
-        const lineText = document.lineAt(range.start.line).text;
-        const lineStart = range.start.line;
-        const charStart = range.start.character;
-        if (lineText.includes('-/') && charStart >= lineText.indexOf('-/'))
+        const lineIndex = range.start.line;
+        const position = range.start.character;
+        const lineText = document.lineAt(lineIndex).text;
+        if (this.isInsideMultiLineComment(document, lineIndex, position)) {
             return true;
-        if (lineText.includes('*/-') || lineText.includes('/-*'))
+        }
+        if (lineText.includes('-/') && position >= lineText.indexOf('-/')) {
             return true;
-        if (lineText.includes('<') && lineText.includes('>'))
+        }
+        if (this.isInsideSymbol(lineText, position, '<', '>'))
             return true;
-        if (lineText.includes('(') && lineText.includes(')'))
+        if (this.isInsideSymbol(lineText, position, '(', ')'))
             return true;
-        if (lineText.includes('/|') && lineText.includes('|\\'))
+        if (this.isInsideSymbol(lineText, position, '/|', '|\\'))
             return true;
         if (text === '“' || text === '”' || text === '‘' || text === '’')
             return true;
         return false;
+    }
+    isInsideMultiLineComment(document, lineIndex, position) {
+        const text = document.getText();
+        const docPosition = document.offsetAt(new vscode.Position(lineIndex, position));
+        let inComment = false;
+        let lastIndex = 0;
+        while (lastIndex < text.length) {
+            const openIndex = text.indexOf('*/-', lastIndex);
+            const closeIndex = text.indexOf('/-*', lastIndex);
+            if (openIndex === -1 && closeIndex === -1)
+                break;
+            let nextIndex = -1;
+            let isOpen = false;
+            if (openIndex !== -1 && closeIndex !== -1) {
+                if (openIndex < closeIndex) {
+                    nextIndex = openIndex;
+                    isOpen = true;
+                }
+                else {
+                    nextIndex = closeIndex;
+                    isOpen = false;
+                }
+            }
+            else if (openIndex !== -1) {
+                nextIndex = openIndex;
+                isOpen = true;
+            }
+            else {
+                nextIndex = closeIndex;
+                isOpen = false;
+            }
+            if (inComment && docPosition < nextIndex) {
+                return true;
+            }
+            if (isOpen) {
+                inComment = true;
+                lastIndex = openIndex + 3;
+            }
+            else {
+                inComment = false;
+                lastIndex = closeIndex + 3;
+            }
+            if (nextIndex > docPosition)
+                break;
+        }
+        return inComment && docPosition >= lastIndex;
+    }
+    isInsideSymbol(lineText, position, startSymbol, endSymbol) {
+        const startIndex = lineText.indexOf(startSymbol);
+        const endIndex = lineText.indexOf(endSymbol, startIndex + startSymbol.length);
+        return startIndex !== -1 && endIndex !== -1 && position > startIndex && position < endIndex;
     }
     clearDiagnostics() {
         this.diagnosticCollection.clear();
@@ -283,7 +390,6 @@ class ZSSpaceDiagnosticProvider {
         const diagnostics = [];
         const text = document.getText();
         this.detectSpacesInNouns(text, diagnostics, document);
-        this.detectInvalidSpaces(text, diagnostics, document);
         this.diagnosticCollection.set(document.uri, diagnostics);
     }
     detectSpacesInNouns(text, diagnostics, document) {
@@ -309,18 +415,6 @@ class ZSSpaceDiagnosticProvider {
                     }
                 }
             }
-        }
-    }
-    detectInvalidSpaces(text, diagnostics, document) {
-        const multipleSpacesRegex = /  +/g;
-        let match;
-        while ((match = multipleSpacesRegex.exec(text)) !== null) {
-            const startPos = document.positionAt(match.index);
-            const endPos = document.positionAt(match.index + match[0].length);
-            const range = new vscode.Range(startPos, endPos);
-            const diagnostic = new vscode.Diagnostic(range, `Multiple consecutive spaces not allowed`, vscode.DiagnosticSeverity.Error);
-            diagnostic.source = 'ZS Spaces';
-            diagnostics.push(diagnostic);
         }
     }
     dispose() {
