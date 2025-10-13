@@ -33,7 +33,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZSSpaceDiagnosticProvider = exports.ZSCommaDiagnosticProvider = exports.ZSDiagnosticProviderWarning = exports.ZSDiagnosticProvider = void 0;
+exports.ZSQuotesDiagnosticProvider = exports.ZSSpaceDiagnosticProvider = exports.ZSCommaDiagnosticProvider = exports.ZSDiagnosticProviderWarning = exports.ZSDiagnosticProvider = void 0;
 const vscode = __importStar(require("vscode"));
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
@@ -422,4 +422,47 @@ class ZSSpaceDiagnosticProvider {
     }
 }
 exports.ZSSpaceDiagnosticProvider = ZSSpaceDiagnosticProvider;
+class ZSQuotesDiagnosticProvider {
+    constructor() {
+        this.diagnosticCollection = vscode.languages.createDiagnosticCollection('zs-quotes');
+    }
+    updateDiagnostics(document) {
+        if (document.languageId !== 'zs') {
+            return;
+        }
+        const diagnostics = [];
+        const text = document.getText();
+        this.detectSpacesInNouns(text, diagnostics, document);
+        this.diagnosticCollection.set(document.uri, diagnostics);
+    }
+    detectSpacesInNouns(text, diagnostics, document) {
+        const nounPatterns = [
+            { regex: /<[^>]*>/g, symbol: '<>' },
+            { regex: /\([^)]*\)/g, symbol: '()' },
+            { regex: /\/\|[^|]*\|\\/g, symbol: '/||\\' }
+        ];
+        for (const pattern of nounPatterns) {
+            let match;
+            while ((match = pattern.regex.exec(text)) !== null) {
+                const nounContent = match[0];
+                for (let i = 0; i < nounContent.length; i++) {
+                    const char = nounContent[i];
+                    if (char === "\'" || char === "\"") {
+                        const spacePosition = match.index + i;
+                        const startPos = document.positionAt(spacePosition);
+                        const endPos = document.positionAt(spacePosition + 1);
+                        const range = new vscode.Range(startPos, endPos);
+                        const diagnostic = new vscode.Diagnostic(range, `${char} not allowed inside ${pattern.symbol} noun symbols`, vscode.DiagnosticSeverity.Error);
+                        diagnostic.source = 'ZS Nouns';
+                        diagnostics.push(diagnostic);
+                    }
+                }
+            }
+        }
+    }
+    dispose() {
+        this.diagnosticCollection.dispose();
+    }
+}
+exports.ZSQuotesDiagnosticProvider = ZSQuotesDiagnosticProvider;
 //# sourceMappingURL=diagnosticProvider.js.map

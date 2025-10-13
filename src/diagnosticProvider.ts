@@ -505,3 +505,62 @@ export class ZSSpaceDiagnosticProvider {
         this.diagnosticCollection.dispose();
     }
 }
+
+export class ZSQuotesDiagnosticProvider {
+    private diagnosticCollection: vscode.DiagnosticCollection;
+
+    constructor() {
+        this.diagnosticCollection = vscode.languages.createDiagnosticCollection('zs-quotes');
+    }
+
+    public updateDiagnostics(document: vscode.TextDocument): void {
+        if (document.languageId !== 'zs') {
+            return;
+        }
+
+        const diagnostics: vscode.Diagnostic[] = [];
+        const text = document.getText();
+
+        this.detectSpacesInNouns(text, diagnostics, document);
+
+        this.diagnosticCollection.set(document.uri, diagnostics);
+    }
+
+    private detectSpacesInNouns(text: string, diagnostics: vscode.Diagnostic[], document: vscode.TextDocument): void {
+        const nounPatterns = [
+            { regex: /<[^>]*>/g, symbol: '<>' },
+            { regex: /\([^)]*\)/g, symbol: '()' },
+            { regex: /\/\|[^|]*\|\\/g, symbol: '/||\\' }
+        ];
+
+        for (const pattern of nounPatterns) {
+            let match: RegExpExecArray | null;
+            while ((match = pattern.regex.exec(text)) !== null) {
+                const nounContent = match[0];
+
+                for (let i = 0; i < nounContent.length; i++) {
+                    const char = nounContent[i];
+                    if (char === "\'" || char === "\"") {
+                        const spacePosition = match.index + i;
+                        const startPos = document.positionAt(spacePosition);
+                        const endPos = document.positionAt(spacePosition + 1);
+                        const range = new vscode.Range(startPos, endPos);
+
+                        const diagnostic = new vscode.Diagnostic(
+                            range,
+                            `${char} not allowed inside ${pattern.symbol} noun symbols`,
+                            vscode.DiagnosticSeverity.Error
+                        );
+
+                        diagnostic.source = 'ZS Nouns';
+                        diagnostics.push(diagnostic);
+                    }
+                }
+            }
+        }
+    }
+
+    public dispose(): void {
+        this.diagnosticCollection.dispose();
+    }
+}

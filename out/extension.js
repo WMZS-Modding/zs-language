@@ -43,6 +43,7 @@ let diagnosticProvider;
 let warningDiagnosticProvider;
 let commaDiagnosticProvider;
 let spaceDiagnosticProvider;
+let quotesDiagnosticProvider;
 function activate(context) {
     console.log('ZS language extension is now active!');
     quoteConverter = new quotationMarkConverter_1.ZSQuoteConverter();
@@ -50,12 +51,14 @@ function activate(context) {
     warningDiagnosticProvider = new diagnosticProvider_1.ZSDiagnosticProviderWarning();
     commaDiagnosticProvider = new diagnosticProvider_1.ZSCommaDiagnosticProvider();
     spaceDiagnosticProvider = new diagnosticProvider_1.ZSSpaceDiagnosticProvider();
+    quotesDiagnosticProvider = new diagnosticProvider_1.ZSQuotesDiagnosticProvider();
     quoteConverter.activate(context);
     const diagnosticDisposable = vscode.workspace.onDidChangeTextDocument((event) => {
         diagnosticProvider.updateDiagnostics(event.document);
         warningDiagnosticProvider.updateDiagnostics(event.document);
         commaDiagnosticProvider.updateDiagnostics(event.document);
         spaceDiagnosticProvider.updateDiagnostics(event.document);
+        quotesDiagnosticProvider.updateDiagnostics(event.document);
     });
     const openDisposable = vscode.workspace.onDidOpenTextDocument((document) => {
         if (document.languageId === 'zs') {
@@ -63,6 +66,7 @@ function activate(context) {
             warningDiagnosticProvider.updateDiagnostics(document);
             commaDiagnosticProvider.updateDiagnostics(document);
             spaceDiagnosticProvider.updateDiagnostics(document);
+            quotesDiagnosticProvider.updateDiagnostics(document);
         }
     });
     vscode.workspace.textDocuments.forEach(document => {
@@ -71,6 +75,7 @@ function activate(context) {
             warningDiagnosticProvider.updateDiagnostics(document);
             commaDiagnosticProvider.updateDiagnostics(document);
             spaceDiagnosticProvider.updateDiagnostics(document);
+            quotesDiagnosticProvider.updateDiagnostics(document);
         }
     });
     const commandDisposable = vscode.commands.registerCommand('zs.convertQuotes', () => {
@@ -92,6 +97,9 @@ function activate(context) {
             if (spaceDiagnosticProvider) {
                 spaceDiagnosticProvider.dispose();
             }
+            if (quotesDiagnosticProvider) {
+                quotesDiagnosticProvider.dispose();
+            }
         } }, vscode.languages.registerCodeActionsProvider('zs', diagnosticProvider, {
         providedCodeActionKinds: [vscode.CodeActionKind.QuickFix]
     }));
@@ -111,6 +119,9 @@ function deactivate() {
     }
     if (spaceDiagnosticProvider) {
         spaceDiagnosticProvider.dispose();
+    }
+    if (quotesDiagnosticProvider) {
+        quotesDiagnosticProvider.dispose();
     }
 }
 //# sourceMappingURL=extension.js.map

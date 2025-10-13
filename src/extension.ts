@@ -1,12 +1,13 @@
 import * as vscode from 'vscode';
 import { ZSQuoteConverter } from './quotationMarkConverter';
-import { ZSDiagnosticProvider, ZSDiagnosticProviderWarning, ZSCommaDiagnosticProvider, ZSSpaceDiagnosticProvider } from './diagnosticProvider';
+import { ZSDiagnosticProvider, ZSDiagnosticProviderWarning, ZSCommaDiagnosticProvider, ZSSpaceDiagnosticProvider, ZSQuotesDiagnosticProvider } from './diagnosticProvider';
 
 let quoteConverter: ZSQuoteConverter;
 let diagnosticProvider: ZSDiagnosticProvider;
 let warningDiagnosticProvider: ZSDiagnosticProviderWarning;
 let commaDiagnosticProvider : ZSCommaDiagnosticProvider;
 let spaceDiagnosticProvider : ZSSpaceDiagnosticProvider;
+let quotesDiagnosticProvider : ZSQuotesDiagnosticProvider;
 
 export function activate(context: vscode.ExtensionContext): void {
     console.log('ZS language extension is now active!');
@@ -16,6 +17,7 @@ export function activate(context: vscode.ExtensionContext): void {
     warningDiagnosticProvider = new ZSDiagnosticProviderWarning();
     commaDiagnosticProvider = new ZSCommaDiagnosticProvider();
     spaceDiagnosticProvider = new ZSSpaceDiagnosticProvider();
+    quotesDiagnosticProvider = new ZSQuotesDiagnosticProvider();
 
     quoteConverter.activate(context);
     
@@ -24,6 +26,7 @@ export function activate(context: vscode.ExtensionContext): void {
         warningDiagnosticProvider.updateDiagnostics(event.document);
         commaDiagnosticProvider.updateDiagnostics(event.document);
         spaceDiagnosticProvider.updateDiagnostics(event.document);
+        quotesDiagnosticProvider.updateDiagnostics(event.document);
     });
 
     const openDisposable = vscode.workspace.onDidOpenTextDocument((document) => {
@@ -32,6 +35,7 @@ export function activate(context: vscode.ExtensionContext): void {
             warningDiagnosticProvider.updateDiagnostics(document);
             commaDiagnosticProvider.updateDiagnostics(document);
             spaceDiagnosticProvider.updateDiagnostics(document);
+            quotesDiagnosticProvider.updateDiagnostics(document);
         }
     });
 
@@ -41,6 +45,7 @@ export function activate(context: vscode.ExtensionContext): void {
             warningDiagnosticProvider.updateDiagnostics(document);
             commaDiagnosticProvider.updateDiagnostics(document);
             spaceDiagnosticProvider.updateDiagnostics(document);
+            quotesDiagnosticProvider.updateDiagnostics(document);
         }
     });
 
@@ -58,6 +63,7 @@ export function activate(context: vscode.ExtensionContext): void {
             if (warningDiagnosticProvider) { warningDiagnosticProvider.dispose(); }
             if (commaDiagnosticProvider) { commaDiagnosticProvider.dispose(); }
             if (spaceDiagnosticProvider) { spaceDiagnosticProvider.dispose(); }
+            if (quotesDiagnosticProvider) { quotesDiagnosticProvider.dispose(); }
         }},
         vscode.languages.registerCodeActionsProvider('zs', diagnosticProvider, {
             providedCodeActionKinds: [vscode.CodeActionKind.QuickFix]
@@ -80,5 +86,8 @@ export function deactivate(): void {
     }
     if (spaceDiagnosticProvider) {
         spaceDiagnosticProvider.dispose();
+    }
+    if (quotesDiagnosticProvider) {
+        quotesDiagnosticProvider.dispose();
     }
 }
