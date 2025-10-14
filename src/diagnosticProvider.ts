@@ -94,21 +94,13 @@ export class ZSDiagnosticProvider {
         this.diagnosticCollection.set(document.uri, diagnostics);
     }
 
-    private detectStraightQuotes(
-        text: string,
-        pattern: RegExp,
-        expectedQuotes: string,
-        diagnostics: vscode.Diagnostic[],
-        document: vscode.TextDocument
-    ): void {
+    private detectStraightQuotes(text: string, pattern: RegExp, expectedQuotes: string, diagnostics: vscode.Diagnostic[], document: vscode.TextDocument): void {
         const lines = text.split('\n');
 
         for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
             const line = lines[lineIndex];
-        
-            if (line.includes('-/') || line.includes('*/-') || line.includes('/-*') || 
-                line.includes('<') || line.includes('(') || line.includes('/|') ||
-                line.includes('>') || line.includes(')') || line.includes('|\\')) {
+
+            if (line.trim().startsWith('-/') || line.includes('*/-') || line.includes('/-*')) {
                 continue;
             }
 
@@ -540,7 +532,7 @@ export class ZSQuotesDiagnosticProvider {
 
                 for (let i = 0; i < nounContent.length; i++) {
                     const char = nounContent[i];
-                    if (char === "\'" || char === "\"") {
+                    if (char === "\'" || char === "\"" || char === "“" || char === "”" || char === "‘" || char === "’") {
                         const spacePosition = match.index + i;
                         const startPos = document.positionAt(spacePosition);
                         const endPos = document.positionAt(spacePosition + 1);
