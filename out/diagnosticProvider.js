@@ -112,7 +112,7 @@ class ZSDiagnosticProvider {
         const lines = text.split('\n');
         for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
             const line = lines[lineIndex];
-            if (line.trim().startsWith('-/') || line.includes('*/-') || line.includes('/-*')) {
+            if (line.trim().startsWith('-/')) {
                 continue;
             }
             let match;
