@@ -84,7 +84,9 @@ function activate(context) {
             if (nounSymbolDiagnosticProvider) {
                 nounSymbolDiagnosticProvider.dispose();
             }
-        } });
+        } }, vscode.languages.registerCodeActionsProvider('zs', diagnosticProvider, {
+        providedCodeActionKinds: [vscode.CodeActionKind.QuickFix]
+    }));
 }
 function deactivate() {
     if (quoteConverter) {

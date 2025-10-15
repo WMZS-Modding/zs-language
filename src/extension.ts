@@ -52,7 +52,10 @@ export function activate(context: vscode.ExtensionContext): void {
             if (diagnosticProvider) { diagnosticProvider.dispose(); }
             if (warningDiagnosticProvider) { warningDiagnosticProvider.dispose(); }
             if (nounSymbolDiagnosticProvider) { nounSymbolDiagnosticProvider.dispose(); }
-        }}
+        }},
+        vscode.languages.registerCodeActionsProvider('zs', diagnosticProvider, {
+            providedCodeActionKinds: [vscode.CodeActionKind.QuickFix]
+        })
     );
 }
 
