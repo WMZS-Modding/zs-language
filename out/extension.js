@@ -41,41 +41,31 @@ const diagnosticProvider_1 = require("./diagnosticProvider");
 let quoteConverter;
 let diagnosticProvider;
 let warningDiagnosticProvider;
-let commaDiagnosticProvider;
-let spaceDiagnosticProvider;
-let quotesDiagnosticProvider;
+let nounSymbolDiagnosticProvider;
 function activate(context) {
     console.log('ZS language extension is now active!');
     quoteConverter = new quotationMarkConverter_1.ZSQuoteConverter();
     diagnosticProvider = new diagnosticProvider_1.ZSDiagnosticProvider(context);
     warningDiagnosticProvider = new diagnosticProvider_1.ZSDiagnosticProviderWarning();
-    commaDiagnosticProvider = new diagnosticProvider_1.ZSCommaDiagnosticProvider();
-    spaceDiagnosticProvider = new diagnosticProvider_1.ZSSpaceDiagnosticProvider();
-    quotesDiagnosticProvider = new diagnosticProvider_1.ZSQuotesDiagnosticProvider();
+    nounSymbolDiagnosticProvider = new diagnosticProvider_1.ZSNounSymbolDiagnosticProvider();
     quoteConverter.activate(context);
     const diagnosticDisposable = vscode.workspace.onDidChangeTextDocument((event) => {
         diagnosticProvider.updateDiagnostics(event.document);
         warningDiagnosticProvider.updateDiagnostics(event.document);
-        commaDiagnosticProvider.updateDiagnostics(event.document);
-        spaceDiagnosticProvider.updateDiagnostics(event.document);
-        quotesDiagnosticProvider.updateDiagnostics(event.document);
+        nounSymbolDiagnosticProvider.updateDiagnostics(event.document);
     });
     const openDisposable = vscode.workspace.onDidOpenTextDocument((document) => {
         if (document.languageId === 'zs') {
             diagnosticProvider.updateDiagnostics(document);
             warningDiagnosticProvider.updateDiagnostics(document);
-            commaDiagnosticProvider.updateDiagnostics(document);
-            spaceDiagnosticProvider.updateDiagnostics(document);
-            quotesDiagnosticProvider.updateDiagnostics(document);
+            nounSymbolDiagnosticProvider.updateDiagnostics(document);
         }
     });
     vscode.workspace.textDocuments.forEach(document => {
         if (document.languageId === 'zs') {
             diagnosticProvider.updateDiagnostics(document);
             warningDiagnosticProvider.updateDiagnostics(document);
-            commaDiagnosticProvider.updateDiagnostics(document);
-            spaceDiagnosticProvider.updateDiagnostics(document);
-            quotesDiagnosticProvider.updateDiagnostics(document);
+            nounSymbolDiagnosticProvider.updateDiagnostics(document);
         }
     });
     const commandDisposable = vscode.commands.registerCommand('zs.convertQuotes', () => {
@@ -91,18 +81,10 @@ function activate(context) {
             if (warningDiagnosticProvider) {
                 warningDiagnosticProvider.dispose();
             }
-            if (commaDiagnosticProvider) {
-                commaDiagnosticProvider.dispose();
+            if (nounSymbolDiagnosticProvider) {
+                nounSymbolDiagnosticProvider.dispose();
             }
-            if (spaceDiagnosticProvider) {
-                spaceDiagnosticProvider.dispose();
-            }
-            if (quotesDiagnosticProvider) {
-                quotesDiagnosticProvider.dispose();
-            }
-        } }, vscode.languages.registerCodeActionsProvider('zs', diagnosticProvider, {
-        providedCodeActionKinds: [vscode.CodeActionKind.QuickFix]
-    }));
+        } });
 }
 function deactivate() {
     if (quoteConverter) {
@@ -114,14 +96,8 @@ function deactivate() {
     if (warningDiagnosticProvider) {
         warningDiagnosticProvider.dispose();
     }
-    if (commaDiagnosticProvider) {
-        commaDiagnosticProvider.dispose();
-    }
-    if (spaceDiagnosticProvider) {
-        spaceDiagnosticProvider.dispose();
-    }
-    if (quotesDiagnosticProvider) {
-        quotesDiagnosticProvider.dispose();
+    if (nounSymbolDiagnosticProvider) {
+        nounSymbolDiagnosticProvider.dispose();
     }
 }
 //# sourceMappingURL=extension.js.map

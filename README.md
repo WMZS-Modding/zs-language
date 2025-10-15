@@ -44,10 +44,12 @@ Currently, I cannot post illustrations such as PNG/JPG or GIF. I do not have tim
 - Display text color: This is an important feature, it helps to determine whether the user has written correctly or not and also to make the language interface more standard for programming. If the user writes a misspelling, the feature will not color the word. If the user writes the correct spelling but still sees white, it is okay, as long as the spelling is correct. If you write a verb and it shows green, it is an allowed verb. If you write a verb and it shows red, it is an not allowed verb. Furthermore, blue is the color for nouns, adjectives, pronouns and some other words; cyan is for class variables; purple is for functions; yellow is for numbers
 - Comments: The symbol is `-/`. This symbol comes from `//` of C# and `--` of LUA. I have supported block comments as `*/-` and `/-*`. Another comment is `!`. You should add `!` comment on the top of the file (only `ZS-CSHARP` and `ZS-LUA` are allowed) to let tools (and AI systems) know which ZS flavor is being used
 - New `‘’` and `“”` to replace `'` and `"`: To add this symbols, just enter `'` or `"`, they'll be inserted
-- "Verbs error detector": This is an important feature. It'll help you detect the wrong verbs with underline them with red underline, and show error. Not only color red on wrong verbs, but also underline with red underline
+- "Verbs error detector": This is an important feature. It'll help you detect the wrong verbs with underline them with red lines, and show error. Not only color red on wrong verbs, but also underline with red lines
 - "Warning verbs": This is small feature, but it'll warn you to use `is` and `are` carefully
-- "Quotes detector": This is small feature, but it's important. When you write `'` and/or `"`, it'll underline them with red underline, and then provide QuickFix
-- "Commas Detector" and "Spaces Detector": Both features are the same in underline with red underline, but they're handle symbols differently, for noun symbols only
+- "Non-word/number characters detector": The important features, it contains previous features:
++ "Quotes detector": This is small feature, but it's important. When you write `'` and/or `"`, it'll underline them with red lines
++ "Commas Detector" and "Spaces Detector": Both features are the same in underline with red lines, but they're handle symbols differently, for noun symbols only
++ Then, it'll underline any non-word/number characters with red lines
 ### Unsupported features:
 - ZS to C# and LUA converter: it is very difficult to create this feature. Since my language is easy to write for non-programmers, creating a TS script to convert ZS code to C# and LUA code is very difficult, even failed and may never be done
 - Spell checking for words: although possible, it is not possible because it still has to be added manually, making me have to search online, wasting time

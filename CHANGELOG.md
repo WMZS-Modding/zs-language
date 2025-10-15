@@ -1,3 +1,4 @@
 # Change Log
-- Remove `line.includes('*/-') || line.includes('/-*')` in `detectStraightQuotes`
-- Up to version 0.1.13
+- Remove classes: `ZSCommaDiagnosticProvider` `ZSSpaceDiagnosticProvider` `ZSQuotesDiagnosticProvider`
+- Add new class instead: `ZSNounSymbolDiagnosticProvider`
+- Up to version 0.1.14

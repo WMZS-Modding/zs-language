@@ -1,13 +1,11 @@
 import * as vscode from 'vscode';
 import { ZSQuoteConverter } from './quotationMarkConverter';
-import { ZSDiagnosticProvider, ZSDiagnosticProviderWarning, ZSCommaDiagnosticProvider, ZSSpaceDiagnosticProvider, ZSQuotesDiagnosticProvider } from './diagnosticProvider';
+import { ZSDiagnosticProvider, ZSDiagnosticProviderWarning, ZSNounSymbolDiagnosticProvider } from './diagnosticProvider';
 
 let quoteConverter: ZSQuoteConverter;
 let diagnosticProvider: ZSDiagnosticProvider;
 let warningDiagnosticProvider: ZSDiagnosticProviderWarning;
-let commaDiagnosticProvider : ZSCommaDiagnosticProvider;
-let spaceDiagnosticProvider : ZSSpaceDiagnosticProvider;
-let quotesDiagnosticProvider : ZSQuotesDiagnosticProvider;
+let nounSymbolDiagnosticProvider : ZSNounSymbolDiagnosticProvider;
 
 export function activate(context: vscode.ExtensionContext): void {
     console.log('ZS language extension is now active!');
@@ -15,27 +13,21 @@ export function activate(context: vscode.ExtensionContext): void {
     quoteConverter = new ZSQuoteConverter();
     diagnosticProvider = new ZSDiagnosticProvider(context);
     warningDiagnosticProvider = new ZSDiagnosticProviderWarning();
-    commaDiagnosticProvider = new ZSCommaDiagnosticProvider();
-    spaceDiagnosticProvider = new ZSSpaceDiagnosticProvider();
-    quotesDiagnosticProvider = new ZSQuotesDiagnosticProvider();
+    nounSymbolDiagnosticProvider = new ZSNounSymbolDiagnosticProvider();
 
     quoteConverter.activate(context);
     
     const diagnosticDisposable = vscode.workspace.onDidChangeTextDocument((event) => {
         diagnosticProvider.updateDiagnostics(event.document);
         warningDiagnosticProvider.updateDiagnostics(event.document);
-        commaDiagnosticProvider.updateDiagnostics(event.document);
-        spaceDiagnosticProvider.updateDiagnostics(event.document);
-        quotesDiagnosticProvider.updateDiagnostics(event.document);
+        nounSymbolDiagnosticProvider.updateDiagnostics(event.document);
     });
 
     const openDisposable = vscode.workspace.onDidOpenTextDocument((document) => {
         if (document.languageId === 'zs') {
             diagnosticProvider.updateDiagnostics(document);
             warningDiagnosticProvider.updateDiagnostics(document);
-            commaDiagnosticProvider.updateDiagnostics(document);
-            spaceDiagnosticProvider.updateDiagnostics(document);
-            quotesDiagnosticProvider.updateDiagnostics(document);
+            nounSymbolDiagnosticProvider.updateDiagnostics(document);
         }
     });
 
@@ -43,9 +35,7 @@ export function activate(context: vscode.ExtensionContext): void {
         if (document.languageId === 'zs') {
             diagnosticProvider.updateDiagnostics(document);
             warningDiagnosticProvider.updateDiagnostics(document);
-            commaDiagnosticProvider.updateDiagnostics(document);
-            spaceDiagnosticProvider.updateDiagnostics(document);
-            quotesDiagnosticProvider.updateDiagnostics(document);
+            nounSymbolDiagnosticProvider.updateDiagnostics(document);
         }
     });
 
@@ -61,13 +51,8 @@ export function activate(context: vscode.ExtensionContext): void {
             if (quoteConverter) { quoteConverter.dispose?.(); }
             if (diagnosticProvider) { diagnosticProvider.dispose(); }
             if (warningDiagnosticProvider) { warningDiagnosticProvider.dispose(); }
-            if (commaDiagnosticProvider) { commaDiagnosticProvider.dispose(); }
-            if (spaceDiagnosticProvider) { spaceDiagnosticProvider.dispose(); }
-            if (quotesDiagnosticProvider) { quotesDiagnosticProvider.dispose(); }
-        }},
-        vscode.languages.registerCodeActionsProvider('zs', diagnosticProvider, {
-            providedCodeActionKinds: [vscode.CodeActionKind.QuickFix]
-        })
+            if (nounSymbolDiagnosticProvider) { nounSymbolDiagnosticProvider.dispose(); }
+        }}
     );
 }
 
@@ -81,13 +66,7 @@ export function deactivate(): void {
     if (warningDiagnosticProvider) {
         warningDiagnosticProvider.dispose();
     }
-    if (commaDiagnosticProvider) {
-        commaDiagnosticProvider.dispose();
-    }
-    if (spaceDiagnosticProvider) {
-        spaceDiagnosticProvider.dispose();
-    }
-    if (quotesDiagnosticProvider) {
-        quotesDiagnosticProvider.dispose();
+    if (nounSymbolDiagnosticProvider) {
+        nounSymbolDiagnosticProvider.dispose();
     }
 }
