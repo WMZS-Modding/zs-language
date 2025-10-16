@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { ZSQuoteConverter } from './quotationMarkConverter';
 import { ZSDiagnosticProvider, ZSDiagnosticProviderWarning, ZSNounSymbolDiagnosticProvider } from './diagnosticProvider';
+import { ZSMinusSignSelector } from './minusSignSelector';
 
 let quoteConverter: ZSQuoteConverter;
 let diagnosticProvider: ZSDiagnosticProvider;
@@ -8,14 +9,13 @@ let warningDiagnosticProvider: ZSDiagnosticProviderWarning;
 let nounSymbolDiagnosticProvider : ZSNounSymbolDiagnosticProvider;
 
 export function activate(context: vscode.ExtensionContext): void {
-    console.log('ZS language extension is now active!');
-    
     quoteConverter = new ZSQuoteConverter();
     diagnosticProvider = new ZSDiagnosticProvider(context);
     warningDiagnosticProvider = new ZSDiagnosticProviderWarning();
     nounSymbolDiagnosticProvider = new ZSNounSymbolDiagnosticProvider();
 
     quoteConverter.activate(context);
+    ZSMinusSignSelector.activate(context);
     
     const diagnosticDisposable = vscode.workspace.onDidChangeTextDocument((event) => {
         diagnosticProvider.updateDiagnostics(event.document);
@@ -72,4 +72,6 @@ export function deactivate(): void {
     if (nounSymbolDiagnosticProvider) {
         nounSymbolDiagnosticProvider.dispose();
     }
+
+    ZSMinusSignSelector.deactivate();
 }

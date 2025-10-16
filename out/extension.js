@@ -38,17 +38,18 @@ exports.deactivate = deactivate;
 const vscode = __importStar(require("vscode"));
 const quotationMarkConverter_1 = require("./quotationMarkConverter");
 const diagnosticProvider_1 = require("./diagnosticProvider");
+const minusSignSelector_1 = require("./minusSignSelector");
 let quoteConverter;
 let diagnosticProvider;
 let warningDiagnosticProvider;
 let nounSymbolDiagnosticProvider;
 function activate(context) {
-    console.log('ZS language extension is now active!');
     quoteConverter = new quotationMarkConverter_1.ZSQuoteConverter();
     diagnosticProvider = new diagnosticProvider_1.ZSDiagnosticProvider(context);
     warningDiagnosticProvider = new diagnosticProvider_1.ZSDiagnosticProviderWarning();
     nounSymbolDiagnosticProvider = new diagnosticProvider_1.ZSNounSymbolDiagnosticProvider();
     quoteConverter.activate(context);
+    minusSignSelector_1.ZSMinusSignSelector.activate(context);
     const diagnosticDisposable = vscode.workspace.onDidChangeTextDocument((event) => {
         diagnosticProvider.updateDiagnostics(event.document);
         warningDiagnosticProvider.updateDiagnostics(event.document);
@@ -101,5 +102,6 @@ function deactivate() {
     if (nounSymbolDiagnosticProvider) {
         nounSymbolDiagnosticProvider.dispose();
     }
+    minusSignSelector_1.ZSMinusSignSelector.deactivate();
 }
 //# sourceMappingURL=extension.js.map

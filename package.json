@@ -2,7 +2,7 @@
   "name": "zs-language",
   "displayName": "ZS Language",
   "description": "An extension that helps clarify the codes of the ZS language",
-  "version": "0.1.15",
+  "version": "0.1.16",
   "publisher": "SuperHero2010",
   "license": "MIT or GPL-3.0-only",
   "bugs": {
@@ -27,9 +27,6 @@
   },
   "categories": [
     "Programming Languages"
-  ],
-  "activationEvents": [
-    "onLanguage:zs"
   ],
   "main": "./out/extension.js",
   "contributes": {

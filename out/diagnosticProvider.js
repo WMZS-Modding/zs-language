@@ -51,7 +51,6 @@ class ZSDiagnosticProvider {
             this.extractInvalidPatterns(grammar);
         }
         catch (error) {
-            console.error('Failed to load grammar for diagnostics:', error);
         }
     }
     extractInvalidPatterns(grammar) {
@@ -73,7 +72,6 @@ class ZSDiagnosticProvider {
             }
         };
         findInvalidPatterns(grammar);
-        console.log('Found invalid patterns:', this.invalidPatterns);
     }
     updateDiagnostics(document) {
         if (document.languageId !== 'zs') {

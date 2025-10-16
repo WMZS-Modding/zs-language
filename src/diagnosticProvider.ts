@@ -19,7 +19,6 @@ export class ZSDiagnosticProvider {
             
             this.extractInvalidPatterns(grammar);
         } catch (error) {
-            console.error('Failed to load grammar for diagnostics:', error);
         }
     }
 
@@ -44,7 +43,6 @@ export class ZSDiagnosticProvider {
         };
 
         findInvalidPatterns(grammar);
-        console.log('Found invalid patterns:', this.invalidPatterns);
     }
 
     public updateDiagnostics(document: vscode.TextDocument): void {
