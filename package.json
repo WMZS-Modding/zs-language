@@ -28,6 +28,9 @@
   "categories": [
     "Programming Languages"
   ],
+  "activationEvents": [
+    "onLanguage:zs"
+  ],
   "main": "./out/extension.js",
   "contributes": {
     "languages": [
