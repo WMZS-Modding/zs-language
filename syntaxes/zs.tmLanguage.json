@@ -210,7 +210,7 @@
       "patterns": [
         {
           "name": "invalid.illegal.zs",
-          "match": "\\b\\w+(ed|ing)\\b"
+          "match": "(?i)\\b\\w+(ed|ing)\\b"
         }
       ]
     },
