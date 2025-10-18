@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { ZSQuoteConverter } from './quotationMarkConverter';
 import { ZSDiagnosticProvider, ZSDiagnosticProviderWarning, ZSNounSymbolDiagnosticProvider } from './diagnosticProvider';
-import { ZSMinusSignSelector } from './minusSignSelector';
+import { ZSMinusSignSelector, ZSMultiplicationSignSelector, ZSDivisionSignSelector } from './mathSignSelector';
 
 let quoteConverter: ZSQuoteConverter;
 let diagnosticProvider: ZSDiagnosticProvider;
@@ -16,6 +16,8 @@ export function activate(context: vscode.ExtensionContext): void {
 
     quoteConverter.activate(context);
     ZSMinusSignSelector.activate(context);
+    ZSMultiplicationSignSelector.activate(context);
+    ZSDivisionSignSelector.activate(context);
     
     const diagnosticDisposable = vscode.workspace.onDidChangeTextDocument((event) => {
         diagnosticProvider.updateDiagnostics(event.document);
@@ -74,4 +76,6 @@ export function deactivate(): void {
     }
 
     ZSMinusSignSelector.deactivate();
+    ZSMultiplicationSignSelector.deactivate();
+    ZSDivisionSignSelector.deactivate();
 }

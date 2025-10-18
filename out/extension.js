@@ -38,7 +38,7 @@ exports.deactivate = deactivate;
 const vscode = __importStar(require("vscode"));
 const quotationMarkConverter_1 = require("./quotationMarkConverter");
 const diagnosticProvider_1 = require("./diagnosticProvider");
-const minusSignSelector_1 = require("./minusSignSelector");
+const mathSignSelector_1 = require("./mathSignSelector");
 let quoteConverter;
 let diagnosticProvider;
 let warningDiagnosticProvider;
@@ -49,7 +49,9 @@ function activate(context) {
     warningDiagnosticProvider = new diagnosticProvider_1.ZSDiagnosticProviderWarning();
     nounSymbolDiagnosticProvider = new diagnosticProvider_1.ZSNounSymbolDiagnosticProvider();
     quoteConverter.activate(context);
-    minusSignSelector_1.ZSMinusSignSelector.activate(context);
+    mathSignSelector_1.ZSMinusSignSelector.activate(context);
+    mathSignSelector_1.ZSMultiplicationSignSelector.activate(context);
+    mathSignSelector_1.ZSDivisionSignSelector.activate(context);
     const diagnosticDisposable = vscode.workspace.onDidChangeTextDocument((event) => {
         diagnosticProvider.updateDiagnostics(event.document);
         warningDiagnosticProvider.updateDiagnostics(event.document);
@@ -102,6 +104,8 @@ function deactivate() {
     if (nounSymbolDiagnosticProvider) {
         nounSymbolDiagnosticProvider.dispose();
     }
-    minusSignSelector_1.ZSMinusSignSelector.deactivate();
+    mathSignSelector_1.ZSMinusSignSelector.deactivate();
+    mathSignSelector_1.ZSMultiplicationSignSelector.deactivate();
+    mathSignSelector_1.ZSDivisionSignSelector.deactivate();
 }
 //# sourceMappingURL=extension.js.map
