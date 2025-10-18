@@ -1,18 +1,6 @@
 # ZS Language
 
-It is a new language, used for my games. This language plays an important role in creating Plugins for my games.
-
-ZS isn't an abbreviation of ZenScript or Z#. ZS is the official name of a custom scripting language designed to work with Unity-based simulations and games.
-
-ZS is created to be:
-- Easier to read than traditional languages like C# or Lua
-- Focused on prefabs, events, and game logic
-- AI-readable with simplified grammar
-- Structured but not overloaded with syntax complexity
-
-ZS supports two scripting styles:
-- ZS-CSHARP – for Unity/C# integration
-- ZS-LUA – for Unity with Lua-style scripting
+It is a natural language, written in the style of different programming languages, and supports default styles. This language is not difficult, but if you do not learn carefully, you will mistake ZS for ZenScript or Z#
 
 ## How to learn my language
 
@@ -29,20 +17,11 @@ My language isn't difficult, just like we write a sentence for daily communicati
 This is an extension for Visual Studio Code. The role of this extension is to clarify what the ZS language is, showing wrong words in red, only showing correct verbs and some other words in green/blue. Currently, this extension is only a test version, not supporting many new features. In the future, if there is any user to help, I will develop additional features for this extension.
 
 ## Features
-
-ZS-CSHARP:
-
-![ZS-CSHARP](https://raw.githubusercontent.com/SuperHero2010/Test/refs/heads/main/Archive/20250626_094438_Modified.gif)
-
-ZS-LUA:
-
-![ZS-LUA](https://raw.githubusercontent.com/SuperHero2010/Test/refs/heads/main/Archive/20250709_120624.gif)
-
 Currently, I cannot post illustrations such as PNG/JPG or GIF. I do not have time to create them because this is just a test version. Here're the main features and features that are not supported.
 
 ### Main features:
 - Display text color: This is an important feature, it helps to determine whether the user has written correctly or not and also to make the language interface more standard for programming. If the user writes a misspelling, the feature will not color the word. If the user writes the correct spelling but still sees white, it is okay, as long as the spelling is correct. If you write a verb and it shows green, it is an allowed verb. If you write a verb and it shows red, it is an not allowed verb. Furthermore, blue is the color for nouns, adjectives, pronouns and some other words; cyan is for class variables; purple is for functions; yellow is for numbers
-- Comments: The symbol is `-/`. This symbol comes from `//` of C# and `--` of LUA. I have supported block comments as `*/-` and `/-*`. Another comment is `!`. You should add `!` comment on the top of the file (only `ZS-CSHARP` and `ZS-LUA` are allowed) to let tools (and AI systems) know which ZS flavor is being used
+- Comments: The symbol is `-/`. This symbol comes from `//` of C# and `--` of LUA. I have supported block comments as `*/-` and `/-*`. Another comment is `!`. You should add `!` comment on the top of the file to let tools (and AI systems) know which ZS flavor is being used
 - New `‘’` and `“”` to replace `'` and `"`: To add this symbols, just enter `'` or `"`, they'll be inserted
 - "Verbs error detector": This is an important feature. It'll help you detect the wrong verbs with underline them with red lines, and show error. Not only color red on wrong verbs, but also underline with red lines
 - "Warning verbs": This is small feature, but it'll warn you to use `is` and `are` carefully
@@ -63,35 +42,6 @@ The duplicate issue isn't important. I just send them the link to the same issue
 
 I don't display changes directly in `README.md`, I display them in Release (each Release will clearly state the changes so it is not necessary to state them in `README.md`)
 
-# Why Use ZS?
-- Block-based logic: Designed for clear game triggers and events
-- Verbs and Nouns: Easy-to-read logic like `Destroy [<target>]`
-- Function Nouns `<...>` and Script Nouns `(...)` keep structure clean
-- Minimal keywords, but powerful constructs
-- AI-friendly with readable patterns and grammar
+## Finnaly
 
----
-
-# Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-# Contributing
-Want to help ZS grow?
-
-If you're a TypeScript or C# developer, we welcome contributions for:
-- Transpilers
-- Grammar updates
-- Diagnostics and rules
-- Test cases
-
-And you can go to my channel [here](https://youtube.com/@SuperHero20102)
+If you like, you can go to my channel [here](https://youtube.com/@SuperHero20102)

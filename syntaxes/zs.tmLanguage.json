@@ -13,30 +13,38 @@
     { "include": "#tilemap-noun"},
     { "include": "#function-noun" },
     { "include": "#script-noun" },
-    { "include": "#language-type" }
+    { "include": "#language-type" },
+    { "include": "#function" },
+    { "include": "#for-repeater" },
+    { "include": "#imports" },
+    { "include": "#specialverbs" }
   ],
   "repository": {
     "keywords": {
       "patterns": [
         {
           "name": "keyword.control.zs",
-          "match": "(?i)\\b(when|if|then|else|with|while|done|trigger|except|once|twice|set|before|after|local|for)\\b"
+          "match": "(?i)\\b(when|if|then|else|with|while|done|trigger|except|once|twice|f?r?o?z?e?n?set|before|after|assert|async|await|break|continue|finally|pass|raise|return|try|yield)\\b"
         },
         {
           "name": "entity.name.type.zs",
-          "match": "(?i)\\b(public|private)\\b"
+          "match": "(?i)\\b(public|private|range|float|int|str|complex|list|tuple|dict|bool|type|bytes|bytearray|classmethod|staticmethod|super|zip)\\b"
         },
         {
           "name": "variable.language.zs",
-          "match": "(?i)\\b(itself|and|monobehaviour|unitysystem|uievent|unityengine|it|they|them|themself|true|false)\\b"
+          "match": "(?i)\\b(itself|and|monobehaviour|unitysystem|uievent|unityengine|it|they|them|themself|true|false|f|none|n?o?n?local|globals?|lambda|not|or|id|iter|len|locals|map|memoryview|object|oct|ord|repr|round|static)\\b"
         },
         {
           "name": "invalid.illegal.zs",
-          "match": "(?i)\\b(am|was|were|had|has|have|may|might|must|shall|should|would|could|did|being|been|feels?|loves?|hates?|dislikes?|likes?|prefer|wish|want|need|know|understand|believe|think|remember|forget|own|possess|belong|see|hear|smell|taste|be|seem|appear|look|disappear|care|become|get|grow|stay|remain|will|can)\\b"
+          "match": "(?i)\\b(am|was|were|had|has|have|may|might|must|shall|should|would|could|did|being|been|feels?|loves?|hates?|dislikes?|likes?|prefer|wish|want|know|understand|believe|think|remember|forget|own|possess|belong|see|hear|smell|taste|be|seem|appear|look|disappear|care|become|grow|stay|remain|will|can)\\b"
         },
         {
           "name": "markup.inserted.zs",
-          "match": "(?i)\\b(move|run|play|touch|cut|earse|wait|doe?s?|blow|is|are|flow|load|call|stop|delete|destroy|remove|replace)\\b"
+          "match": "(?i)\\b(move|run|play|touch|cut|earse|wait|does|blow|is|are|flow|load|calla?b?l?e?|stop|delete|destroy|remove|replace|clear|copy|add|count|extend|r?index|insert|popi?t?e?m?|reversed?|sort|append|s?y?m?m?e?t?r?i?c?_?difference_?u?p?d?a?t?e?|discard|intersection_?u?p?d?a?t?e?|isdisjoint|issubset|issuperset|union|update|fromkeys|get|items|keys|setdefault|values|capitalize|casefold|center|encode|endswith|expandtabs|r?find|format_?m?a?p?|isalnum|isalpha|isascii|isdecimal|isdigit|isidentifier|i?s?lower|isnumeric|isprintable|isspace|i?s?title|i?s?upper|join|ljust|lstrip|maketrans|r?partition|removeprefix|removesuffix|rjust|rsplit|r?strip|splitl?i?n?e?s?|starts?w?i?t?h?|swapcase|translate|zfill|filter|help|isinstance|issubclass|open|sorted|slice)\\b"
+        },
+        {
+          "name": "entity.name.function.zs",
+          "match": "(?i)\\b(abs|aiter|all|any|anext|ascii|bin|breakpoint|chr|compile|delattr|dir|divmod|enumerate|eval|exec|getattr|hasattr|hash|hex|min|max|next|setattr|sum|vars|__import__)\\b"
         }
       ]
     },
@@ -142,11 +150,67 @@
         }
       ]
     },
-    "script-noun": {
+    "function": {
       "patterns": [
         {
-          "name": "support.function.script.zs",
-          "match": "\\([^()\\n]+\\)"
+          "name": "support.function.zs",
+          "match": "\\b(\\w+):"
+        }
+      ]
+    },
+    "for-repeater": {
+      "patterns": [
+        {
+          "name": "keyword.control.for.zs",
+          "begin": "(?i)\\b(for)\\b\\s+",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.control.zs"
+            }
+          },
+          "end": "(?i)\\b(in|do)\\b",
+          "patterns": [
+            {
+              "match": "[A-Za-z_][A-Za-z0-9_]*",
+              "name": "entity.name.variable.zs"
+            }
+          ]
+        }
+      ]
+    },
+    "imports": {
+      "patterns": [
+        {
+          "name": "meta.from.zs",
+          "match": "\\b(from)\\s+(\\w+)",
+          "captures": {
+            "1": { "name": "keyword.control.from.zs" },
+            "2": { "name": "entity.name.type.path.zs" }
+          }
+        },
+        {
+          "name": "meta.import.zs",
+          "match": "\\b(import)\\s+(\\w+)",
+          "captures": {
+            "1": { "name": "keyword.control.import.zs" },
+            "2": { "name": "entity.name.type.module.zs" }
+          }
+        },
+        {
+          "name": "meta.import-alias.zs",
+          "match": "\\b(as)\\s+(\\w+)",
+          "captures": {
+            "1": { "name": "keyword.control.as.zs" },
+            "2": { "name": "entity.name.type.other.redwrite.zs" }
+          }
+        }
+      ]
+    },
+    "specialverbs": {
+      "patterns": [
+        {
+          "name": "invalid.illegal.zs",
+          "match": "\\b\\w+(ed|ing)\\b"
         }
       ]
     },
@@ -154,7 +218,7 @@
       "patterns": [
         {
           "name": "keyword.other.language-type.zs",
-          "match": "^\\!\\s*(ZS-CSHARP|ZS-LUA)\\b"
+          "match": "^\\!\\s*(ZS-CSHARP|ZS-LUA|ZS-PYTHON|ZS-NORMAL)\\b"
         }
       ]
     }

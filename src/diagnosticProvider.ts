@@ -172,8 +172,37 @@ export class ZSDiagnosticProvider {
         if (this.isInsideSymbol(lineText, position, '(', ')')) return true;
         if (this.isInsideSymbol(lineText, position, '/|', '|\\')) return true;
 
+        if (this.isInsideRepeaterBlock(document, lineIndex)) {
+            return true;
+        }
+
         if (text === '“' || text === '”' || text === '‘' || text === '’') return true;
 
+        return false;
+    }
+
+    private isInsideRepeaterBlock(document: vscode.TextDocument, lineIndex: number): boolean {
+        for (let i = lineIndex; i >= 0; i--) {
+            const line = document.lineAt(i).text;
+            const trimmedLine = line.trim();
+
+            if ((trimmedLine.startsWith('for ') || trimmedLine.startsWith('while ')) && trimmedLine.includes(':')) {
+                const repeaterIndentation = line.length - line.trimStart().length;
+                const currentLine = document.lineAt(lineIndex).text;
+                const currentIndentation = currentLine.length - currentLine.trimStart().length;
+
+                return currentIndentation > repeaterIndentation;
+            }
+
+            const currentLine = document.lineAt(lineIndex).text;
+            const currentIndentation = currentLine.length - currentLine.trimStart().length;
+            const searchLineIndentation = line.length - line.trimStart().length;
+        
+            if (i < lineIndex && searchLineIndentation <= currentIndentation && line.trim() !== '') {
+                break;
+            }
+        }
+    
         return false;
     }
 
@@ -309,8 +338,37 @@ export class ZSDiagnosticProviderWarning {
         if (this.isInsideSymbol(lineText, position, '(', ')')) return true;
         if (this.isInsideSymbol(lineText, position, '/|', '|\\')) return true;
 
+        if (this.isInsideRepeaterBlock(document, lineIndex)) {
+            return true;
+        }
+
         if (text === '“' || text === '”' || text === '‘' || text === '’') return true;
 
+        return false;
+    }
+
+    private isInsideRepeaterBlock(document: vscode.TextDocument, lineIndex: number): boolean {
+        for (let i = lineIndex; i >= 0; i--) {
+            const line = document.lineAt(i).text;
+            const trimmedLine = line.trim();
+
+            if ((trimmedLine.startsWith('for ') || trimmedLine.startsWith('while ')) && trimmedLine.includes(':')) {
+                const repeaterIndentation = line.length - line.trimStart().length;
+                const currentLine = document.lineAt(lineIndex).text;
+                const currentIndentation = currentLine.length - currentLine.trimStart().length;
+
+                return currentIndentation > repeaterIndentation;
+            }
+
+            const currentLine = document.lineAt(lineIndex).text;
+            const currentIndentation = currentLine.length - currentLine.trimStart().length;
+            const searchLineIndentation = line.length - line.trimStart().length;
+        
+            if (i < lineIndex && searchLineIndentation <= currentIndentation && line.trim() !== '') {
+                break;
+            }
+        }
+    
         return false;
     }
 
@@ -403,7 +461,6 @@ export class ZSNounSymbolDiagnosticProvider {
     private detectInvalidSymbolsInNouns(text: string, diagnostics: vscode.Diagnostic[], document: vscode.TextDocument): void {
         const nounPatterns = [
             { regex: /<[^>]*>/g, symbol: '<>' },
-            { regex: /\([^)]*\)/g, symbol: '()' },
             { regex: /\/\|[^|]*\|\\/g, symbol: '/||\\' }
         ];
 
