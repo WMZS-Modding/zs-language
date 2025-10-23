@@ -13,6 +13,18 @@ This is an extension for Visual Studio Code. The role of this extension is to cl
 ## 🎯 Features
 To know, check [ZS_LANGUAGE.md](https://github.com/WMZS-Modding/zs-language/blob/main/docs/ZS_LANGUAGE.md)
 
+## 🤝 Credits
+
+The ZS themes are enhanced versions of the built-in Microsoft VS Code themes:
+- Dark Modern
+- Light Modern
+- Dark+
+- Light+
+- Dark High Contrast
+- Light High Contrast
+
+*These base themes are Copyright (c) Microsoft Corporation. Used as the foundation for ZS-specific syntax highlighting.*
+
 ## ⚠ Known Issues
 
 The duplicate issue isn't important. I just send them the link to the same issue and close that issue.
