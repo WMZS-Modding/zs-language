@@ -2,7 +2,7 @@
   "name": "zs-language",
   "displayName": "ZS Language",
   "description": "An extension that helps clarify the codes of the ZS language",
-  "version": "0.2.2",
+  "version": "1.0.0",
   "publisher": "SuperHero2010",
   "license": "MIT or GPL-3.0-only",
   "bugs": {
@@ -51,6 +51,38 @@
         "language": "zs",
         "scopeName": "source.zs",
         "path": "./syntaxes/zs.tmLanguage.json"
+      }
+    ],
+    "themes": [
+      {
+        "label": "ZS Dark Modern",
+        "uiTheme": "vs-dark",
+        "path": "./themes/zs-dark-modern.json"
+      },
+      {
+        "label": "ZS Light Modern", 
+        "uiTheme": "vs",
+        "path": "./themes/zs-light-modern.json"
+      },
+      {
+        "label": "ZS Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/zs-dark.json"
+      },
+      {
+        "label": "ZS Light", 
+        "uiTheme": "vs",
+        "path": "./themes/zs-light.json"
+      },
+      {
+        "label": "ZS Dark High Contrast",
+        "uiTheme": "hc-black",
+        "path": "./themes/zs-dark-high-contrast.json"
+      },
+      {
+        "label": "ZS Light High Contrast", 
+        "uiTheme": "hc-light",
+        "path": "./themes/zs-light-high-contrast.json"
       }
     ]
   },

@@ -35,11 +35,11 @@
           "match": "(?i)\\b(itself|and|monobehaviour|unitysystem|uievent|unityengine|it|they|them|themself|true|false|f|none|n?o?n?local|globals?|lambda|not|or|id|iter|len|locals|map|memoryview|object|oct|ord|repr|round|static)\\b"
         },
         {
-          "name": "invalid.illegal.zs",
+          "name": "zs.red.zs",
           "match": "(?i)\\b(am|was|were|had|has|have|may|might|must|shall|should|would|could|did|being|been|feels?|loves?|hates?|dislikes?|likes?|prefer|wish|want|know|understand|believe|think|remember|forget|own|possess|belong|see|hear|smell|taste|be|seem|appear|look|disappear|care|become|grow|stay|remain|will|can)\\b"
         },
         {
-          "name": "markup.inserted.zs",
+          "name": "zs.green.zs",
           "match": "(?i)\\b(move|run|play|touch|cut|earse|wait|does|blow|is|are|flow|load|calla?b?l?e?|stop|delete|destroy|remove|replace|clear|copy|add|count|extend|r?index|insert|popi?t?e?m?|reversed?|sort|append|s?y?m?m?e?t?r?i?c?_?difference_?u?p?d?a?t?e?|discard|intersection_?u?p?d?a?t?e?|isdisjoint|issubset|issuperset|union|update|fromkeys|get|items|keys|setdefault|values|capitalize|casefold|center|encode|endswith|expandtabs|r?find|format_?m?a?p?|isalnum|isalpha|isascii|isdecimal|isdigit|isidentifier|i?s?lower|isnumeric|isprintable|isspace|i?s?title|i?s?upper|join|ljust|lstrip|maketrans|r?partition|removeprefix|removesuffix|rjust|rsplit|r?strip|splitl?i?n?e?s?|starts?w?i?t?h?|swapcase|translate|zfill|filter|help|isinstance|issubclass|open|sorted|slice)\\b"
         },
         {
@@ -129,7 +129,7 @@
     "invalidGrammar": {
       "patterns": [
         {
-          "name": "invalid.illegal.zs",
+          "name": "zs.red.zs",
           "match": "(?i)\\b(i|you|he|she|we|us|me|him|hers?|ours?|his|your|my|mine|theirs?|its|myself|yourself|himself|herself|ourself|ourselves|yourselves|myselves|himselves|herselves|themselves|itselves)\\b"
         }
       ]
@@ -137,7 +137,7 @@
     "tilemap-noun": {
       "patterns": [
         {
-          "name" : "support.function.tilemap.zs",
+          "name" : "zs.blue.tilemap.zs",
           "match": "/\\|[^|\\\\\\n]+\\|\\\\"
         }
       ]
@@ -145,7 +145,7 @@
     "function-noun": {
       "patterns": [
         {
-          "name": "support.function.noun.zs",
+          "name": "zs.blue.noun.zs",
           "match": "<[^<>\\n]+>"
         }
       ]
@@ -209,7 +209,7 @@
     "specialverbs": {
       "patterns": [
         {
-          "name": "invalid.illegal.zs",
+          "name": "zs.red.zs",
           "match": "(?i)\\b\\w+(ed|ing)\\b"
         }
       ]
@@ -218,7 +218,7 @@
       "patterns": [
         {
           "name": "keyword.other.language-type.zs",
-          "match": "^\\!\\s*(ZS-CSHARP|ZS-LUA|ZS-PYTHON|ZS-NORMAL)\\b"
+          "match": "^\\!\\s*(ZS-CSHARP|ZS-LUA|ZS-PYTHON|ZS-C|ZS-CPP|ZS-JAVA|ZS-HAXE|ZS-NORMAL)\\b"
         }
       ]
     }

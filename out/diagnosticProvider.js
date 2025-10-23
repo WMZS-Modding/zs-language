@@ -56,7 +56,7 @@ class ZSDiagnosticProvider {
     extractInvalidPatterns(grammar) {
         const findInvalidPatterns = (obj, path = []) => {
             if (typeof obj === 'object' && obj !== null) {
-                if (obj.name && obj.name.includes('invalid.illegal')) {
+                if (obj.name && obj.name.includes('invalid.illegal') || obj.name && obj.name.includes('zs.red')) {
                     if (obj.match) {
                         this.invalidPatterns.push(obj.match);
                     }
