@@ -133,6 +133,9 @@ class ZSDiagnosticProvider {
             pattern.lastIndex = 0;
             while ((match = pattern.exec(line)) !== null) {
                 const range = new vscode.Range(new vscode.Position(lineIndex, match.index), new vscode.Position(lineIndex, match.index + 1));
+                if (this.shouldSkipRange(document, range)) {
+                    continue;
+                }
                 const diagnostic = new vscode.Diagnostic(range, `Use ${expectedQuotes} instead of "${match[0]}" in ZS code`, vscode.DiagnosticSeverity.Error);
                 diagnostic.source = 'ZS Quotes';
                 diagnostics.push(diagnostic);
@@ -409,43 +412,46 @@ class ZSNounSymbolDiagnosticProvider {
         this.diagnosticCollection.set(document.uri, diagnostics);
     }
     detectInvalidSymbolsInNouns(text, diagnostics, document) {
-        const nounPatterns = [
-            { regex: /<[^>]*>/g, symbol: '<>' },
-            { regex: /\/\|[^|]*\|\\/g, symbol: '/||\\' }
-        ];
-        for (const pattern of nounPatterns) {
-            let match;
-            while ((match = pattern.regex.exec(text)) !== null) {
-                const nounContent = match[0];
-                if (this.isComparisonOperator(nounContent, match.index, text)) {
-                    continue;
+        const lines = text.split('\n');
+        for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
+            const line = lines[lineIndex];
+            let nounMatch;
+            const nounRegex = /<([^>]+)>/g;
+            while ((nounMatch = nounRegex.exec(line)) !== null) {
+                const [fullMatch, content] = nounMatch;
+                const matchIndex = nounMatch.index;
+                if (!this.isComparisonOperator(line, matchIndex)) {
+                    this.validateNounContent(content, matchIndex + 1, lineIndex, '<>', diagnostics, document);
                 }
-                const contentStart = pattern.symbol === '/||\\' ? 2 : 1;
-                const contentEnd = nounContent.length - (pattern.symbol === '/||\\' ? 2 : 1);
-                for (let i = contentStart; i < contentEnd; i++) {
-                    const char = nounContent[i];
-                    if (!/[\w]/.test(char)) {
-                        const symbolPosition = match.index + i;
-                        const startPos = document.positionAt(symbolPosition);
-                        const endPos = document.positionAt(symbolPosition + 1);
-                        const range = new vscode.Range(startPos, endPos);
-                        const diagnostic = new vscode.Diagnostic(range, `Symbol "${char}" not allowed inside ${pattern.symbol} noun symbols`, vscode.DiagnosticSeverity.Error);
-                        diagnostic.source = 'ZS Nouns';
-                        diagnostics.push(diagnostic);
-                    }
-                }
+            }
+            let tileMatch;
+            const tileRegex = /\/\|([^|]+)\|\\/g;
+            while ((tileMatch = tileRegex.exec(line)) !== null) {
+                const [fullMatch, content] = tileMatch;
+                this.validateNounContent(content, tileMatch.index + 2, lineIndex, '/||\\', diagnostics, document);
             }
         }
     }
-    isComparisonOperator(nounContent, position, fullText) {
-        if (nounContent === '<' || nounContent === '>' || nounContent === '<=' || nounContent === '>=') {
-            return true;
+    isComparisonOperator(line, position) {
+        const before = line.substring(Math.max(0, position - 3), position);
+        const after = line.substring(position + 1, position + 4);
+        const hasWordBefore = /[a-zA-Z0-9_]\s*$/.test(before);
+        const hasWordAfter = /^\s*[a-zA-Z0-9_]/.test(after);
+        return hasWordBefore && hasWordAfter;
+    }
+    validateNounContent(content, startOffset, lineIndex, symbolType, diagnostics, document) {
+        for (let i = 0; i < content.length; i++) {
+            const char = content[i];
+            if (!/[a-zA-Z0-9_]/.test(char)) {
+                const charPosition = startOffset + i;
+                const startPos = new vscode.Position(lineIndex, charPosition);
+                const endPos = new vscode.Position(lineIndex, charPosition + 1);
+                const range = new vscode.Range(startPos, endPos);
+                const diagnostic = new vscode.Diagnostic(range, `Invalid symbol "${char}" in ${symbolType} noun - only letters, numbers and _ allowed`, vscode.DiagnosticSeverity.Error);
+                diagnostic.source = 'ZS Nouns';
+                diagnostics.push(diagnostic);
+            }
         }
-        const before = fullText.substring(Math.max(0, position - 10), position);
-        const after = fullText.substring(position + nounContent.length, position + nounContent.length + 10);
-        const comparisonBefore = /\b[\w\d]+\s*$/.test(before);
-        const comparisonAfter = /^\s*[\w\d]+\b/.test(after);
-        return comparisonBefore && comparisonAfter;
     }
     dispose() {
         this.diagnosticCollection.dispose();
