@@ -9,7 +9,7 @@ let quoteConverter: ZSQuoteConverter;
 let diagnosticProvider: ZSDiagnosticProvider;
 let warningDiagnosticProvider: ZSDiagnosticProviderWarning;
 let nounSymbolDiagnosticProvider: ZSNounSymbolDiagnosticProvider;
-let moduleValidator : ZSModuleValidator;
+let moduleValidator: ZSModuleValidator;
 
 export function activate(context: vscode.ExtensionContext): void {
     quoteConverter = new ZSQuoteConverter();
