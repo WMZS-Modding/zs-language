@@ -56,5 +56,5 @@ Most programming languages use available symbols like `-` (Hypen), `*` (Asterisk
     + `32 ÷ 2`: ✔ Correct
     + `x : y`: ✔ Correct
 
-## Some other Markdown files in `Experiments` folder
-I haven't written them yet, because they're the test versions. If you like, you can make changes base on `CONTRIBUTING.md`
+### Set symbols
+This is most common in PYTHON. The methods (but they are verbs) `difference`, `union`, `intersection` are all used, but other methods like `emptySet`, `complement`, `elementOf`, `subset`, `properSubset`, and even `infinity` are not used. In ZS, they are used but in symbolic form. I still allow the method keyword, but only for special cases where symbolic notation is not possible.

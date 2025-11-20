@@ -5,10 +5,12 @@ import * as path from 'path';
 export class ZSDiagnosticProvider {
     private diagnosticCollection: vscode.DiagnosticCollection;
     private invalidPatterns: string[] = [];
+    private suffixExceptions: Set<string>;
 
     constructor(context: vscode.ExtensionContext) {
         this.diagnosticCollection = vscode.languages.createDiagnosticCollection('zs');
         this.loadInvalidPatternsFromGrammar(context);
+        this.loadSuffixExceptions();
     }
 
     private async loadInvalidPatternsFromGrammar(context: vscode.ExtensionContext): Promise<void> {
@@ -45,6 +47,20 @@ export class ZSDiagnosticProvider {
         findInvalidPatterns(grammar);
     }
 
+    private loadSuffixExceptions(): void {
+        this.suffixExceptions = new Set([
+            'when', 'then', 'prefab', 'unitysystem', 'unityengine', 'union', 'undo', 'redo',
+
+            'light', 'right', 'night', 'fight', 'sight',
+            'bright', 'tight', 'eight', 'weight', 'height', 'thought'
+        ]);
+    }
+
+    private shouldFlagAsInvalid(matchedText: string): boolean {
+        const lowerText = matchedText.toLowerCase();
+        return !this.suffixExceptions.has(lowerText);
+    }
+
     public updateDiagnostics(document: vscode.TextDocument): void {
         if (document.languageId !== 'zs') {
             return;
@@ -73,6 +89,11 @@ export class ZSDiagnosticProvider {
                 const startPos = document.positionAt(match.index);
                 const endPos = document.positionAt(match.index + match[0].length);
                 const range = new vscode.Range(startPos, endPos);
+                const matchedText = match[0];
+
+                if (!this.shouldFlagAsInvalid(matchedText)) {
+                    continue;
+                }
 
                 if (this.shouldSkipRange(document, range)) {
                     continue;
@@ -110,10 +131,6 @@ export class ZSDiagnosticProvider {
                     new vscode.Position(lineIndex, match.index),
                     new vscode.Position(lineIndex, match.index + 1)
                 );
-
-                if (this.shouldSkipRange(document, range)) {
-                    continue;
-                }
 
                 const diagnostic = new vscode.Diagnostic(
                     range,
@@ -170,13 +187,13 @@ export class ZSDiagnosticProvider {
 
         if (this.isInsideSymbol(lineText, position, '<', '>')) return true;
         if (this.isInsideSymbol(lineText, position, '(', ')')) return true;
+        if (this.isInsideSymbol(lineText, position, '‘', '’')) return true;
+        if (this.isInsideSymbol(lineText, position, '“', '”')) return true;
         if (this.isInsideSymbol(lineText, position, '/|', '|\\')) return true;
 
         if (this.isInsideRepeaterBlock(document, lineIndex)) {
             return true;
         }
-
-        if (text === '“' || text === '”' || text === '‘' || text === '’') return true;
 
         return false;
     }
@@ -336,13 +353,13 @@ export class ZSDiagnosticProviderWarning {
 
         if (this.isInsideSymbol(lineText, position, '<', '>')) return true;
         if (this.isInsideSymbol(lineText, position, '(', ')')) return true;
+        if (this.isInsideSymbol(lineText, position, '‘', '’')) return true;
+        if (this.isInsideSymbol(lineText, position, '“', '”')) return true;
         if (this.isInsideSymbol(lineText, position, '/|', '|\\')) return true;
 
         if (this.isInsideRepeaterBlock(document, lineIndex)) {
             return true;
         }
-
-        if (text === '“' || text === '”' || text === '‘' || text === '’') return true;
 
         return false;
     }
@@ -465,13 +482,17 @@ export class ZSNounSymbolDiagnosticProvider {
         ];
 
         for (const pattern of nounPatterns) {
-            let match: RegExpExecArray | null;
+            let match;
             while ((match = pattern.regex.exec(text)) !== null) {
                 const nounContent = match[0];
 
+                if (this.isComparisonOperator(nounContent, match.index, text)) {
+                    continue;
+                }
+
                 const contentStart = pattern.symbol === '/||\\' ? 2 : 1;
                 const contentEnd = nounContent.length - (pattern.symbol === '/||\\' ? 2 : 1);
-                
+
                 for (let i = contentStart; i < contentEnd; i++) {
                     const char = nounContent[i];
                     if (!/[\w]/.test(char)) {
@@ -479,19 +500,31 @@ export class ZSNounSymbolDiagnosticProvider {
                         const startPos = document.positionAt(symbolPosition);
                         const endPos = document.positionAt(symbolPosition + 1);
                         const range = new vscode.Range(startPos, endPos);
-
                         const diagnostic = new vscode.Diagnostic(
-                            range,
-                            `Symbol "${char}" not allowed inside ${pattern.symbol} noun symbols - only letters, numbers and underscores allowed`,
+                            range, 
+                            `Symbol "${char}" not allowed inside ${pattern.symbol} noun symbols`,
                             vscode.DiagnosticSeverity.Error
                         );
-
                         diagnostic.source = 'ZS Nouns';
                         diagnostics.push(diagnostic);
                     }
                 }
             }
         }
+    }
+
+    private isComparisonOperator(nounContent: string, position: number, fullText: string): boolean {
+        if (nounContent === '<' || nounContent === '>' || nounContent === '<=' || nounContent === '>=') {
+            return true;
+        }
+
+        const before = fullText.substring(Math.max(0, position - 10), position);
+        const after = fullText.substring(position + nounContent.length, position + nounContent.length + 10);
+
+        const comparisonBefore = /\b[\w\d]+\s*$/.test(before);
+        const comparisonAfter = /^\s*[\w\d]+\b/.test(after);
+
+        return comparisonBefore && comparisonAfter;
     }
 
     public dispose(): void {

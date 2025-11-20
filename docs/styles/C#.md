@@ -1,4 +1,4 @@
-# ⭐ Csharp
+# ⭐ CSHARP
 It is a language used to create scripts for Engines like Unity. I use this language as inspiration to design the ZS style
 ## ✏ How to use
 Although ZS is a natural language, it is not easy. Here are some notes when using this style:

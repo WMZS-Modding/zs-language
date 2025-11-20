@@ -39,29 +39,36 @@ const vscode = __importStar(require("vscode"));
 const quotationMarkConverter_1 = require("./quotationMarkConverter");
 const diagnosticProvider_1 = require("./diagnosticProvider");
 const mathSignSelector_1 = require("./mathSignSelector");
+const setSymbolSelector_1 = require("./setSymbolSelector");
+const moduleValidator_1 = require("./moduleValidator");
 let quoteConverter;
 let diagnosticProvider;
 let warningDiagnosticProvider;
 let nounSymbolDiagnosticProvider;
+let moduleValidator;
 function activate(context) {
     quoteConverter = new quotationMarkConverter_1.ZSQuoteConverter();
     diagnosticProvider = new diagnosticProvider_1.ZSDiagnosticProvider(context);
     warningDiagnosticProvider = new diagnosticProvider_1.ZSDiagnosticProviderWarning();
     nounSymbolDiagnosticProvider = new diagnosticProvider_1.ZSNounSymbolDiagnosticProvider();
+    moduleValidator = new moduleValidator_1.ZSModuleValidator();
     quoteConverter.activate(context);
     mathSignSelector_1.ZSMinusSignSelector.activate(context);
     mathSignSelector_1.ZSMultiplicationSignSelector.activate(context);
     mathSignSelector_1.ZSDivisionSignSelector.activate(context);
+    setSymbolSelector_1.ZSSetSymbolSelector.activate(context);
     const diagnosticDisposable = vscode.workspace.onDidChangeTextDocument((event) => {
         diagnosticProvider.updateDiagnostics(event.document);
         warningDiagnosticProvider.updateDiagnostics(event.document);
         nounSymbolDiagnosticProvider.updateDiagnostics(event.document);
+        moduleValidator.updateDiagnostics(event.document);
     });
     const openDisposable = vscode.workspace.onDidOpenTextDocument((document) => {
         if (document.languageId === 'zs') {
             diagnosticProvider.updateDiagnostics(document);
             warningDiagnosticProvider.updateDiagnostics(document);
             nounSymbolDiagnosticProvider.updateDiagnostics(document);
+            moduleValidator.updateDiagnostics(document);
         }
     });
     vscode.workspace.textDocuments.forEach(document => {
@@ -69,12 +76,13 @@ function activate(context) {
             diagnosticProvider.updateDiagnostics(document);
             warningDiagnosticProvider.updateDiagnostics(document);
             nounSymbolDiagnosticProvider.updateDiagnostics(document);
+            moduleValidator.updateDiagnostics(document);
         }
     });
     const commandDisposable = vscode.commands.registerCommand('zs.convertQuotes', () => {
         quoteConverter.convertDocumentQuotes();
     });
-    context.subscriptions.push(diagnosticDisposable, openDisposable, commandDisposable, { dispose: () => {
+    context.subscriptions.push(diagnosticDisposable, openDisposable, commandDisposable, moduleValidator, { dispose: () => {
             if (quoteConverter) {
                 quoteConverter.dispose?.();
             }
@@ -86,6 +94,9 @@ function activate(context) {
             }
             if (nounSymbolDiagnosticProvider) {
                 nounSymbolDiagnosticProvider.dispose();
+            }
+            if (moduleValidator) {
+                moduleValidator.dispose();
             }
         } }, vscode.languages.registerCodeActionsProvider('zs', diagnosticProvider, {
         providedCodeActionKinds: [vscode.CodeActionKind.QuickFix]
@@ -104,8 +115,12 @@ function deactivate() {
     if (nounSymbolDiagnosticProvider) {
         nounSymbolDiagnosticProvider.dispose();
     }
+    if (moduleValidator) {
+        moduleValidator.dispose();
+    }
     mathSignSelector_1.ZSMinusSignSelector.deactivate();
     mathSignSelector_1.ZSMultiplicationSignSelector.deactivate();
     mathSignSelector_1.ZSDivisionSignSelector.deactivate();
+    setSymbolSelector_1.ZSSetSymbolSelector.deactivate();
 }
 //# sourceMappingURL=extension.js.map

@@ -2,7 +2,7 @@
   "name": "zs-language",
   "displayName": "ZS Language",
   "description": "An extension that helps clarify the codes of the ZS language",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "publisher": "SuperHero2010",
   "license": "MIT or GPL-3.0-only",
   "bugs": {
@@ -83,6 +83,21 @@
         "label": "ZS Light High Contrast", 
         "uiTheme": "hc-light",
         "path": "./themes/zs-light-high-contrast.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "zs.selectSetSymbol",
+        "title": "ZS: Select Set Symbol",
+        "category": "ZS"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "zs.selectSetSymbol",
+        "key": "ctrl+'",
+        "mac": "cmd+'",
+        "when": "editorTextFocus && editorLangId == zs"
       }
     ]
   },
