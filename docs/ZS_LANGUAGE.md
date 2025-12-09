@@ -48,13 +48,16 @@ Most programming languages use available symbols like `-` (Hypen), `*` (Asterisk
     + `10 − 5`: ✔ Correct
     + `-93 + 39`: ✔ Correct
 - Example for `*` vs `×`:
-    + `x * y`: ✔ Correct
     + `16 * 8`: ❌ Error
     + `16 × 8`: ✔ Corect
 - Example for `:` vs `÷`:
     + `32 : 2`: ❌ Error
     + `32 ÷ 2`: ✔ Correct
-    + `x : y`: ✔ Correct
 
 ### Set symbols
 This is most common in PYTHON. The methods (but they are verbs) `difference`, `union`, `intersection` are all used, but other methods like `emptySet`, `complement`, `elementOf`, `subset`, `properSubset`, and even `infinity` are not used. In ZS, they are used but in symbolic form. I still allow the method keyword, but only for special cases where symbolic notation is not possible.
+
+## Note for `null` keywords
+Traditional languages use `null`/`None`/`nil` to represent "absence of value". This leads to the "billion-dollar mistake" of null pointer exceptions.
+
+But ZS works differently. It prohibits the use of the null keyword, but it still allows the use of `∅` and `0` instead. So, avoid using these keywords for all types in ZS, use those replacement symbols instead.

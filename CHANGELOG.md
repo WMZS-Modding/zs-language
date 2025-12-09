@@ -1,4 +1,4 @@
 # 🛠 What's fixed
-- 🔨 Fix false positive of `<` and `>`
-- ➕ Add `shouldSkipRange` back to `detectStraightQuotes`
-- 🖋 Update to version 1.1.1
+- 🔧 Remove `None` keyword because it violates rules of ZS language
+- 🔨 Add `None`, `null`, `nil`, `nullptr` keywords as wrong keywords to `zs.tmLanguage.json` to make `diagosticProvider.js` flags them
+- ⛏ Minimal modify `docs` folder

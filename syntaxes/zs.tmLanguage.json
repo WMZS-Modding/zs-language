@@ -33,7 +33,7 @@
         },
         {
           "name": "variable.language.zs",
-          "match": "(?i)\\b(itself|and|monobehaviour|unitysystem|uievent|unityengine|it|they|them|themself|true|false|f|none|n?o?n?local|globals?|lambda|not|or|id|iter|len|locals|map|memoryview|object|oct|ord|repr|round|static|undo|redo)\\b"
+          "match": "(?i)\\b(itself|and|monobehaviour|unitysystem|uievent|unityengine|it|they|them|themself|true|false|f|n?o?n?local|globals?|lambda|not|or|id|iter|len|locals|map|memoryview|object|oct|ord|repr|round|static|undo|redo)\\b"
         },
         {
           "name": "zs.red.zs",
@@ -131,7 +131,7 @@
       "patterns": [
         {
           "name": "zs.red.zs",
-          "match": "(?i)\\b(i|you|he|she|we|us|me|him|hers?|ours?|his|your|my|mine|theirs?|its|myself|yourself|himself|herself|ourself|ourselves|yourselves|myselves|himselves|herselves|themselves|itselves)\\b"
+          "match": "(?i)\\b(i|you|he|she|we|us|me|him|hers?|ours?|his|your|my|mine|theirs?|its|myself|yourself|himself|herself|ourself|ourselves|yourselves|myselves|himselves|herselves|themselves|itselves|none|null|nil|nullptr)\\b"
         }
       ]
     },

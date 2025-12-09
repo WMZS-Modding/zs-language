@@ -1,7 +1,7 @@
 # 🌴 ZS Language
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/SuperHero2010/Test/refs/heads/main/ZS.gif" width="200" alt="ZS Glitch">
+  <img src="https://raw.githubusercontent.com/WMZS-Modding/zs-language/refs/heads/main/icons/ZS.gif" width="200" alt="ZS Glitch">
 </p>
 
 It is a natural language, written in the style of different programming languages, and supports default styles. This language is not difficult, but if you do not learn carefully, you will mistake ZS for ZenScript or Z#
