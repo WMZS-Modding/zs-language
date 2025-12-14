@@ -1,4 +1,3 @@
-# 🛠 What's fixed
-- 🔧 Remove `None` keyword because it violates rules of ZS language
-- 🔨 Add `None`, `null`, `nil`, `nullptr` keywords as wrong keywords to `zs.tmLanguage.json` to make `diagosticProvider.js` flags them
-- ⛏ Minimal modify `docs` folder
+# 🛠 What's changed
+- 🗃 Move `mathSignSelector.js` to `unused_scripts` folder to archive
+- ⚒ Rename `setSymbolSelector.js` to `mathSignSelector.js` and add `−`, `×`, `÷` and `ℕ`, `ℤ`, `ℚ`, `ℝ`, `ℂ`, `ℙ`, `𝕀` (Irrational numbers) to it
