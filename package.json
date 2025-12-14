@@ -2,7 +2,7 @@
   "name": "zs-language",
   "displayName": "ZS Language",
   "description": "An extension that helps clarify the codes of the ZS language",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "publisher": "SuperHero2010",
   "license": "MIT or GPL-3.0-only",
   "bugs": {
@@ -87,14 +87,14 @@
     ],
     "commands": [
       {
-        "command": "zs.selectSetSymbol",
-        "title": "ZS: Select Set Symbol",
+        "command": "zs.selectMathSign",
+        "title": "ZS: Select Math Sign",
         "category": "ZS"
       }
     ],
     "keybindings": [
       {
-        "command": "zs.selectSetSymbol",
+        "command": "zs.selectMathSign",
         "key": "ctrl+'",
         "mac": "cmd+'",
         "when": "editorTextFocus && editorLangId == zs"

@@ -39,7 +39,6 @@ const vscode = __importStar(require("vscode"));
 const quotationMarkConverter_1 = require("./quotationMarkConverter");
 const diagnosticProvider_1 = require("./diagnosticProvider");
 const mathSignSelector_1 = require("./mathSignSelector");
-const setSymbolSelector_1 = require("./setSymbolSelector");
 const moduleValidator_1 = require("./moduleValidator");
 let quoteConverter;
 let diagnosticProvider;
@@ -53,10 +52,7 @@ function activate(context) {
     nounSymbolDiagnosticProvider = new diagnosticProvider_1.ZSNounSymbolDiagnosticProvider();
     moduleValidator = new moduleValidator_1.ZSModuleValidator();
     quoteConverter.activate(context);
-    mathSignSelector_1.ZSMinusSignSelector.activate(context);
-    mathSignSelector_1.ZSMultiplicationSignSelector.activate(context);
-    mathSignSelector_1.ZSDivisionSignSelector.activate(context);
-    setSymbolSelector_1.ZSSetSymbolSelector.activate(context);
+    mathSignSelector_1.ZSMathSignSelector.activate(context);
     const diagnosticDisposable = vscode.workspace.onDidChangeTextDocument((event) => {
         diagnosticProvider.updateDiagnostics(event.document);
         warningDiagnosticProvider.updateDiagnostics(event.document);
@@ -118,9 +114,6 @@ function deactivate() {
     if (moduleValidator) {
         moduleValidator.dispose();
     }
-    mathSignSelector_1.ZSMinusSignSelector.deactivate();
-    mathSignSelector_1.ZSMultiplicationSignSelector.deactivate();
-    mathSignSelector_1.ZSDivisionSignSelector.deactivate();
-    setSymbolSelector_1.ZSSetSymbolSelector.deactivate();
+    mathSignSelector_1.ZSMathSignSelector.deactivate();
 }
 //# sourceMappingURL=extension.js.map

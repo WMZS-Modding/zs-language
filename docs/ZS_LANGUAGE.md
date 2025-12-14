@@ -42,7 +42,7 @@ This is the important comment. It helps system know what style ZS language is wr
 These are the important symbol. Instead of using `'` and `"` traditionaly, ZS language uses `‘’` and `“”`. `quotationMarkConverter.js` helps you convert `'` and `"` to `‘’` and `“”`. You should use them, otherwise system will throw an error
 
 ### 📄 New math signs
-Most programming languages use available symbols like `-` (Hypen), `*` (Asterisk), `:` (Colon) or `/` (Slash) as negative and minus sign, multiplication sign, division sign. However, ZS Language prohibit them to use for mathematic (number) and you must use new math signs like `−` (Minus), `×` (Multiplication), `÷` (Division). To use old math signs, you must know that `-` is negative sign, `:` is for some styles, `*` isn't often used in ZS. To choose old and new math signs, `mathSignSelector.js` will help you when you enter `-` or `*` or `:`
+Most programming languages use available symbols like `-` (Hypen), `*` (Asterisk), `:` (Colon) or `/` (Slash) as negative and minus sign, multiplication sign, division sign. However, ZS Language prohibit them to use for mathematic (number) and you must use new math signs like `−` (Minus), `×` (Multiplication), `÷` (Division). To use old math signs, you must know that `-` is negative sign, `:` is for some styles, `*` isn't often used in ZS. To choose old and new math signs, `mathSignSelector.js` will help you when you press `Ctrl + '`/`Cmd + '`
 - Example for `-` vs `−`:
     + `10 - 5`: ❌ Error
     + `10 − 5`: ✔ Correct
