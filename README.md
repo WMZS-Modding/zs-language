@@ -12,7 +12,7 @@ To learn my language, you should check [ZS_LANGUAGE.md](https://github.com/WMZS-
 
 # 🛠 ZS Language Extension
 
-This is an extension for Visual Studio Code. The role of this extension is to clarify what the ZS language is, showing wrong words in red, only showing correct verbs and some other words in green/blue. Currently, this extension is only a test version, not supporting many new features. In the future, if there is any user to help, I will develop additional features for this extension.
+This is an extension for Visual Studio Code. Its role is to help you understand what this language is. While it already has many powerful features, it currently lacks several important ones. In the future, if there are any Issues/Pull Requests, I will accept and implement them.
 
 ## 🎯 Features
 To know, check [ZS_LANGUAGE.md](https://github.com/WMZS-Modding/zs-language/blob/main/docs/ZS_LANGUAGE.md)

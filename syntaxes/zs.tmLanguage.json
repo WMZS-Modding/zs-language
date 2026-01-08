@@ -25,7 +25,7 @@
       "patterns": [
         {
           "name": "keyword.control.zs",
-          "match": "(?i)\\b(when|if|then|else|with|while|done|of|or|trigger|except|once|twice|f?r?o?z?e?n?set|before|after|assert|async|await|break|continue|finally|pass|raise|return|try|yield)\\b"
+          "match": "(?i)\\b(when|if|then|else|with|while|done|of|or|trigger|except|once|twice|f?r?o?z?e?n?set|before|after|assert|async|break|continue|each)\\b"
         },
         {
           "name": "entity.name.type.zs",
@@ -131,7 +131,7 @@
       "patterns": [
         {
           "name": "zs.red.zs",
-          "match": "(?i)\\b(i|you|he|she|we|us|me|him|hers?|ours?|his|your|my|mine|theirs?|its|myself|yourself|himself|herself|ourself|ourselves|yourselves|myselves|himselves|herselves|themselves|itselves|none|null|nil|nullptr)\\b"
+          "match": "(?i)\\b(i|you|he|she|we|us|me|him|hers?|ours?|his|your|my|mine|theirs?|its|myself|yourself|himself|herself|ourself|ourselves|yourselves|myselves|himselves|herselves|themselves|itselves|none|null|nil|nullptr|await|finally|pass|raise|return|try|yield)\\b"
         }
       ]
     },
