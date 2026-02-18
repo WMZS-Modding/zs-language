@@ -692,6 +692,12 @@
 			"settings": {
 				"foreground": "#000000"
 			}
+		},
+		{
+			"scope": "zs.grey",
+			"settings": {
+				"foreground": "#D3D3D3"
+			}
 		}
 	]
 }

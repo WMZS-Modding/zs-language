@@ -1,3 +1,4 @@
 # 🛠 What's changed
-- 🗑 Remove some keywords that violate the ZS rules
-- ✏ Small update for README.md
+- 🔧 Fix `detectInvalidSymbolsInNouns()`
+- 🔨 Add exception keywords to `loadSuffixExceptions[]` list and `zs.tmLangauge.json`
+- ⚒ Add `zs.grey` to 6 themes and add `#if - #else if - #else - #end` with `zs.grey` to `zs.tmLanguage.json`

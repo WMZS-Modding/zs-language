@@ -534,6 +534,12 @@
 			"settings": {
 				"foreground": "#000000"
 			}
+		},
+		{
+			"scope": "zs.grey",
+			"settings": {
+				"foreground": "#808080"
+			}
 		}
 	]
 }

@@ -18,14 +18,15 @@
     { "include": "#for-repeater" },
     { "include": "#imports" },
     { "include": "#module-usage" },
-    { "include": "#specialwords" }
+    { "include": "#specialwords" },
+    { "include": "#preprocessor"}
   ],
   "repository": {
     "keywords": {
       "patterns": [
         {
           "name": "keyword.control.zs",
-          "match": "(?i)\\b(when|if|then|else|with|while|done|of|or|trigger|except|once|twice|f?r?o?z?e?n?set|before|after|assert|async|break|continue|each)\\b"
+          "match": "(?i)\\b(when|if|then|else|with|while|done|of|or|trigger|except|once|twice|f?r?o?z?e?n?set|before|after|assert|async|break|continue|each|proceed|halt|haltLua|haltScript|haltAll)\\b"
         },
         {
           "name": "entity.name.type.zs",
@@ -211,7 +212,7 @@
       "patterns": [
         {
           "name": "meta.module-usage.zs",
-          "match": "\\b([a-zA-Z_][a-zA-Z0-9_]*)\\s*<",
+          "match": "(?<=^import\\s+|^from\\s+\\w+\\s+import\\s+)([a-zA-Z_][a-zA-Z0-9_]*)\\s*<|\\b(math|os|sys|json|re|random|itertools)\\s*<",
           "captures": {
             "1": { "name": "entity.name.type.module.zs" }
           }
@@ -222,7 +223,7 @@
       "patterns": [
         {
           "name": "zs.red.zs",
-          "match": "(?i)\\b\\w+(ed|ing|en|ght)\\b"
+          "match": "(?i)\\b(?!(elapsed|onEventPushed|onTweenCompleted|onTimerCompleted|onSoundFinished|onRecalculateRating|onCountdownStarted)\\b)\\w+(ed|ing|en|ght)\\b"
         },
         {
           "name": "zs.purple.zs",
@@ -234,11 +235,39 @@
         },
         {
           "name": "zs.red.zs",
-          "match": "(?i)\\b(mis|out|over|pre|re|un)\\w+\\b"
+          "match": "(?i)\\b(?!(retry|preUpdateScore|miss)\\b)(mis|out|over|pre|re|un)\\w+\\b"
         },
         {
           "name": "zs.blue.zs",
           "match": "(?i)\\b(defeat|victory)\\b"
+        }
+      ]
+    },
+    "preprocessor": {
+      "patterns": [
+        {
+          "name": "meta.preprocessor.zs",
+          "begin": "^\\s*#if\\b",
+          "beginCaptures": {
+            "0": { "name": "zs.grey.zs" }
+          },
+          "end": "^\\s*#end\\b",
+          "endCaptures": {
+            "0": { "name": "zs.grey.zs" }
+          },
+          "patterns": [
+            {
+              "name": "zs.grey.zs",
+              "match": "^\\s*#else if\\b"
+            },
+            {
+              "name": "zs.grey.zs",
+              "match": "^\\s*#else\\b"
+            },
+            {
+              "include": "source.zs"
+            }
+          ]
         }
       ]
     },

@@ -52,7 +52,11 @@ export class ZSDiagnosticProvider {
             'when', 'then', 'prefab', 'unitysystem', 'unityengine', 'union', 'undo', 'redo',
 
             'light', 'right', 'night', 'fight', 'sight',
-            'bright', 'tight', 'eight', 'weight', 'height', 'thought'
+            'bright', 'tight', 'eight', 'weight', 'height', 'thought',
+
+            'elapsed', 'onEventPushed', 'onTweenCompleted', 'onTimerCompleted',
+            'onSoundFinished', 'onRecalculateRating', 'onCountdownStarted',
+            'retry', 'preUpdateScore', 'miss', 'proceed'
         ]);
     }
 
@@ -485,11 +489,24 @@ export class ZSNounSymbolDiagnosticProvider {
         for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
             const line = lines[lineIndex];
 
+            const trimmedLine = line.trim();
+            if (trimmedLine.startsWith('-/')) {
+                continue;
+            }
+
+            if (this.isInsideMultiLineComment(document, lineIndex, 0)) {
+                continue;
+            }
+
             let nounMatch;
             const nounRegex = /<([^>]+)>/g;
             while ((nounMatch = nounRegex.exec(line)) !== null) {
                 const [fullMatch, content] = nounMatch;
                 const matchIndex = nounMatch.index;
+
+                if (this.isInsideComment(document, lineIndex, matchIndex)) {
+                    continue;
+                }
 
                 if (!this.isComparisonOperator(line, matchIndex)) {
                     this.validateNounContent(content, matchIndex + 1, lineIndex, '<>', diagnostics, document);
@@ -500,9 +517,80 @@ export class ZSNounSymbolDiagnosticProvider {
             const tileRegex = /\/\|([^|]+)\|\\/g;
             while ((tileMatch = tileRegex.exec(line)) !== null) {
                 const [fullMatch, content] = tileMatch;
-                this.validateNounContent(content, tileMatch.index + 2, lineIndex, '/||\\', diagnostics, document);
+                const matchIndex = tileMatch.index;
+
+                if (this.isInsideComment(document, lineIndex, matchIndex)) {
+                    continue;
+                }
+
+                this.validateNounContent(content, matchIndex + 2, lineIndex, '/||\\', diagnostics, document);
             }
         }
+    }
+
+    private isInsideComment(document: vscode.TextDocument, lineIndex: number, characterIndex: number): boolean {
+        const line = document.lineAt(lineIndex).text;
+
+        const commentIndex = line.indexOf('-/');
+        if (commentIndex !== -1 && characterIndex >= commentIndex) {
+            return true;
+        }
+
+        if (this.isInsideMultiLineComment(document, lineIndex, characterIndex)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private isInsideMultiLineComment(document: vscode.TextDocument, lineIndex: number, characterIndex: number): boolean {
+        const text = document.getText();
+        const docPosition = document.offsetAt(new vscode.Position(lineIndex, characterIndex));
+
+        let inComment = false;
+        let lastIndex = 0;
+
+        while (lastIndex < text.length) {
+            const openIndex = text.indexOf('*/-', lastIndex);
+            const closeIndex = text.indexOf('/-*', lastIndex);
+
+            if (openIndex === -1 && closeIndex === -1) break;
+
+            let nextIndex = -1;
+            let isOpen = false;
+
+            if (openIndex !== -1 && closeIndex !== -1) {
+                if (openIndex < closeIndex) {
+                    nextIndex = openIndex;
+                    isOpen = true;
+                } else {
+                    nextIndex = closeIndex;
+                    isOpen = false;
+                }
+            } else if (openIndex !== -1) {
+                nextIndex = openIndex;
+                isOpen = true;
+            } else {
+                nextIndex = closeIndex;
+                isOpen = false;
+            }
+
+            if (inComment && docPosition < nextIndex) {
+                return true;
+            }
+
+            if (isOpen) {
+                inComment = true;
+                lastIndex = openIndex + 3;
+            } else {
+                inComment = false;
+                lastIndex = closeIndex + 3;
+            }
+
+            if (nextIndex > docPosition) break;
+        }
+
+        return inComment && docPosition >= lastIndex;
     }
 
     private isComparisonOperator(line: string, position: number): boolean {
