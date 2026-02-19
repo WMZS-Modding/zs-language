@@ -28,6 +28,9 @@ export class ZSMathSignSelector {
             { label: '−', description: 'Minus', detail: 'Real minus sign (not hyphen)' },
             { label: '×', description: 'Multiplication', detail: 'Real multiplication sign' },
             { label: '÷', description: 'Division', detail: 'Real division sign' },
+            { label: '≠', description: 'Not Equal', detail: 'Mathematical inequality symbol' },
+            { label: '≤', description: 'Less Than or Equal', detail: '≤ (replaces <=)' },
+            { label: '≥', description: 'Greater Than or Equal', detail: '≥ (replaces >=)' },
 
             { label: '∩', description: 'Intersection', detail: 'A ∩ B - Elements in both' },
             { label: '∪', description: 'Union', detail: 'A ∪ B - Elements in either' },
