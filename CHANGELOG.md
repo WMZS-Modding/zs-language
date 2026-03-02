@@ -1,2 +1,2 @@
 # 🛠 What's changed
-Small update: Add `≠`, `≤`, `≥`
+Small update: Add prepositions

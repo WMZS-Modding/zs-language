@@ -19,7 +19,8 @@
     { "include": "#imports" },
     { "include": "#module-usage" },
     { "include": "#specialwords" },
-    { "include": "#preprocessor"}
+    { "include": "#preprocessor"},
+    { "include": "#prepositions" }
   ],
   "repository": {
     "keywords": {
@@ -268,6 +269,38 @@
               "include": "source.zs"
             }
           ]
+        }
+      ]
+    },
+    "prepositions": {
+      "patterns": [
+        {
+          "name": "keyword.preposition.location.zs",
+          "match": "\\b(in|into|inside|within|at)\\b"
+        },
+        {
+          "name": "keyword.preposition.direction.zs",
+          "match": "\\b(from|to|into|out of|through|across)\\b"
+        },
+        {
+          "name": "keyword.preposition.temporal.zs",
+          "match": "\\b(during|until|since|between|among)\\b"
+        },
+        {
+          "name": "keyword.preposition.conditional.zs",
+          "match": "\\b(where|with|without|having|excluding|including)\\b"
+        },
+        {
+          "name": "keyword.preposition.transformation.zs",
+          "match": "\\b(as|like|using|via|by|through)\\b"
+        },
+        {
+          "name": "keyword.preposition.possession.zs",
+          "match": "\\b(of|for|to|with)\\b"
+        },
+        {
+          "name": "keyword.preposition.comparison.zs",
+          "match": "\\b(than|as|like|unlike|versus|vs)\\b"
         }
       ]
     },
