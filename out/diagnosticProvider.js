@@ -173,6 +173,10 @@ class ZSDiagnosticProvider {
         }
         if (this.isInsideSymbol(lineText, position, '<', '>'))
             return true;
+        if (this.isInsideSymbol(lineText, position, '[', ']'))
+            return true;
+        if (this.isInsideSymbol(lineText, position, '{', '}'))
+            return true;
         if (this.isInsideSymbol(lineText, position, '(', ')'))
             return true;
         if (this.isInsideSymbol(lineText, position, '‘', '’'))
@@ -309,6 +313,10 @@ class ZSDiagnosticProviderWarning {
             return true;
         }
         if (this.isInsideSymbol(lineText, position, '<', '>'))
+            return true;
+        if (this.isInsideSymbol(lineText, position, '[', ']'))
+            return true;
+        if (this.isInsideSymbol(lineText, position, '{', '}'))
             return true;
         if (this.isInsideSymbol(lineText, position, '(', ')'))
             return true;
