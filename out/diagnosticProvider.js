@@ -81,7 +81,8 @@ class ZSDiagnosticProvider {
             'bright', 'tight', 'eight', 'weight', 'height', 'thought',
             'elapsed', 'onEventPushed', 'onTweenCompleted', 'onTimerCompleted',
             'onSoundFinished', 'onRecalculateRating', 'onCountdownStarted',
-            'retry', 'preUpdateScore', 'miss', 'proceed'
+            'retry', 'preUpdateScore', 'miss', 'proceed', 'unless',
+            'using', 'excluding', 'including', 'nothing'
         ]);
     }
     shouldFlagAsInvalid(matchedText) {

@@ -15,9 +15,6 @@
     { "include": "#script-noun" },
     { "include": "#language-type" },
     { "include": "#function" },
-    { "include": "#for-repeater" },
-    { "include": "#imports" },
-    { "include": "#module-usage" },
     { "include": "#specialwords" },
     { "include": "#preprocessor"},
     { "include": "#prepositions" }
@@ -27,7 +24,7 @@
       "patterns": [
         {
           "name": "keyword.control.zs",
-          "match": "(?i)\\b(when|if|then|else|with|while|done|of|or|trigger|except|once|twice|f?r?o?z?e?n?set|before|after|assert|async|break|continue|each|proceed|halt|haltLua|haltScript|haltAll)\\b"
+          "match": "(?i)\\b(when|if|unless|else|for|in|from|import|give|back|nothing|while|done|trigger|do|except|once|twice|f?r?o?z?e?n?set|before|after|assert|async|break|continue|each|proceed|halt|haltLua|haltScript|haltAll)\\b"
         },
         {
           "name": "entity.name.type.zs",
@@ -35,11 +32,11 @@
         },
         {
           "name": "variable.language.zs",
-          "match": "(?i)\\b(itself|and|monobehaviour|unitysystem|uievent|unityengine|it|they|them|themself|true|false|f|n?o?n?local|globals?|lambda|not|or|id|iter|len|locals|map|memoryview|object|oct|ord|repr|round|static|undo|redo)\\b"
+          "match": "(?i)\\b(itself|monobehaviour|unitysystem|uievent|unityengine|it|they|them|themself|true|false|f|n?o?n?local|globals?|lambda|not|or|id|iter|len|locals|map|memoryview|object|oct|ord|repr|round|static|undo|redo)\\b"
         },
         {
           "name": "zs.red.zs",
-          "match": "(?i)\\b(am|was|were|had|has|have|may|must|shall|should|would|could|did|being|been|feels?|loves?|hates?|dislikes?|likes?|prefers?|wishe?s?|wants?|knows?|believes?|thinks?|remembers?|own|possesse?s?|belongs?|smells?|tastes?|be|seems?|looks?|d?i?s?appears?|cares?|b?e?comes?|stays?|remains?|will|can|abides?|abode|arises?|arose|a?wakes?|a?woke|backslide?s?|f?o?r?bears?|f?o?r?bore|f?o?r?borne|b?r?o?w?beats?|b?e?came|b?e?falls?|b?e?fell|began|begun|b?e?holds?|b?e?held|bends?|bent|besets?|b?e?speaks?|b?e?spoke|bets?|bids?|binds?|bound|bite?s?|blee?ds?|blew|blown|broke|i?n?bree?ds?|brings?|broadcasts?|builds?|built|burnt|bur?st|buys?|f?o?r?e?casts?|catchs?|chide?|chose|leaves?|clove|cleft|clave|clings?|clung|clothes?|clad|costs?|creeps?|crept|crossbree?ds?|crows?|crew|d?a?y?dreams|d?a?y?dreamt?|deals|dealt?|dug|disproves?|dove|drew|drawn|drinks?|drank|drunk|drives?|drove|dwells?|dwelt|eats?|ate|fee?ds?|felt|found|fits?|flees?|flings?|flung|flew|flown|forbids?|forbade?|f?o?r?e?goe?s?|f?o?r?e?went|f?o?r?e?gone|f?o?r?e?sees?|f?o?r?e?saw|f?o?r?e?tell|f?o?r?e?told|f?o?r?gets?|f?o?r?got|f?o?r?gives?|f?o?r?gave|forsakes?|forsook|froze|frostbites?|frostbit|gilds?|gilt|girds?|girt|grinds?|ground|grew|grown|hand-fee?ds?|handwrites?|h?a?n?d?wrote|hangs?|hung|heard|heaves?|hove|hews?|hewn|hid|i?n?lays?|i?n?laid|insets?|interbree?ds?|i?n?t?e?r?weaves?|i?n?t?e?r?wove|i?n?t?e?r?winds?|i?n?t?e?r?wound|jerry-builds?|jerry-built|kept|kneels?|knelt|knit|knew|known|leads?|led|leans?|leant|leaps?|leapt|learnt|lends?|lent|lies?|lain|lit|lip-reads?|lost|makes?|made|means?|meant|mee?ts?|mows?|mown|offsets?|parktakes?|partook|pays?|paid|pleads?|pled|proofreads?|proves?|proven|quick-freezes?|quick-froze|rids?|rides?|rode|rings?|rang|rung|rises?|rose|roughcast|ran|sand-cast|saws?|sawn|says?|said|seeks?|sells?|sold|sends?|sent|sews?|sewn|shook|shaves?|shears?|shorn|sheds?|shines?|shone|shits?|shat|shown|shrinks?|shrank|shrunk|shut|sight-reads?|sang|sung|sinks?|sank|sunk|sits?|sat|slays?|slew|slain|slept|slides?|slid|slings?|slung|slinks?|slunk|slits?|smelt|smites?|smote|sneaks?|snuck|sped|spells?|spelt|spends?|spent|spills?|spilt|spins?|span|spun|spoils?|spoilt|spreads?|stands?|stood|steals?|stole|sticks?|stuck|stings?|stung|stinks?|stank|stunk|strides?|strode|strikes?|struck|strung|sunburns?|sunburnt|s?wears?|s?wore|s?worn|sweats?|swept|swells?|swims?|swam|swum|swings?|swung|takes?|took|teache?s?|tears?|tore|torn|telecasts?|throws?|threw|thrown|thrusts?|treads?|trod|typewrites?|typewrote|upholds?|upheld|weds?|weeps?|wept|wets?|won|withdraws?|withdrew|withdrawn|withholds?|withheld|withstands?|withstood|works?|wrings?|wrung)\\b"
+          "match": "(?i)\\b(am|was|were|had|has|have|may|must|shall|should|would|could|did|being|been|feels?|loves?|hates?|dislikes?|likes?|prefers?|wishe?s?|wants?|knows?|believes?|thinks?|remembers?|own|possesse?s?|belongs?|smells?|tastes?|be|seems?|looks?|d?i?s?appears?|cares?|b?e?comes?|stays?|remains?|will|can|abides?|abode|arises?|arose|a?wakes?|a?woke|backslide?s?|f?o?r?bears?|f?o?r?bore|f?o?r?borne|b?r?o?w?beats?|b?e?came|b?e?falls?|b?e?fell|began|begun|b?e?holds?|b?e?held|bends?|bent|besets?|b?e?speaks?|b?e?spoke|bets?|bids?|binds?|bound|bite?s?|blee?ds?|blew|blown|broke|i?n?bree?ds?|brings?|broadcasts?|builds?|built|burnt|bur?st|buys?|f?o?r?e?casts?|catchs?|chide?|chose|leaves?|clove|cleft|clave|clings?|clung|clothes?|clad|costs?|creeps?|crept|crossbree?ds?|crows?|crew|d?a?y?dreams|d?a?y?dreamt?|deals|dealt?|dug|disproves?|dove|drew|drawn|drinks?|drank|drunk|drives?|drove|dwells?|dwelt|eats?|ate|fee?ds?|felt|found|fits?|flees?|flings?|flung|flew|flown|forbids?|forbade?|f?o?r?e?goe?s?|f?o?r?e?went|f?o?r?e?gone|f?o?r?e?sees?|f?o?r?e?saw|f?o?r?e?tell|f?o?r?e?told|f?o?r?gets?|f?o?r?got|forgive|forgives|f?o?r?gave|forsakes?|forsook|froze|frostbites?|frostbit|gilds?|gilt|girds?|girt|gives|grinds?|ground|grew|grown|hand-fee?ds?|handwrites?|h?a?n?d?wrote|hangs?|hung|heard|heaves?|hove|hews?|hewn|hid|i?n?lays?|i?n?laid|insets?|interbree?ds?|i?n?t?e?r?weaves?|i?n?t?e?r?wove|i?n?t?e?r?winds?|i?n?t?e?r?wound|jerry-builds?|jerry-built|kept|kneels?|knelt|knit|knew|known|leads?|led|leans?|leant|leaps?|leapt|learnt|lends?|lent|lies?|lain|lit|lip-reads?|lost|makes?|made|means?|meant|mee?ts?|mows?|mown|offsets?|parktakes?|partook|pays?|paid|pleads?|pled|proofreads?|proves?|proven|quick-freezes?|quick-froze|rids?|rides?|rode|rings?|rang|rung|rises?|rose|roughcast|ran|sand-cast|saws?|sawn|says?|said|seeks?|sells?|sold|sends?|sent|sews?|sewn|shook|shaves?|shears?|shorn|sheds?|shines?|shone|shits?|shat|shown|shrinks?|shrank|shrunk|shut|sight-reads?|sang|sung|sinks?|sank|sunk|sits?|sat|slays?|slew|slain|slept|slides?|slid|slings?|slung|slinks?|slunk|slits?|smelt|smites?|smote|sneaks?|snuck|sped|spells?|spelt|spends?|spent|spills?|spilt|spins?|span|spun|spoils?|spoilt|spreads?|stands?|stood|steals?|stole|sticks?|stuck|stings?|stung|stinks?|stank|stunk|strides?|strode|strikes?|struck|strung|sunburns?|sunburnt|s?wears?|s?wore|s?worn|sweats?|swept|swells?|swims?|swam|swum|swings?|swung|takes?|took|teache?s?|tears?|tore|torn|telecasts?|throws?|threw|thrown|thrusts?|treads?|trod|typewrites?|typewrote|upholds?|upheld|weds?|weeps?|wept|wets?|won|withdraws?|withdrew|withdrawn|withholds?|withheld|withstands?|withstood|works?|wrings?|wrung)\\b"
         },
         {
           "name": "zs.green.zs",
@@ -161,65 +158,6 @@
         }
       ]
     },
-    "for-repeater": {
-      "patterns": [
-        {
-          "name": "keyword.control.for.zs",
-          "begin": "(?i)\\b(for)\\b\\s+",
-          "beginCaptures": {
-            "1": {
-              "name": "keyword.control.zs"
-            }
-          },
-          "end": "(?i)\\b(in|do)\\b",
-          "patterns": [
-            {
-              "match": "[A-Za-z_][A-Za-z0-9_]*",
-              "name": "entity.name.variable.zs"
-            }
-          ]
-        }
-      ]
-    },
-    "imports": {
-      "patterns": [
-        {
-          "name": "meta.from.zs",
-          "match": "\\b(from)\\s+(\\w+)",
-          "captures": {
-            "1": { "name": "keyword.control.from.zs" },
-            "2": { "name": "entity.name.type.module.zs" }
-          }
-        },
-        {
-          "name": "meta.import.zs",
-          "match": "\\b(import)\\s+(\\w+)",
-          "captures": {
-            "1": { "name": "keyword.control.import.zs" },
-            "2": { "name": "entity.name.type.module.zs" }
-          }
-        },
-        {
-          "name": "meta.import-alias.zs",
-          "match": "\\b(as)\\s+(\\w+)",
-          "captures": {
-            "1": { "name": "keyword.control.as.zs" },
-            "2": { "name": "entity.name.type.other.redwrite.zs" }
-          }
-        }
-      ]
-    },
-    "module-usage": {
-      "patterns": [
-        {
-          "name": "meta.module-usage.zs",
-          "match": "(?<=^import\\s+|^from\\s+\\w+\\s+import\\s+)([a-zA-Z_][a-zA-Z0-9_]*)\\s*<|\\b(math|os|sys|json|re|random|itertools)\\s*<",
-          "captures": {
-            "1": { "name": "entity.name.type.module.zs" }
-          }
-        }
-      ]
-    },
     "specialwords": {
       "patterns": [
         {
@@ -232,7 +170,7 @@
         },
         {
           "name": "zs.orange.zs",
-          "match": "(?i)\\b(easy|normal|hard|on|off)\\b"
+          "match": "(?i)\\b(easy|normal|hard|off)\\b"
         },
         {
           "name": "zs.red.zs",
@@ -248,22 +186,22 @@
       "patterns": [
         {
           "name": "meta.preprocessor.zs",
-          "begin": "^\\s*#if\\b",
+          "begin": "(?i)^\\s*#if\\b",
           "beginCaptures": {
             "0": { "name": "zs.grey.zs" }
           },
-          "end": "^\\s*#end\\b",
+          "end": "(?i)^\\s*#end\\b",
           "endCaptures": {
             "0": { "name": "zs.grey.zs" }
           },
           "patterns": [
             {
               "name": "zs.grey.zs",
-              "match": "^\\s*#else if\\b"
+              "match": "(?i)^\\s*#else if\\b"
             },
             {
               "name": "zs.grey.zs",
-              "match": "^\\s*#else\\b"
+              "match": "(?i)^\\s*#else\\b"
             },
             {
               "include": "source.zs"
@@ -276,31 +214,31 @@
       "patterns": [
         {
           "name": "keyword.preposition.location.zs",
-          "match": "\\b(in|into|inside|within|at)\\b"
+          "match": "(?i)\\b(into|inside|within|at)\\b"
         },
         {
           "name": "keyword.preposition.direction.zs",
-          "match": "\\b(from|to|into|out of|through|across)\\b"
+          "match": "(?i)\\b(to|into|out|through|across)\\b"
         },
         {
           "name": "keyword.preposition.temporal.zs",
-          "match": "\\b(during|until|since|between|among)\\b"
+          "match": "(?i)\\b(during|until|till|since|between|among)\\b"
         },
         {
           "name": "keyword.preposition.conditional.zs",
-          "match": "\\b(where|with|without|having|excluding|including)\\b"
+          "match": "(?i)\\b(where|without|having|excluding|including)\\b"
         },
         {
           "name": "keyword.preposition.transformation.zs",
-          "match": "\\b(as|like|using|via|by|through)\\b"
+          "match": "(?i)\\b(as|using|via|by|through)\\b"
         },
         {
           "name": "keyword.preposition.possession.zs",
-          "match": "\\b(of|for|to|with)\\b"
+          "match": "(?i)\\b(of|or|to|with|then|and)\\b"
         },
         {
           "name": "keyword.preposition.comparison.zs",
-          "match": "\\b(than|as|like|unlike|versus|vs)\\b"
+          "match": "(?i)\\b(than|versus|vs)\\b"
         }
       ]
     },

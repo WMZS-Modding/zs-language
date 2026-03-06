@@ -56,7 +56,9 @@ export class ZSDiagnosticProvider {
 
             'elapsed', 'onEventPushed', 'onTweenCompleted', 'onTimerCompleted',
             'onSoundFinished', 'onRecalculateRating', 'onCountdownStarted',
-            'retry', 'preUpdateScore', 'miss', 'proceed'
+            'retry', 'preUpdateScore', 'miss', 'proceed', 'unless',
+
+            'using', 'excluding', 'including', 'nothing'
         ]);
     }
 
