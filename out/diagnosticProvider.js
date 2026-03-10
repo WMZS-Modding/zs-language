@@ -33,7 +33,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZSNounSymbolDiagnosticProvider = exports.ZSDiagnosticProviderWarning = exports.ZSDiagnosticProvider = void 0;
+exports.ZSNounSymbolDiagnosticProvider = exports.ZSDiagnosticProvider = void 0;
 const vscode = __importStar(require("vscode"));
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
@@ -81,8 +81,9 @@ class ZSDiagnosticProvider {
             'bright', 'tight', 'eight', 'weight', 'height', 'thought',
             'elapsed', 'onEventPushed', 'onTweenCompleted', 'onTimerCompleted',
             'onSoundFinished', 'onRecalculateRating', 'onCountdownStarted',
-            'retry', 'preUpdateScore', 'miss', 'proceed', 'unless',
-            'using', 'excluding', 'including', 'nothing'
+            'retry', 'preUpdateScore', 'miss', 'proceed', 'unless', 'misses',
+            'using', 'excluding', 'including', 'nothing',
+            'overrides', 'overwrites', 'override', 'overwrite'
         ]);
     }
     shouldFlagAsInvalid(matchedText) {
@@ -266,150 +267,6 @@ class ZSDiagnosticProvider {
     }
 }
 exports.ZSDiagnosticProvider = ZSDiagnosticProvider;
-class ZSDiagnosticProviderWarning {
-    constructor() {
-        this.warningPatterns = [];
-        this.diagnosticCollection = vscode.languages.createDiagnosticCollection('zs');
-        this.loadwarningPatterns();
-    }
-    loadwarningPatterns() {
-        this.warningPatterns = [
-            /\b(is|are)\b/gi,
-        ];
-    }
-    updateDiagnostics(document) {
-        if (document.languageId !== 'zs') {
-            return;
-        }
-        const diagnostics = [];
-        for (let lineIndex = 0; lineIndex < document.lineCount; lineIndex++) {
-            const line = document.lineAt(lineIndex);
-            const lineText = line.text;
-            this.warningPatterns.forEach(pattern => {
-                let match;
-                while ((match = pattern.exec(lineText)) !== null) {
-                    const startPos = new vscode.Position(lineIndex, match.index);
-                    const endPos = new vscode.Position(lineIndex, match.index + match[0].length);
-                    const range = new vscode.Range(startPos, endPos);
-                    if (this.shouldSkipRange(document, range)) {
-                        continue;
-                    }
-                    const diagnostic = new vscode.Diagnostic(range, `Warning: If you use "${match[0]}", you must be careful. Otherwise, your script is error`, vscode.DiagnosticSeverity.Warning);
-                    diagnostic.source = 'ZS Language';
-                    diagnostics.push(diagnostic);
-                }
-            });
-        }
-        this.diagnosticCollection.set(document.uri, diagnostics);
-    }
-    shouldSkipRange(document, range) {
-        const text = document.getText(range);
-        const lineIndex = range.start.line;
-        const position = range.start.character;
-        const lineText = document.lineAt(lineIndex).text;
-        if (this.isInsideMultiLineComment(document, lineIndex, position)) {
-            return true;
-        }
-        if (lineText.includes('-/') && position >= lineText.indexOf('-/')) {
-            return true;
-        }
-        if (this.isInsideSymbol(lineText, position, '<', '>'))
-            return true;
-        if (this.isInsideSymbol(lineText, position, '[', ']'))
-            return true;
-        if (this.isInsideSymbol(lineText, position, '{', '}'))
-            return true;
-        if (this.isInsideSymbol(lineText, position, '(', ')'))
-            return true;
-        if (this.isInsideSymbol(lineText, position, '‘', '’'))
-            return true;
-        if (this.isInsideSymbol(lineText, position, '“', '”'))
-            return true;
-        if (this.isInsideSymbol(lineText, position, '/|', '|\\'))
-            return true;
-        if (this.isInsideRepeaterBlock(document, lineIndex)) {
-            return true;
-        }
-        return false;
-    }
-    isInsideRepeaterBlock(document, lineIndex) {
-        for (let i = lineIndex; i >= 0; i--) {
-            const line = document.lineAt(i).text;
-            const trimmedLine = line.trim();
-            if ((trimmedLine.startsWith('for ') || trimmedLine.startsWith('while ')) && trimmedLine.includes(':')) {
-                const repeaterIndentation = line.length - line.trimStart().length;
-                const currentLine = document.lineAt(lineIndex).text;
-                const currentIndentation = currentLine.length - currentLine.trimStart().length;
-                return currentIndentation > repeaterIndentation;
-            }
-            const currentLine = document.lineAt(lineIndex).text;
-            const currentIndentation = currentLine.length - currentLine.trimStart().length;
-            const searchLineIndentation = line.length - line.trimStart().length;
-            if (i < lineIndex && searchLineIndentation <= currentIndentation && line.trim() !== '') {
-                break;
-            }
-        }
-        return false;
-    }
-    isInsideMultiLineComment(document, lineIndex, position) {
-        const text = document.getText();
-        const docPosition = document.offsetAt(new vscode.Position(lineIndex, position));
-        let inComment = false;
-        let lastIndex = 0;
-        while (lastIndex < text.length) {
-            const openIndex = text.indexOf('*/-', lastIndex);
-            const closeIndex = text.indexOf('/-*', lastIndex);
-            if (openIndex === -1 && closeIndex === -1)
-                break;
-            let nextIndex = -1;
-            let isOpen = false;
-            if (openIndex !== -1 && closeIndex !== -1) {
-                if (openIndex < closeIndex) {
-                    nextIndex = openIndex;
-                    isOpen = true;
-                }
-                else {
-                    nextIndex = closeIndex;
-                    isOpen = false;
-                }
-            }
-            else if (openIndex !== -1) {
-                nextIndex = openIndex;
-                isOpen = true;
-            }
-            else {
-                nextIndex = closeIndex;
-                isOpen = false;
-            }
-            if (inComment && docPosition < nextIndex) {
-                return true;
-            }
-            if (isOpen) {
-                inComment = true;
-                lastIndex = openIndex + 3;
-            }
-            else {
-                inComment = false;
-                lastIndex = closeIndex + 3;
-            }
-            if (nextIndex > docPosition)
-                break;
-        }
-        return inComment && docPosition >= lastIndex;
-    }
-    isInsideSymbol(lineText, position, startSymbol, endSymbol) {
-        const startIndex = lineText.indexOf(startSymbol);
-        const endIndex = lineText.indexOf(endSymbol, startIndex + startSymbol.length);
-        return startIndex !== -1 && endIndex !== -1 && position > startIndex && position < endIndex;
-    }
-    clearDiagnostics() {
-        this.diagnosticCollection.clear();
-    }
-    dispose() {
-        this.diagnosticCollection.dispose();
-    }
-}
-exports.ZSDiagnosticProviderWarning = ZSDiagnosticProviderWarning;
 class ZSNounSymbolDiagnosticProvider {
     constructor() {
         this.diagnosticCollection = vscode.languages.createDiagnosticCollection('zs-noun-symbols');

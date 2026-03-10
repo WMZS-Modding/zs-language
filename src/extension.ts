@@ -1,19 +1,17 @@
 import * as vscode from 'vscode';
 import { ZSQuoteConverter } from './quotationMarkConverter';
-import { ZSDiagnosticProvider, ZSDiagnosticProviderWarning, ZSNounSymbolDiagnosticProvider } from './diagnosticProvider';
+import { ZSDiagnosticProvider, ZSNounSymbolDiagnosticProvider } from './diagnosticProvider';
 import { ZSMathSignSelector } from './mathSignSelector';
 import { ZSModuleValidator } from './moduleValidator';
 
 let quoteConverter: ZSQuoteConverter;
 let diagnosticProvider: ZSDiagnosticProvider;
-let warningDiagnosticProvider: ZSDiagnosticProviderWarning;
 let nounSymbolDiagnosticProvider: ZSNounSymbolDiagnosticProvider;
 let moduleValidator: ZSModuleValidator;
 
 export function activate(context: vscode.ExtensionContext): void {
     quoteConverter = new ZSQuoteConverter();
     diagnosticProvider = new ZSDiagnosticProvider(context);
-    warningDiagnosticProvider = new ZSDiagnosticProviderWarning();
     nounSymbolDiagnosticProvider = new ZSNounSymbolDiagnosticProvider();
     moduleValidator = new ZSModuleValidator();
 
@@ -22,7 +20,6 @@ export function activate(context: vscode.ExtensionContext): void {
     
     const diagnosticDisposable = vscode.workspace.onDidChangeTextDocument((event) => {
         diagnosticProvider.updateDiagnostics(event.document);
-        warningDiagnosticProvider.updateDiagnostics(event.document);
         nounSymbolDiagnosticProvider.updateDiagnostics(event.document);
         moduleValidator.updateDiagnostics(event.document);
     });
@@ -30,7 +27,6 @@ export function activate(context: vscode.ExtensionContext): void {
     const openDisposable = vscode.workspace.onDidOpenTextDocument((document) => {
         if (document.languageId === 'zs') {
             diagnosticProvider.updateDiagnostics(document);
-            warningDiagnosticProvider.updateDiagnostics(document);
             nounSymbolDiagnosticProvider.updateDiagnostics(document);
             moduleValidator.updateDiagnostics(document);
         }
@@ -39,7 +35,6 @@ export function activate(context: vscode.ExtensionContext): void {
     vscode.workspace.textDocuments.forEach(document => {
         if (document.languageId === 'zs') {
             diagnosticProvider.updateDiagnostics(document);
-            warningDiagnosticProvider.updateDiagnostics(document);
             nounSymbolDiagnosticProvider.updateDiagnostics(document);
             moduleValidator.updateDiagnostics(document);
         }
@@ -57,7 +52,6 @@ export function activate(context: vscode.ExtensionContext): void {
         { dispose: () => {
             if (quoteConverter) { quoteConverter.dispose?.(); }
             if (diagnosticProvider) { diagnosticProvider.dispose(); }
-            if (warningDiagnosticProvider) { warningDiagnosticProvider.dispose(); }
             if (nounSymbolDiagnosticProvider) { nounSymbolDiagnosticProvider.dispose(); }
             if (moduleValidator) { moduleValidator.dispose(); }
         }},
@@ -73,9 +67,6 @@ export function deactivate(): void {
     }
     if (diagnosticProvider) {
         diagnosticProvider.dispose();
-    }
-    if (warningDiagnosticProvider) {
-        warningDiagnosticProvider.dispose();
     }
     if (nounSymbolDiagnosticProvider) {
         nounSymbolDiagnosticProvider.dispose();

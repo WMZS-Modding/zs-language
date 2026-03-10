@@ -42,27 +42,23 @@ const mathSignSelector_1 = require("./mathSignSelector");
 const moduleValidator_1 = require("./moduleValidator");
 let quoteConverter;
 let diagnosticProvider;
-let warningDiagnosticProvider;
 let nounSymbolDiagnosticProvider;
 let moduleValidator;
 function activate(context) {
     quoteConverter = new quotationMarkConverter_1.ZSQuoteConverter();
     diagnosticProvider = new diagnosticProvider_1.ZSDiagnosticProvider(context);
-    warningDiagnosticProvider = new diagnosticProvider_1.ZSDiagnosticProviderWarning();
     nounSymbolDiagnosticProvider = new diagnosticProvider_1.ZSNounSymbolDiagnosticProvider();
     moduleValidator = new moduleValidator_1.ZSModuleValidator();
     quoteConverter.activate(context);
     mathSignSelector_1.ZSMathSignSelector.activate(context);
     const diagnosticDisposable = vscode.workspace.onDidChangeTextDocument((event) => {
         diagnosticProvider.updateDiagnostics(event.document);
-        warningDiagnosticProvider.updateDiagnostics(event.document);
         nounSymbolDiagnosticProvider.updateDiagnostics(event.document);
         moduleValidator.updateDiagnostics(event.document);
     });
     const openDisposable = vscode.workspace.onDidOpenTextDocument((document) => {
         if (document.languageId === 'zs') {
             diagnosticProvider.updateDiagnostics(document);
-            warningDiagnosticProvider.updateDiagnostics(document);
             nounSymbolDiagnosticProvider.updateDiagnostics(document);
             moduleValidator.updateDiagnostics(document);
         }
@@ -70,7 +66,6 @@ function activate(context) {
     vscode.workspace.textDocuments.forEach(document => {
         if (document.languageId === 'zs') {
             diagnosticProvider.updateDiagnostics(document);
-            warningDiagnosticProvider.updateDiagnostics(document);
             nounSymbolDiagnosticProvider.updateDiagnostics(document);
             moduleValidator.updateDiagnostics(document);
         }
@@ -84,9 +79,6 @@ function activate(context) {
             }
             if (diagnosticProvider) {
                 diagnosticProvider.dispose();
-            }
-            if (warningDiagnosticProvider) {
-                warningDiagnosticProvider.dispose();
             }
             if (nounSymbolDiagnosticProvider) {
                 nounSymbolDiagnosticProvider.dispose();
@@ -104,9 +96,6 @@ function deactivate() {
     }
     if (diagnosticProvider) {
         diagnosticProvider.dispose();
-    }
-    if (warningDiagnosticProvider) {
-        warningDiagnosticProvider.dispose();
     }
     if (nounSymbolDiagnosticProvider) {
         nounSymbolDiagnosticProvider.dispose();
