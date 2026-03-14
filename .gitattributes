@@ -1,3 +1,2 @@
 out/**/*.js linguist-generated=false
-
 *.js.map linguist-generated=true

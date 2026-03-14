@@ -24,7 +24,7 @@
       "patterns": [
         {
           "name": "keyword.control.zs",
-          "match": "(?i)\\b(when|if|unless|else|for|in|from|import|give|back|nothing|while|done|trigger|do|except|once|twice|attempt|handle|ensure|report|stream|f?r?o?z?e?n?set|before|after|assert|async|break|continue|each|proceed|halt|haltLua|haltScript|haltAll)\\b"
+          "match": "(?i)\\b(when|if|then|unless|else|for|in|from|import|give|back|nothing|while|done|trigger|do|except|once|twice|attempt|handle|ensure|report|stream|f?r?o?z?e?n?set|before|after|assert|async|break|continue|each|proceed|halt|haltLua|haltScript|haltAll)\\b"
         },
         {
           "name": "entity.name.type.zs",
@@ -32,7 +32,7 @@
         },
         {
           "name": "variable.language.zs",
-          "match": "(?i)\\b(itself|monobehaviour|unitysystem|uievent|unityengine|it|they|them|themself|true|false|f|n?o?n?local|globals?|lambda|not|or|id|iter|len|locals|map|memoryview|object|oct|ord|repr|round|undo|redo|type)\\b"
+          "match": "(?i)\\b(itself|new|monobehaviour|unitysystem|uievent|unityengine|it|they|them|themself|true|false|f|n?o?n?local|globals?|lambda|not|or|id|iter|len|locals|map|memoryview|object|oct|ord|repr|round|undo|redo|type)\\b"
         },
         {
           "name": "zs.red.zs",
@@ -162,7 +162,7 @@
       "patterns": [
         {
           "name": "zs.red.zs",
-          "match": "(?i)\\b(?!(elapsed|onEventPushed|onTweenCompleted|onTimerCompleted|onSoundFinished|onRecalculateRating|onCountdownStarted)\\b)\\w+(ed|ing|en|ght)\\b"
+          "match": "(?i)\\b(?!(elapsed|onEventPushed|onTweenCompleted|onTimerCompleted|onSoundFinished|onRecalculateRating|onCountdownStarted|then)\\b)\\w+(ed|ing|en|ght)\\b"
         },
         {
           "name": "zs.purple.zs",
@@ -234,7 +234,7 @@
         },
         {
           "name": "keyword.preposition.possession.zs",
-          "match": "(?i)\\b(of|or|to|with|then|and)\\b"
+          "match": "(?i)\\b(of|or|to|with|and)\\b"
         },
         {
           "name": "keyword.preposition.comparison.zs",

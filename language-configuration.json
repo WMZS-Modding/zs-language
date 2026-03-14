@@ -29,5 +29,9 @@
         ["/|", "|\\"],
         ["“", "”"],
         ["‘", "’"]
-    ]
+    ],
+    "indentationRules": {
+        "increaseIndentPattern": "^\\s*(if|else|else if|for|while|repeat|attempt|except).*[:do]\\s*$|^\\s*[a-zA-Z_]+:",
+        "decreaseIndentPattern": "^\\s*$|^\\s*\\S"
+    }
 }

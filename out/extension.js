@@ -40,27 +40,32 @@ const quotationMarkConverter_1 = require("./quotationMarkConverter");
 const diagnosticProvider_1 = require("./diagnosticProvider");
 const mathSignSelector_1 = require("./mathSignSelector");
 const moduleValidator_1 = require("./moduleValidator");
+const indentationProvider_1 = require("./indentationProvider");
 let quoteConverter;
 let diagnosticProvider;
 let nounSymbolDiagnosticProvider;
 let moduleValidator;
+let indentationProvider;
 function activate(context) {
     quoteConverter = new quotationMarkConverter_1.ZSQuoteConverter();
     diagnosticProvider = new diagnosticProvider_1.ZSDiagnosticProvider(context);
     nounSymbolDiagnosticProvider = new diagnosticProvider_1.ZSNounSymbolDiagnosticProvider();
     moduleValidator = new moduleValidator_1.ZSModuleValidator();
+    indentationProvider = new indentationProvider_1.ZSIndentationProvider();
     quoteConverter.activate(context);
     mathSignSelector_1.ZSMathSignSelector.activate(context);
     const diagnosticDisposable = vscode.workspace.onDidChangeTextDocument((event) => {
         diagnosticProvider.updateDiagnostics(event.document);
         nounSymbolDiagnosticProvider.updateDiagnostics(event.document);
         moduleValidator.updateDiagnostics(event.document);
+        indentationProvider.updateDiagnostics(event.document);
     });
     const openDisposable = vscode.workspace.onDidOpenTextDocument((document) => {
         if (document.languageId === 'zs') {
             diagnosticProvider.updateDiagnostics(document);
             nounSymbolDiagnosticProvider.updateDiagnostics(document);
             moduleValidator.updateDiagnostics(document);
+            indentationProvider.updateDiagnostics(document);
         }
     });
     vscode.workspace.textDocuments.forEach(document => {
@@ -68,6 +73,7 @@ function activate(context) {
             diagnosticProvider.updateDiagnostics(document);
             nounSymbolDiagnosticProvider.updateDiagnostics(document);
             moduleValidator.updateDiagnostics(document);
+            indentationProvider.updateDiagnostics(document);
         }
     });
     const commandDisposable = vscode.commands.registerCommand('zs.convertQuotes', () => {
@@ -86,6 +92,9 @@ function activate(context) {
             if (moduleValidator) {
                 moduleValidator.dispose();
             }
+            if (indentationProvider) {
+                indentationProvider.dispose();
+            }
         } }, vscode.languages.registerCodeActionsProvider('zs', diagnosticProvider, {
         providedCodeActionKinds: [vscode.CodeActionKind.QuickFix]
     }));
@@ -102,6 +111,9 @@ function deactivate() {
     }
     if (moduleValidator) {
         moduleValidator.dispose();
+    }
+    if (indentationProvider) {
+        indentationProvider.dispose();
     }
     mathSignSelector_1.ZSMathSignSelector.deactivate();
 }

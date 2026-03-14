@@ -2,7 +2,7 @@
   "name": "zs-language",
   "displayName": "ZS Language",
   "description": "An extension that helps clarify the codes of the ZS language",
-  "version": "1.1.9",
+  "version": "1.2.0",
   "publisher": "SuperHero2010",
   "license": "MIT or GPL-3.0-only",
   "bugs": {
@@ -99,7 +99,13 @@
         "mac": "cmd+'",
         "when": "editorTextFocus && editorLangId == zs"
       }
-    ]
+    ],
+    "configurationDefaults": {
+      "[zs]": {
+        "editor.formatOnType": true,
+        "editor.autoIndent": "none"
+      }
+    }
   },
   "devDependencies": {
     "@types/node": "^24.6.0",
