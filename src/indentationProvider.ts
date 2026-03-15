@@ -5,6 +5,7 @@ export class ZSIndentationProvider {
     private blockStack: number[] = [0];
     private currentIndent = 0;
     private expectingBlockContent = false;
+    private inBlockComment = false;
 
     constructor() {
         this.diagnosticCollection = vscode.languages.createDiagnosticCollection('zs-indentation');
@@ -21,20 +22,26 @@ export class ZSIndentationProvider {
         this.blockStack = [0];
         this.currentIndent = 0;
         this.expectingBlockContent = false;
+        this.inBlockComment = false;
+
+        const editor = vscode.window.activeTextEditor;
+        const tabSize = editor?.options.tabSize as number || 4;
 
         for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
             const line = lines[lineIndex];
-            const lineDiagnostics = this.validateLine(line, lineIndex, document);
+            const lineDiagnostics = this.validateLine(line, lineIndex, document, tabSize);
             diagnostics.push(...lineDiagnostics);
         }
 
         this.diagnosticCollection.set(document.uri, diagnostics);
     }
 
-    private validateLine(line: string, lineIndex: number, document: vscode.TextDocument): vscode.Diagnostic[] {
+    private validateLine(line: string, lineIndex: number, document: vscode.TextDocument, tabSize: number): vscode.Diagnostic[] {
         const diagnostics: vscode.Diagnostic[] = [];
 
-        const hasNonSpaceChar = /\S/.test(line);
+        const expandedLine = line.replace(/\t/g, ' '.repeat(tabSize));
+
+        const hasNonSpaceChar = /\S/.test(expandedLine);
 
         if (!hasNonSpaceChar) {
             this.blockStack = [0];
@@ -43,13 +50,25 @@ export class ZSIndentationProvider {
             return [];
         }
 
-        const trimmedLine = line.trim();
+        const trimmedLine = expandedLine.trim();
+        const indentLevel = expandedLine.length - expandedLine.trimStart().length;
+
+        if (trimmedLine.includes('*/-')) {
+            this.inBlockComment = true;
+            return [];
+        }
+        if (trimmedLine.includes('/-*')) {
+            this.inBlockComment = false;
+            return [];
+        }
+
+        if (this.inBlockComment) {
+            return [];
+        }
 
         if (trimmedLine.startsWith('-/')) {
             return [];
         }
-
-        const indentLevel = line.length - line.trimStart().length;
 
         if (this.isBlockStarter(trimmedLine)) {
             this.blockStack.push(this.currentIndent);
@@ -60,6 +79,7 @@ export class ZSIndentationProvider {
 
         if (this.expectingBlockContent) {
             const expectedMinIndent = this.blockStack[this.blockStack.length - 1] + 4;
+
             if (indentLevel < expectedMinIndent) {
                 diagnostics.push(this.createDiagnostic(
                     lineIndex,
