@@ -174,7 +174,7 @@
         },
         {
           "name": "zs.red.zs",
-          "match": "(?i)\\b(?!(retry|preUpdateScore|miss|misses|removes?|replaces?|reads?|repr||repeat|resumes?|reverses?|removeprefix|removesuffix)\\b)(mis|out|over|pre|re|un)\\w+\\b"
+          "match": "(?i)\\b(?!(retry|preUpdateScore|miss|misses|removes?|replaces?|reads?|repr|repeat|resumes?|reverses?|removeprefix|removesuffix)\\b)(mis|out|over|pre|re|un)\\w+\\b"
         },
         {
           "name": "zs.blue.zs",
