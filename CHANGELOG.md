@@ -1,2 +1,2 @@
 # 🛠 What's changed
-Fix false positives of `\t` (Tabs characters): Convert `\t` to `\s` (Spaces characters)
+Fix false positives of `\t` (Tab characters): Convert `\t` to `\s` (Space characters)
