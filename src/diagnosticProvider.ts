@@ -52,11 +52,11 @@ export class ZSDiagnosticProvider {
             'when', 'then', 'prefab', 'unitysystem', 'unityengine', 'union', 'undo', 'redo',
 
             'light', 'right', 'night', 'fight', 'sight',
-            'bright', 'tight', 'eight', 'weight', 'height', 'thought',
+            'bright', 'tight', 'eight', 'weight', 'height', 'thought', 'read', 'reads', 'repeat', 'report', 'repr', 'remove', 'removes', 'replaces', 'replace',
 
             'elapsed', 'onEventPushed', 'onTweenCompleted', 'onTimerCompleted',
             'onSoundFinished', 'onRecalculateRating', 'onCountdownStarted',
-            'retry', 'preUpdateScore', 'miss', 'proceed', 'unless', 'misses',
+            'retry', 'preUpdateScore', 'miss', 'proceed', 'unless', 'misses', 'resumes', 'resume', 'reverse', 'reverses', 'removeprefix', 'removesuffix',
 
             'using', 'excluding', 'including', 'nothing',
             'overrides', 'overwrites', 'override', 'overwrite'

@@ -1,2 +1,2 @@
 # 🛠 What's changed
-Fix false positives of `\t` (Tab characters): Convert `\t` to `\s` (Space characters)
+Add missing keywords like 'read', 'reads', 'repeat', 'report', 'repr', 'remove', 'removes', 'replaces', 'replace', 'resumes', 'resume', 'reverse', 'reverses', 'removeprefix', 'removesuffix', to exception list in `diagnosticProvider.js`
