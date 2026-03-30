@@ -1,2 +1,2 @@
 # 🛠 What's changed
-Add missing keywords like 'read', 'reads', 'repeat', 'report', 'repr', 'remove', 'removes', 'replaces', 'replace', 'resumes', 'resume', 'reverse', 'reverses', 'removeprefix', 'removesuffix', to exception list in `diagnosticProvider.js`
+Update themes to fit the latest VS Code's themes
