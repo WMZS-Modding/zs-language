@@ -142,7 +142,7 @@
           "match": "/\\|[^|\\\\\\n]+\\|\\\\"
         },
         {
-          "name" : "zs.blue.abs.zs",
+          "name" : "zs.yellow.abs.zs",
           "match": "\\|[^|\\\\\\n]+\\|"
         }
       ]
