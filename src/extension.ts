@@ -20,11 +20,11 @@ export function activate(context: vscode.ExtensionContext): void {
 
     quoteConverter.activate(context);
     ZSMathSignSelector.activate(context);
-    
+    moduleValidator.activate(context);
+
     const diagnosticDisposable = vscode.workspace.onDidChangeTextDocument((event) => {
         diagnosticProvider.updateDiagnostics(event.document);
         nounSymbolDiagnosticProvider.updateDiagnostics(event.document);
-        moduleValidator.updateDiagnostics(event.document);
         indentationProvider.updateDiagnostics(event.document);
     });
 
@@ -32,7 +32,6 @@ export function activate(context: vscode.ExtensionContext): void {
         if (document.languageId === 'zs') {
             diagnosticProvider.updateDiagnostics(document);
             nounSymbolDiagnosticProvider.updateDiagnostics(document);
-            moduleValidator.updateDiagnostics(document);
             indentationProvider.updateDiagnostics(document);
         }
     });
@@ -41,7 +40,6 @@ export function activate(context: vscode.ExtensionContext): void {
         if (document.languageId === 'zs') {
             diagnosticProvider.updateDiagnostics(document);
             nounSymbolDiagnosticProvider.updateDiagnostics(document);
-            moduleValidator.updateDiagnostics(document);
             indentationProvider.updateDiagnostics(document);
         }
     });
@@ -54,12 +52,10 @@ export function activate(context: vscode.ExtensionContext): void {
         diagnosticDisposable,
         openDisposable,
         commandDisposable,
-        moduleValidator,
         { dispose: () => {
             if (quoteConverter) { quoteConverter.dispose?.(); }
             if (diagnosticProvider) { diagnosticProvider.dispose(); }
             if (nounSymbolDiagnosticProvider) { nounSymbolDiagnosticProvider.dispose(); }
-            if (moduleValidator) { moduleValidator.dispose(); }
             if (indentationProvider) { indentationProvider.dispose(); }
         }},
         vscode.languages.registerCodeActionsProvider('zs', diagnosticProvider, {
@@ -77,9 +73,6 @@ export function deactivate(): void {
     }
     if (nounSymbolDiagnosticProvider) {
         nounSymbolDiagnosticProvider.dispose();
-    }
-    if (moduleValidator) {
-        moduleValidator.dispose();
     }
     if (indentationProvider) {
         indentationProvider.dispose();

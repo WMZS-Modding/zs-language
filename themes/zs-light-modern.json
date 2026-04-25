@@ -1597,5 +1597,15 @@
 				"foreground": "#D3D3D3"
 			}
 		}
-	]
+	],
+    "semanticHighlighting": true,
+    "semanticTokenColors": {
+        "newOperator": "#0000ff",
+        "stringLiteral": "#a31515",
+        "customLiteral": "#000000",
+        "numberLiteral": "#098658",
+        "module": "#82D9C7",
+        "alias": "#B8E6FE"
+        //"keyword": "#7CB2DF"
+    }
 }

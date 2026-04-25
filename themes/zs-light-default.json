@@ -1987,5 +1987,11 @@
 				"foreground": "#D3D3D3"
 			}
 		}
-	]
+	],
+	"semanticHighlighting": true,
+	"semanticTokenColors": {
+        "module": "#82D9C7",
+        "alias": "#B8E6FE"
+        // "keyword": "#7CB2DF"
+	}
 }

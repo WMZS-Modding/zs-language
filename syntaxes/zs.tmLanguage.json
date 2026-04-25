@@ -13,6 +13,7 @@
     { "include": "#tilemap-noun"},
     { "include": "#function-noun" },
     { "include": "#script-noun" },
+    { "include": "#module-usage" },
     { "include": "#language-type" },
     { "include": "#function" },
     { "include": "#specialwords" },
@@ -40,7 +41,7 @@
         },
         {
           "name": "zs.green.zs",
-          "match": "(?i)\\b(moves?|runs?|plays?|touche?s?|cuts?|earses?|waite?s?|does|blows?|is|are|flows?|loads?|calla?b?l?e?|calls|stops?|deletes?|destroys?|removes?|replaces?|clear|copy|copies|adds?|count|extends?|r?index|insert|popi?t?e?m?|reverses?|sort|append|s?y?m?m?e?t?r?i?c?_?difference_?u?p?d?a?t?e?|discard|intersection_?u?p?d?a?t?e?|isdisjoint|issubset|issuperset|union|updates?|fromkeys|gets?|items|keys|setdefault|values|capitalize|casefold|center|encode|endswith|expandtabs|r?find|format_?m?a?p?|isalnum|isalpha|isascii|isdecimal|isdigit|isidentifier|i?s?lower|isnumeric|isprintable|isspace|i?s?title|i?s?upper|join|ljust|lstrip|maketrans|r?partition|removeprefix|removesuffix|rjust|rsplit|r?strip|splitl?i?n?e?s?|starts?w?i?t?h?|swapcase|translate|zfill|filter|help|isinstance|issubclass|opens?|slices?|complement|emptyset|elementof|p?r?o?p?e?r?subset|infinity|attacks?|burns?|chooses?|cleaves?|digs?|dives?|draws?|fights?|finds?|fly|flies|freezes?|grows?|hears?|hides?|hit|hurt|keeps?|learns?|lets?|puts?|reads?|shakes?|shoots?|shows?|sings?|sleeps?|speeds?|sweeps?|writes?|wins?|loses?|exits?|exists?|skips?|leaves?|resumes?|produces?|matche?s?|verify|verifies|closes?|writes?|overrides?|overwrites?)\\b"
+          "match": "(?i)\\b(moves?|runs?|plays?|touche?s?|cuts?|earses?|waite?s?|does|blows?|is|are|flows?|loads?|calla?b?l?e?|calls|stops?|deletes?|destroys?|removes?|replaces?|clear|copy|copies|adds?|count|extends?|r?index|insert|popi?t?e?m?|reverses?|sort|append|s?y?m?m?e?t?r?i?c?_?difference_?u?p?d?a?t?e?|discard|intersection_?u?p?d?a?t?e?|isdisjoint|issubset|issuperset|union|updates?|fromkeys|gets?|items|keys|setdefault|values|capitalize|casefold|center|encode|endswith|expandtabs|r?find|format_?m?a?p?|isalnum|isalpha|isascii|isdecimal|isdigit|isidentifier|i?s?lower|isnumeric|isprintable|isspace|i?s?title|i?s?upper|join|ljust|lstrip|maketrans|r?partition|removeprefix|removesuffix|rjust|rsplit|r?strip|splitl?i?n?e?s?|starts?w?i?t?h?|swapcase|translate|zfill|filter|help|isinstance|issubclass|opens?|slices?|complement|emptyset|elementof|p?r?o?p?e?r?subset|infinity|attacks?|burns?|chooses?|cleaves?|digs?|dives?|draws?|fights?|finds?|fly|flies|freezes?|grows?|hears?|hides?|hit|hurt|keeps?|learns?|lets?|puts?|reads?|shakes?|shoots?|shows?|sings?|sleeps?|speeds?|sweeps?|writes?|wins?|loses?|exits?|exists?|skips?|leaves?|resumes?|produces?|matche?s?|verify|verifies|closes?|writes?|overrides?|overwrites?|arranges?|rearranges?|invert)\\b"
         },
         {
           "name": "entity.name.function.zs",
@@ -139,6 +140,10 @@
         {
           "name" : "zs.blue.tilemap.zs",
           "match": "/\\|[^|\\\\\\n]+\\|\\\\"
+        },
+        {
+          "name" : "zs.blue.abs.zs",
+          "match": "\\|[^|\\\\\\n]+\\|"
         }
       ]
     },
@@ -158,6 +163,18 @@
         }
       ]
     },
+    "module-usage": {
+      "patterns": [
+        {
+          "name": "meta.module-usage.zs",
+          "match": "\\b([a-zA-Z_][a-zA-Z0-9_]*)\\s*:\\s*([a-zA-Z_][a-zA-Z0-9_]*)",
+          "captures": {
+            "1": { "name": "entity.name.type.module.zs" },
+            "2": { "name": "entity.name.function.zs" }
+          }
+        }
+      ]
+    },
     "specialwords": {
       "patterns": [
         {
@@ -174,7 +191,7 @@
         },
         {
           "name": "zs.red.zs",
-          "match": "(?i)\\b(?!(retry|preUpdateScore|miss|misses|removes?|replaces?|reads?|repr|repeat|resumes?|reverses?|removeprefix|removesuffix)\\b)(mis|out|over|pre|re|un)\\w+\\b"
+          "match": "(?i)\\b(?!(retry|preUpdateScore|miss|misses|removes?|replaces?|reads?|repr|repeat|resumes?|reverses?|removeprefix|removesuffix|rearranges?)\\b)(mis|out|over|pre|re|un)\\w+\\b"
         },
         {
           "name": "zs.blue.zs",

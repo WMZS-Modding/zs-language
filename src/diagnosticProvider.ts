@@ -56,7 +56,7 @@ export class ZSDiagnosticProvider {
 
             'elapsed', 'onEventPushed', 'onTweenCompleted', 'onTimerCompleted',
             'onSoundFinished', 'onRecalculateRating', 'onCountdownStarted',
-            'retry', 'preUpdateScore', 'miss', 'proceed', 'unless', 'misses', 'resumes', 'resume', 'reverse', 'reverses', 'removeprefix', 'removesuffix',
+            'retry', 'preUpdateScore', 'miss', 'proceed', 'unless', 'misses', 'resumes', 'resume', 'reverse', 'reverses', 'removeprefix', 'removesuffix', 'rearrange', 'rearranges',
 
             'using', 'excluding', 'including', 'nothing',
             'overrides', 'overwrites', 'override', 'overwrite'

@@ -2,7 +2,7 @@
   "name": "zs-language",
   "displayName": "ZS Language",
   "description": "An extension that helps clarify the codes of the ZS language",
-  "version": "1.2.3",
+  "version": "1.3.0",
   "publisher": "SuperHero2010",
   "license": "MIT or GPL-3.0-only",
   "bugs": {
@@ -115,7 +115,25 @@
         "editor.formatOnType": true,
         "editor.autoIndent": "none"
       }
-    }
+    },
+    "semanticTokenTypes": [
+      {
+        "id": "module",
+        "superType": "namespace",
+        "description": "Imported module names"
+      },
+      {
+        "id": "alias",
+        "superType": "variable",
+        "description": "Module aliases"
+      },
+      {
+        "id": "keyword",
+        "superType": "keyword",
+        "description": "Import keywords"
+      }
+    ],
+    "semanticTokenModifiers": []
   },
   "devDependencies": {
     "@types/node": "^24.6.0",

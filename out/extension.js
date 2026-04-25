@@ -54,17 +54,16 @@ function activate(context) {
     indentationProvider = new indentationProvider_1.ZSIndentationProvider();
     quoteConverter.activate(context);
     mathSignSelector_1.ZSMathSignSelector.activate(context);
+    moduleValidator.activate(context);
     const diagnosticDisposable = vscode.workspace.onDidChangeTextDocument((event) => {
         diagnosticProvider.updateDiagnostics(event.document);
         nounSymbolDiagnosticProvider.updateDiagnostics(event.document);
-        moduleValidator.updateDiagnostics(event.document);
         indentationProvider.updateDiagnostics(event.document);
     });
     const openDisposable = vscode.workspace.onDidOpenTextDocument((document) => {
         if (document.languageId === 'zs') {
             diagnosticProvider.updateDiagnostics(document);
             nounSymbolDiagnosticProvider.updateDiagnostics(document);
-            moduleValidator.updateDiagnostics(document);
             indentationProvider.updateDiagnostics(document);
         }
     });
@@ -72,14 +71,13 @@ function activate(context) {
         if (document.languageId === 'zs') {
             diagnosticProvider.updateDiagnostics(document);
             nounSymbolDiagnosticProvider.updateDiagnostics(document);
-            moduleValidator.updateDiagnostics(document);
             indentationProvider.updateDiagnostics(document);
         }
     });
     const commandDisposable = vscode.commands.registerCommand('zs.convertQuotes', () => {
         quoteConverter.convertDocumentQuotes();
     });
-    context.subscriptions.push(diagnosticDisposable, openDisposable, commandDisposable, moduleValidator, { dispose: () => {
+    context.subscriptions.push(diagnosticDisposable, openDisposable, commandDisposable, { dispose: () => {
             if (quoteConverter) {
                 quoteConverter.dispose?.();
             }
@@ -88,9 +86,6 @@ function activate(context) {
             }
             if (nounSymbolDiagnosticProvider) {
                 nounSymbolDiagnosticProvider.dispose();
-            }
-            if (moduleValidator) {
-                moduleValidator.dispose();
             }
             if (indentationProvider) {
                 indentationProvider.dispose();
@@ -108,9 +103,6 @@ function deactivate() {
     }
     if (nounSymbolDiagnosticProvider) {
         nounSymbolDiagnosticProvider.dispose();
-    }
-    if (moduleValidator) {
-        moduleValidator.dispose();
     }
     if (indentationProvider) {
         indentationProvider.dispose();

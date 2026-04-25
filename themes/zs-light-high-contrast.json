@@ -1593,5 +1593,11 @@
 				"foreground": "#D3D3D3"
 			}
 		}
-	]
+	],
+	"semanticHighlighting": true,
+	"semanticTokenColors": {
+        "module": "#A5E3D7",
+        "alias": "#E6F6FF"
+        // "keyword": "#A1C8E8"
+	}
 }
