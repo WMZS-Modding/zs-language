@@ -1,4 +1,4 @@
-# 🛠 What's changed
+# 🛠 What's new in THE SEMANTIC UPDATE
 - ➕ Add arrange, rearrange, reverse, invert
 - ✅ Enable sematic highlighting and add sematic color to 8 themes
 - 🔨 Add `||` for absolute value
