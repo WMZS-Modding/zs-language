@@ -25,7 +25,7 @@
       "patterns": [
         {
           "name": "keyword.control.zs",
-          "match": "(?i)\\b(when|if|then|unless|else|for|in|from|import|give|back|nothing|while|done|trigger|do|except|once|twice|attempt|handle|ensure|report|repeat|stream|f?r?o?z?e?n?set|before|after|assert|async|break|continue|each|proceed|halt|haltLua|haltScript|haltAll)\\b"
+          "match": "(?i)\\b(when|if|then|unless|else|for|in|from|import|give|back|nothing|while|done|trigger|do|except|once|twice|attempt|handle|ensure|report|repeat|stream|f?r?o?z?e?n?set|before|after|assert|async|break|continue|each|proceed|halt|haltLua|haltScript|haltAll|change|read|uniform|add|remove)\\b"
         },
         {
           "name": "entity.name.type.zs",
@@ -41,11 +41,11 @@
         },
         {
           "name": "zs.green.zs",
-          "match": "(?i)\\b(moves?|runs?|plays?|touche?s?|cuts?|earses?|waite?s?|does|blows?|is|are|flows?|loads?|calla?b?l?e?|calls|stops?|deletes?|destroys?|removes?|replaces?|clear|copy|copies|adds?|count|extends?|r?index|insert|popi?t?e?m?|reverses?|sort|append|s?y?m?m?e?t?r?i?c?_?difference_?u?p?d?a?t?e?|discard|intersection_?u?p?d?a?t?e?|isdisjoint|issubset|issuperset|union|updates?|fromkeys|gets?|items|keys|setdefault|values|capitalize|casefold|center|encode|endswith|expandtabs|r?find|format_?m?a?p?|isalnum|isalpha|isascii|isdecimal|isdigit|isidentifier|i?s?lower|isnumeric|isprintable|isspace|i?s?title|i?s?upper|join|ljust|lstrip|maketrans|r?partition|removeprefix|removesuffix|rjust|rsplit|r?strip|splitl?i?n?e?s?|starts?w?i?t?h?|swapcase|translate|zfill|filter|help|isinstance|issubclass|opens?|slices?|complement|emptyset|elementof|p?r?o?p?e?r?subset|infinity|attacks?|burns?|chooses?|cleaves?|digs?|dives?|draws?|fights?|finds?|fly|flies|freezes?|grows?|hears?|hides?|hit|hurt|keeps?|learns?|lets?|puts?|reads?|shakes?|shoots?|shows?|sings?|sleeps?|speeds?|sweeps?|writes?|wins?|loses?|exits?|exists?|skips?|leaves?|resumes?|produces?|matche?s?|verify|verifies|closes?|writes?|overrides?|overwrites?|arranges?|rearranges?|invert)\\b"
+          "match": "(?i)\\b(moves?|runs?|plays?|touche?s?|cuts?|earses?|waite?s?|does|blows?|is|are|flows?|loads?|calla?b?l?e?|calls|stops?|deletes?|destroys?|removes|replaces?|clear|copy|copies|adds|count|extends?|r?index|insert|popi?t?e?m?|reverses?|sort|append|s?y?m?m?e?t?r?i?c?_?difference_?u?p?d?a?t?e?|discard|intersection_?u?p?d?a?t?e?|isdisjoint|issubset|issuperset|union|updates?|fromkeys|gets?|items|keys|setdefault|values|capitalize|casefold|center|encode|endswith|expandtabs|r?find|format_?m?a?p?|isalnum|isalpha|isascii|isdecimal|isdigit|isidentifier|i?s?lower|isnumeric|isprintable|isspace|i?s?title|i?s?upper|join|ljust|lstrip|maketrans|r?partition|removeprefix|removesuffix|rjust|rsplit|r?strip|splitl?i?n?e?s?|starts?w?i?t?h?|swapcase|translate|zfill|filter|help|isinstance|issubclass|opens?|slices?|complement|emptyset|elementof|p?r?o?p?e?r?subset|infinity|attacks?|burns?|chooses?|cleaves?|digs?|dives?|draws?|fights?|finds?|fly|flies|freezes?|grows?|hears?|hides?|hit|hurt|keeps?|learns?|lets?|puts?|reads|shakes?|shoots?|shows?|sings?|sleeps?|speeds?|sweeps?|writes?|wins?|loses?|exits?|exists?|skips?|leaves?|resumes?|produces?|matche?s?|verify|verifies|closes?|writes?|overrides?|overwrites?|arranges?|rearranges?|invert|register|apply|tween)\\b"
         },
         {
           "name": "entity.name.function.zs",
-          "match": "(?i)\\b(abs|aiter|all|any|anext|ascii|bin|breakpoint|chr|compile|delattr|dir|divmod|enumerate|eval|exec|getattr|hasattr|hash|hex|min|max|next|setattr|sum|vars|__import__)\\b"
+          "match": "(?i)\\b(abs|aiter|all|any|anext|ascii|bin|breakpoint|chr|compile|delattr|dir|divmod|enumerate|eval|exec|getattr|hasattr|hash|hex|min|max|setattr|sum|vars|__import__)\\b"
         }
       ]
     },
@@ -179,11 +179,11 @@
       "patterns": [
         {
           "name": "zs.red.zs",
-          "match": "(?i)\\b(?!(elapsed|onEventPushed|onTweenCompleted|onTimerCompleted|onSoundFinished|onRecalculateRating|onCountdownStarted|then)\\b)\\w+(ed|ing|en|ght)\\b"
+          "match": "(?i)\\b(?!(elapsed|onEventPushed|onTweenCompleted|onTimerCompleted|onSoundFinished|onRecalculateRating|onCountdownStarted|then|tween)\\b)\\w+(ed|ing|en|ght)\\b"
         },
         {
           "name": "zs.purple.zs",
-          "match": "(?i)\\b\\w+(ly|fold)\\b"
+          "match": "(?i)\\b\\w+(?!(apply)\\b)(ly|fold)\\b"
         },
         {
           "name": "zs.orange.zs",
@@ -196,6 +196,10 @@
         {
           "name": "zs.blue.zs",
           "match": "(?i)\\b(defeat|victory)\\b"
+        },
+        {
+          "name": "zs.yellow.zs",
+          "match": "(?i)\\b(property|sub)\\b"
         }
       ]
     },

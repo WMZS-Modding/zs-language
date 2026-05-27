@@ -59,7 +59,9 @@ export class ZSDiagnosticProvider {
             'retry', 'preUpdateScore', 'miss', 'proceed', 'unless', 'misses', 'resumes', 'resume', 'reverse', 'reverses', 'removeprefix', 'removesuffix', 'rearrange', 'rearranges',
 
             'using', 'excluding', 'including', 'nothing',
-            'overrides', 'overwrites', 'override', 'overwrite'
+            'overrides', 'overwrites', 'override', 'overwrite',
+
+            'uniform', 'register'
         ]);
     }
 
