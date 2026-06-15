@@ -1,3 +1,2 @@
 # 🛠 What's changed
-- Add template, step and reset
-- Add Parenthesis Validator
+Parenthesis Validator: Fix syntax error. Change to `if (!inString && (char === '"' || char === '\'' || char === "‘" || char === '’' || char === '“' || char === '”'))`

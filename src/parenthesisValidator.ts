@@ -126,7 +126,7 @@ export class ZSParenthesisValidator {
                 continue;
             }
 
-            if (!inString && (char === '"' || char === '"' || char === "'" || char === '’')) {
+            if (!inString && (char === '"' || char === '\'' || char === "‘" || char === '’' || char === '“' || char === '”')) {
                 inString = true;
                 stringChar = char;
                 continue;
