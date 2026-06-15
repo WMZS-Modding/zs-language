@@ -4,12 +4,14 @@ import { ZSDiagnosticProvider, ZSNounSymbolDiagnosticProvider } from './diagnost
 import { ZSMathSignSelector } from './mathSignSelector';
 import { ZSModuleValidator } from './moduleValidator';
 import { ZSIndentationProvider } from './indentationProvider';
+import { ZSParenthesisValidator } from './parenthesisValidator';
 
 let quoteConverter: ZSQuoteConverter;
 let diagnosticProvider: ZSDiagnosticProvider;
 let nounSymbolDiagnosticProvider: ZSNounSymbolDiagnosticProvider;
 let moduleValidator: ZSModuleValidator;
 let indentationProvider: ZSIndentationProvider;
+let parenthesisValidator: ZSParenthesisValidator;
 
 export function activate(context: vscode.ExtensionContext): void {
     quoteConverter = new ZSQuoteConverter();
@@ -17,10 +19,12 @@ export function activate(context: vscode.ExtensionContext): void {
     nounSymbolDiagnosticProvider = new ZSNounSymbolDiagnosticProvider();
     moduleValidator = new ZSModuleValidator();
     indentationProvider = new ZSIndentationProvider();
+    parenthesisValidator = new ZSParenthesisValidator();
 
     quoteConverter.activate(context);
     ZSMathSignSelector.activate(context);
     moduleValidator.activate(context);
+    parenthesisValidator.activate(context);
 
     const diagnosticDisposable = vscode.workspace.onDidChangeTextDocument((event) => {
         diagnosticProvider.updateDiagnostics(event.document);

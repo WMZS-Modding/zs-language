@@ -22,10 +22,11 @@ My language isn't difficult, just like we write a sentence for daily communicati
     + "Quotes detector": This is small feature, but it's important. When you write `'` and/or `"`, it'll underline them with red lines
     + "Commas Detector" and "Spaces Detector": Both features are the same in underline with red lines, but they're handle symbols differently, for noun symbols only
     + Moreover, it'll underline any non-word/number characters with red lines
-- "Math selector": Because `-`, `*` and `:` aren't both negative sign and minus sign, multiplication sign, division sign; this feature will help you choose negative sign or real minus sign when you enter `-`, `*` or `:`
+- "Math selector": Because `-`, `*` and `:` aren't both negative sign and minus sign, multiplication sign, division sign; this feature will help you choose negative sign or real minus sign when you press `Ctrl/Cmd + '`
+- "Parenthesis Validator": ZS follows Math parenthesis rule. This script help you arrange parentheses correctly
 
 ### ❌ Unsupported features:
-- ZS to C# and LUA converter: it is very difficult to create this feature. Since my language is easy to write for non-programmers, creating a TS script to convert ZS code to C# and LUA code is very difficult, even failed and may never be done
+- ZS to C# converter: it is very difficult to create this feature. Since my language is easy to write for non-programmers, creating a TS script to convert ZS code to C# code is very difficult, even failed and may never be done
 - Spell checking for words: although possible, it is not possible because it still has to be added manually, making me have to search online, wasting time
 
 ## 🗃 Explain some symbols

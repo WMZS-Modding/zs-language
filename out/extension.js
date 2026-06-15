@@ -41,20 +41,24 @@ const diagnosticProvider_1 = require("./diagnosticProvider");
 const mathSignSelector_1 = require("./mathSignSelector");
 const moduleValidator_1 = require("./moduleValidator");
 const indentationProvider_1 = require("./indentationProvider");
+const parenthesisValidator_1 = require("./parenthesisValidator");
 let quoteConverter;
 let diagnosticProvider;
 let nounSymbolDiagnosticProvider;
 let moduleValidator;
 let indentationProvider;
+let parenthesisValidator;
 function activate(context) {
     quoteConverter = new quotationMarkConverter_1.ZSQuoteConverter();
     diagnosticProvider = new diagnosticProvider_1.ZSDiagnosticProvider(context);
     nounSymbolDiagnosticProvider = new diagnosticProvider_1.ZSNounSymbolDiagnosticProvider();
     moduleValidator = new moduleValidator_1.ZSModuleValidator();
     indentationProvider = new indentationProvider_1.ZSIndentationProvider();
+    parenthesisValidator = new parenthesisValidator_1.ZSParenthesisValidator();
     quoteConverter.activate(context);
     mathSignSelector_1.ZSMathSignSelector.activate(context);
     moduleValidator.activate(context);
+    parenthesisValidator.activate(context);
     const diagnosticDisposable = vscode.workspace.onDidChangeTextDocument((event) => {
         diagnosticProvider.updateDiagnostics(event.document);
         nounSymbolDiagnosticProvider.updateDiagnostics(event.document);

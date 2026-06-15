@@ -33,7 +33,7 @@
         },
         {
           "name": "variable.language.zs",
-          "match": "(?i)\\b(itself|new|monobehaviour|unitysystem|uievent|unityengine|it|they|them|themself|true|false|f|n?o?n?local|globals?|lambda|not|or|id|iter|len|locals|map|memoryview|object|oct|ord|repr|round|undo|redo|type)\\b"
+          "match": "(?i)\\b(itself|new|monobehaviour|unitysystem|uievent|unityengine|it|they|them|themself|true|false|f|n?o?n?local|globals?|lambda|not|or|id|iter|len|locals|map|memoryview|object|oct|ord|repr|round|undo|redo|template)\\b"
         },
         {
           "name": "zs.red.zs",
@@ -41,7 +41,7 @@
         },
         {
           "name": "zs.green.zs",
-          "match": "(?i)\\b(moves?|runs?|plays?|touche?s?|cuts?|earses?|waite?s?|does|blows?|is|are|flows?|loads?|calla?b?l?e?|calls|stops?|deletes?|destroys?|removes|replaces?|clear|copy|copies|adds|count|extends?|r?index|insert|popi?t?e?m?|reverses?|sort|append|s?y?m?m?e?t?r?i?c?_?difference_?u?p?d?a?t?e?|discard|intersection_?u?p?d?a?t?e?|isdisjoint|issubset|issuperset|union|updates?|fromkeys|gets?|items|keys|setdefault|values|capitalize|casefold|center|encode|endswith|expandtabs|r?find|format_?m?a?p?|isalnum|isalpha|isascii|isdecimal|isdigit|isidentifier|i?s?lower|isnumeric|isprintable|isspace|i?s?title|i?s?upper|join|ljust|lstrip|maketrans|r?partition|removeprefix|removesuffix|rjust|rsplit|r?strip|splitl?i?n?e?s?|starts?w?i?t?h?|swapcase|translate|zfill|filter|help|isinstance|issubclass|opens?|slices?|complement|emptyset|elementof|p?r?o?p?e?r?subset|infinity|attacks?|burns?|chooses?|cleaves?|digs?|dives?|draws?|fights?|finds?|fly|flies|freezes?|grows?|hears?|hides?|hit|hurt|keeps?|learns?|lets?|puts?|reads|shakes?|shoots?|shows?|sings?|sleeps?|speeds?|sweeps?|writes?|wins?|loses?|exits?|exists?|skips?|leaves?|resumes?|produces?|matche?s?|verify|verifies|closes?|writes?|overrides?|overwrites?|arranges?|rearranges?|invert|register|apply|tween)\\b"
+          "match": "(?i)\\b(moves?|runs?|plays?|touche?s?|cuts?|earses?|waite?s?|does|blows?|is|are|flows?|loads?|calla?b?l?e?|calls|stops?|deletes?|destroys?|removes|replaces?|clear|copy|copies|adds|count|extends?|r?index|insert|popi?t?e?m?|reverses?|sort|append|s?y?m?m?e?t?r?i?c?_?difference_?u?p?d?a?t?e?|discard|intersection_?u?p?d?a?t?e?|isdisjoint|issubset|issuperset|union|updates?|fromkeys|gets?|items|keys|setdefault|values|capitalize|casefold|center|encode|endswith|expandtabs|r?find|format_?m?a?p?|isalnum|isalpha|isascii|isdecimal|isdigit|isidentifier|i?s?lower|isnumeric|isprintable|isspace|i?s?title|i?s?upper|join|ljust|lstrip|maketrans|r?partition|removeprefix|removesuffix|rjust|rsplit|r?strip|splitl?i?n?e?s?|starts?w?i?t?h?|swapcase|translate|zfill|filter|help|isinstance|issubclass|opens?|slices?|complement|emptyset|elementof|p?r?o?p?e?r?subset|infinity|attacks?|burns?|chooses?|cleaves?|digs?|dives?|draws?|fights?|finds?|fly|flies|freezes?|grows?|hears?|hides?|hit|hurt|keeps?|learns?|lets?|puts?|reads|shakes?|shoots?|shows?|sings?|sleeps?|speeds?|sweeps?|writes?|wins?|loses?|exits?|exists?|skips?|leaves?|resumes?|produces?|matche?s?|verify|verifies|closes?|writes?|overrides?|overwrites?|arranges?|rearranges?|invert|register|apply|tween|resets?)\\b"
         },
         {
           "name": "entity.name.function.zs",
@@ -239,7 +239,7 @@
         },
         {
           "name": "keyword.preposition.direction.zs",
-          "match": "(?i)\\b(to|into|out|through|across)\\b"
+          "match": "(?i)\\b(to|into|out|through|across|step)\\b"
         },
         {
           "name": "keyword.preposition.temporal.zs",
@@ -255,7 +255,7 @@
         },
         {
           "name": "keyword.preposition.possession.zs",
-          "match": "(?i)\\b(of|or|to|with|and)\\b"
+          "match": "(?i)\\b(of|or|with|and)\\b"
         },
         {
           "name": "keyword.preposition.comparison.zs",
