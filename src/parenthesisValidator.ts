@@ -186,72 +186,69 @@ export class ZSParenthesisValidator {
 
         for (const pair of pairs) {
             const content = line.substring(pair.openPos + 1, pair.closePos).trim();
+            const hasMathOp = content.includes('+') || content.includes('−') || content.includes('×') || content.includes('÷');
 
             if (pair.type === 'brace') {
-                const content = line.substring(pair.openPos + 1, pair.closePos).trim();
+                if (content === '') {}
+                else {
+                    if (hasMathOp) {
+                        const hasBracket = content.includes('[') || content.includes(']');
 
-                if (content === '') {
-                    const range = new vscode.Range(
-                        new vscode.Position(lineIndex, pair.openPos),
-                        new vscode.Position(lineIndex, pair.closePos + 1)
-                    );
-                    diagnostics.push(this.createDiagnostic(
-                        range,
-                        '{ } cannot be empty - must contain [ ] for math grouping',
-                        document
-                    ));
-                } else {
-                    const hasBracket = content.includes('[') || content.includes(']');
-
-                    if (!hasBracket) {
-                        const range = new vscode.Range(
-                            new vscode.Position(lineIndex, pair.openPos),
-                            new vscode.Position(lineIndex, pair.openPos + 1)
-                        );
-                        diagnostics.push(this.createDiagnostic(
-                            range,
-                            '{ } must contain [ ] for math grouping',
-                            document
-                        ));
-                    } else {
-                        let firstBracketPos = -1;
-                        let firstParenPos = -1;
-
-                        for (let i = pair.openPos + 1; i < pair.closePos; i++) {
-                            if (line[i] === '[' && firstBracketPos === -1) {
-                                firstBracketPos = i;
-                            }
-                            if (line[i] === '(' && firstParenPos === -1) {
-                                firstParenPos = i;
-                            }
-                        }
-
-                        if (firstBracketPos !== -1 && firstParenPos !== -1 && firstParenPos < firstBracketPos) {
+                        if (!hasBracket) {
                             const range = new vscode.Range(
                                 new vscode.Position(lineIndex, pair.openPos),
                                 new vscode.Position(lineIndex, pair.openPos + 1)
                             );
                             diagnostics.push(this.createDiagnostic(
                                 range,
-                                '[ ] must come before ( ) inside { }',
+                                '{ } must contain [ ] for math grouping',
                                 document
                             ));
+                        } else {
+                            let firstBracketPos = -1;
+                            let firstParenPos = -1;
+
+                            for (let i = pair.openPos + 1; i < pair.closePos; i++) {
+                                if (line[i] === '[' && firstBracketPos === -1) {
+                                    firstBracketPos = i;
+                                }
+                                if (line[i] === '(' && firstParenPos === -1) {
+                                    firstParenPos = i;
+                                }
+                            }
+
+                            if (firstBracketPos !== -1 && firstParenPos !== -1 && firstParenPos < firstBracketPos) {
+                                const range = new vscode.Range(
+                                    new vscode.Position(lineIndex, pair.openPos),
+                                    new vscode.Position(lineIndex, pair.openPos + 1)
+                                );
+                                diagnostics.push(this.createDiagnostic(
+                                    range,
+                                    '[ ] must come before ( ) inside { }',
+                                    document
+                                ));
+                            }
                         }
                     }
                 }
             }
             else if (pair.type === 'bracket') {
-                const hasParen = content.includes('(') || content.includes(')');
-                if (!hasParen && content !== '') {
-                    const range = new vscode.Range(
-                        new vscode.Position(lineIndex, pair.openPos),
-                        new vscode.Position(lineIndex, pair.openPos + 1)
-                    );
-                    diagnostics.push(this.createDiagnostic(
-                        range,
-                        '[ ] must contain ( ) inside them for math expressions',
-                        document
-                    ));
+                if (content === '') {}
+                else {
+                    if (hasMathOp) {
+                        const hasParen = content.includes('(') || content.includes(')');
+                        if (!hasParen) {
+                            const range = new vscode.Range(
+                                new vscode.Position(lineIndex, pair.openPos),
+                                new vscode.Position(lineIndex, pair.openPos + 1)
+                            );
+                            diagnostics.push(this.createDiagnostic(
+                                range,
+                                '[ ] must contain ( ) inside them for math expressions',
+                                document
+                            ));
+                        }
+                    }
                 }
             }
             else if (pair.type === 'paren') {
