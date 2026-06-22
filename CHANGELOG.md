@@ -1,2 +1,4 @@
 # 🛠 What's changed
-Parenthesis Validator: Change logic to flag if `{}` or `[]` has math operators
+Parenthesis Validator:
+- Add mixed case handler
+- Fix brace condition to flag the `()` inside `{}`

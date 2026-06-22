@@ -26,7 +26,7 @@ export class ZSParenthesisValidator {
     }
 
     private validateLine(line: string, lineIndex: number, document: vscode.TextDocument): vscode.Diagnostic[] {
-        const diagnostics: vscode.Diagnostic[] = [];
+        let diagnostics: vscode.Diagnostic[] = [];
 
         const trimmed = line.trim();
         if (trimmed.startsWith('-/')) {
@@ -188,45 +188,69 @@ export class ZSParenthesisValidator {
             const content = line.substring(pair.openPos + 1, pair.closePos).trim();
             const hasMathOp = content.includes('+') || content.includes('−') || content.includes('×') || content.includes('÷');
 
-            if (pair.type === 'brace') {
-                if (content === '') {}
-                else {
-                    if (hasMathOp) {
-                        const hasBracket = content.includes('[') || content.includes(']');
+            if (pair.type === "brace") {
+                if (content !== "") {
+                    if (content.indexOf(",") !== -1) {
+                        const elements = this.splitByCommas(content);
+                        for (const elem of elements) {
+                            const elemErrors = this.validateElement(elem, lineIndex, line, document);
+                            if (elemErrors.length > 0) {
+                                diagnostics = diagnostics.concat(elemErrors);
+                                return diagnostics;
+                            }
+                        }
+                    } else {
+                        const hasParen = content.indexOf("(") !== -1 || content.indexOf(")") !== -1;
+                        const hasBracket = content.indexOf("[") !== -1 || content.indexOf("]") !== -1;
+                        const hasMathOp = content.indexOf("+") !== -1 || content.indexOf("−") !== -1 || content.indexOf("×") !== -1 || content.indexOf("÷") !== -1;
 
-                        if (!hasBracket) {
+                        if (hasParen && !hasBracket) {
                             const range = new vscode.Range(
                                 new vscode.Position(lineIndex, pair.openPos),
                                 new vscode.Position(lineIndex, pair.openPos + 1)
                             );
                             diagnostics.push(this.createDiagnostic(
                                 range,
-                                '{ } must contain [ ] for math grouping',
+                                '{ } must contain [ ] before ( )',
                                 document
                             ));
-                        } else {
-                            let firstBracketPos = -1;
-                            let firstParenPos = -1;
+                            return diagnostics;
+                        }
 
-                            for (let i = pair.openPos + 1; i < pair.closePos; i++) {
-                                if (line[i] === '[' && firstBracketPos === -1) {
-                                    firstBracketPos = i;
-                                }
-                                if (line[i] === '(' && firstParenPos === -1) {
-                                    firstParenPos = i;
-                                }
-                            }
-
-                            if (firstBracketPos !== -1 && firstParenPos !== -1 && firstParenPos < firstBracketPos) {
+                        if (hasMathOp) {
+                            if (!hasBracket) {
                                 const range = new vscode.Range(
                                     new vscode.Position(lineIndex, pair.openPos),
                                     new vscode.Position(lineIndex, pair.openPos + 1)
                                 );
                                 diagnostics.push(this.createDiagnostic(
                                     range,
-                                    '[ ] must come before ( ) inside { }',
+                                    '{ } must contain [ ] for math grouping',
                                     document
                                 ));
+                                return diagnostics;
+                            } else {
+                                let firstBracketPos = -1;
+                                let firstParenPos = -1;
+                                let idx = pair.openPos + 1;
+                                while (idx < pair.closePos) {
+                                    const ch = line.charAt(idx);
+                                    if (ch === '[' && firstBracketPos === -1) firstBracketPos = idx;
+                                    if (ch === '(' && firstParenPos === -1) firstParenPos = idx;
+                                    idx++;
+                                }
+                                if (firstBracketPos !== -1 && firstParenPos !== -1 && firstParenPos < firstBracketPos) {
+                                    const range = new vscode.Range(
+                                        new vscode.Position(lineIndex, pair.openPos),
+                                        new vscode.Position(lineIndex, pair.openPos + 1)
+                                    );
+                                    diagnostics.push(this.createDiagnostic(
+                                        range,
+                                        '[ ] must come before ( ) inside { }',
+                                        document
+                                    ));
+                                    return diagnostics;
+                                }
                             }
                         }
                     }
@@ -295,6 +319,89 @@ export class ZSParenthesisValidator {
                             `Cannot put ${pairs[j].open} inside ${pairs[i].open}`,
                             document
                         ));
+                    }
+                }
+            }
+        }
+
+        return diagnostics;
+    }
+
+    private splitByCommas(content: string): string[] {
+        const parts: string[] = [];
+        let current = "";
+        let depth = 0;
+        let inString = false;
+        let i = 0;
+        while (i < content.length) {
+            const c = content.charAt(i);
+            if (c === '"' || c === "'" || c === '‘' || c === '’' || c === '“' || c === '”') {
+                inString = !inString;
+                current += c;
+            } else if (!inString && (c === '(' || c === '[' || c === '{')) {
+                depth++;
+                current += c;
+            } else if (!inString && (c === ')' || c === ']' || c === '}')) {
+                depth--;
+                current += c;
+            } else if (!inString && depth === 0 && c === ',') {
+                parts.push(current);
+                current = "";
+            } else {
+                current += c;
+            }
+            i++;
+        }
+        if (current !== "") parts.push(current);
+        return parts;
+    }
+
+    private validateElement(element: string, lineIndex: number, line: string, document: vscode.TextDocument): vscode.Diagnostic[] {
+        const diagnostics: vscode.Diagnostic[] = [];
+        const trimmed = element.trim();
+        if (trimmed === "") return diagnostics;
+
+        const elementIndex = line.indexOf(element);
+
+        const bracketOpen = trimmed.indexOf("[");
+        if (bracketOpen !== -1) {
+            const bracketClose = trimmed.indexOf("]", bracketOpen);
+            if (bracketClose !== -1) {
+                const inner = trimmed.substring(bracketOpen + 1, bracketClose);
+                if (inner.indexOf("(") === -1 && inner.indexOf(")") === -1) {
+                    const range = new vscode.Range(
+                        new vscode.Position(lineIndex, elementIndex + bracketOpen),
+                        new vscode.Position(lineIndex, elementIndex + bracketOpen + 1)
+                    );
+                    diagnostics.push(this.createDiagnostic(
+                        range,
+                        '[ ] must contain ( ) for math expressions inside set/table',
+                        document
+                    ));
+                    return diagnostics;
+                }
+            }
+        }
+
+        const braceOpen = trimmed.indexOf("{");
+        if (braceOpen !== -1) {
+            const braceClose = trimmed.indexOf("}", braceOpen);
+            if (braceClose !== -1) {
+                const inner = trimmed.substring(braceOpen + 1, braceClose);
+                const hasMathOp = inner.indexOf("+") !== -1 || inner.indexOf("−") !== -1 || inner.indexOf("×") !== -1 || inner.indexOf("÷") !== -1;
+                if (hasMathOp) {
+                    const hasBracket = inner.indexOf("[") !== -1 || inner.indexOf("]") !== -1;
+                    if (!hasBracket) {
+                        const range = new vscode.Range(
+                            new vscode.Position(lineIndex, elementIndex + braceOpen),
+                            new vscode.Position(lineIndex, elementIndex + braceOpen + 1)
+                        );
+                        diagnostics.push(this.createDiagnostic(
+                            range,
+                            '{ } must contain [ ] for math grouping inside set/table',
+                            document
+                        ));
+                        return diagnostics;
                     }
                 }
             }
