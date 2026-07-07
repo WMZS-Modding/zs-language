@@ -25,15 +25,15 @@
       "patterns": [
         {
           "name": "keyword.control.zs",
-          "match": "(?i)\\b(when|if|then|unless|else|for|in|from|import|give|back|nothing|while|done|trigger|do|except|once|twice|attempt|handle|ensure|report|repeat|stream|f?r?o?z?e?n?set|before|after|assert|async|break|continue|each|proceed|halt|haltLua|haltScript|haltAll|change|read|uniform|add|remove)\\b"
+          "match": "(?i)\\b(when|if|then|unless|else|for|in|from|import|give|back|nothing|while|done|trigger|do|except|once|twice|attempt|handle|ensure|report|repeat|stream|f?r?o?z?e?n?set|before|after|assert|async|break|continue|each|proceed|halt|haltLua|haltScript|haltAll|change|read|uniform|add|remove|create|name|cancel|any)\\b"
         },
         {
           "name": "entity.name.type.zs",
-          "match": "(?i)\\b(public|private|range|float|int|str|complex|list|tuple|dict|bool|type|bytes|bytearray|classmethod|staticmethod|super|zip)\\b"
+          "match": "(?i)\\b(public|private|range|class|floatA?r?r?a?y?|intA?r?r?a?y?|str|complex|list|tuple|dict|boolA?r?r?a?y?|type|bytes|bytearray|classmethod|staticmethod|super|zip)\\b"
         },
         {
           "name": "variable.language.zs",
-          "match": "(?i)\\b(itself|new|monobehaviour|unitysystem|uievent|unityengine|it|they|them|themself|true|false|f|n?o?n?local|globals?|lambda|not|or|id|iter|len|locals|map|memoryview|object|oct|ord|repr|round|undo|redo|template)\\b"
+          "match": "(?i)\\b(itself|new|monobehaviour|unitysystem|uievent|unityengine|it|they|them|themself|true|false|f|n?o?n?local|globals?|lambda|not|or|id|iter|len|locals|map|memoryview|object|oct|ord|repr|round|undo|redo|template|data|code|library)\\b"
         },
         {
           "name": "zs.red.zs",
@@ -41,7 +41,7 @@
         },
         {
           "name": "zs.green.zs",
-          "match": "(?i)\\b(moves?|runs?|plays?|touche?s?|cuts?|earses?|waite?s?|does|blows?|is|are|flows?|loads?|calla?b?l?e?|calls|stops?|deletes?|destroys?|removes|replaces?|clear|copy|copies|adds|count|extends?|r?index|insert|popi?t?e?m?|reverses?|sort|append|s?y?m?m?e?t?r?i?c?_?difference_?u?p?d?a?t?e?|discard|intersection_?u?p?d?a?t?e?|isdisjoint|issubset|issuperset|union|updates?|fromkeys|gets?|items|keys|setdefault|values|capitalize|casefold|center|encode|endswith|expandtabs|r?find|format_?m?a?p?|isalnum|isalpha|isascii|isdecimal|isdigit|isidentifier|i?s?lower|isnumeric|isprintable|isspace|i?s?title|i?s?upper|join|ljust|lstrip|maketrans|r?partition|removeprefix|removesuffix|rjust|rsplit|r?strip|splitl?i?n?e?s?|starts?w?i?t?h?|swapcase|translate|zfill|filter|help|isinstance|issubclass|opens?|slices?|complement|emptyset|elementof|p?r?o?p?e?r?subset|infinity|attacks?|burns?|chooses?|cleaves?|digs?|dives?|draws?|fights?|finds?|fly|flies|freezes?|grows?|hears?|hides?|hit|hurt|keeps?|learns?|lets?|puts?|reads|shakes?|shoots?|shows?|sings?|sleeps?|speeds?|sweeps?|writes?|wins?|loses?|exits?|exists?|skips?|leaves?|resumes?|produces?|matche?s?|verify|verifies|closes?|writes?|overrides?|overwrites?|arranges?|rearranges?|invert|register|apply|tween|resets?)\\b"
+          "match": "(?i)\\b(moves?|runs?|plays?|touche?s?|cuts?|earses?|waite?s?|does|blows?|is|are|flows?|loads?|calla?b?l?e?|calls|stops?|deletes?|destroys?|removes|replaces?|clear|copy|copies|adds|creates|count|extends?|r?index|insert|popi?t?e?m?|reverses?|sort|append|s?y?m?m?e?t?r?i?c?_?difference_?u?p?d?a?t?e?|discard|intersection_?u?p?d?a?t?e?|isdisjoint|issubset|issuperset|union|updates?|fromkeys|gets?|items|keys|setdefault|values|capitalize|casefold|center|encode|endswith|expandtabs|r?find|format_?m?a?p?|isalnum|isalpha|isascii|isdecimal|isdigit|isidentifier|i?s?lower|isnumeric|isprintable|isspace|i?s?title|i?s?upper|join|ljust|lstrip|maketrans|r?partition|removeprefix|removesuffix|rjust|rsplit|r?strip|splitl?i?n?e?s?|starts?w?i?t?h?|swapcase|translate|zfill|filter|help|isinstance|issubclass|opens?|slices?|complement|emptyset|elementof|p?r?o?p?e?r?subset|infinity|attacks?|burns?|chooses?|cleaves?|digs?|dives?|draws?|fights?|finds?|fly|flies|freezes?|grows?|hears?|hides?|hit|hurt|keeps?|learns?|lets?|puts?|reads|shakes?|shoots?|shows?|sings?|sleeps?|speeds?|sweeps?|writes?|wins?|loses?|exits?|exists?|skips?|leaves?|resumes?|produces?|matche?s?|verify|verifies|closes?|writes?|overrides?|overwrites?|arranges?|rearranges?|invert|register|apply|tween|resets?|restarts?|scales?|pauses?|follow|zoom|flush|flushes|erases?)\\b"
         },
         {
           "name": "entity.name.function.zs",
@@ -111,7 +111,7 @@
       "patterns": [
         {
           "name": "meta.class.zs",
-          "begin": "(?i)\\b(class|prefab)\\b\\s+",
+          "begin": "(?i)\\b(prefab)\\b\\s+",
           "beginCaptures": {
             "1": {
               "name": "entity.name.type.class.zs"
@@ -179,7 +179,7 @@
       "patterns": [
         {
           "name": "zs.red.zs",
-          "match": "(?i)\\b(?!(elapsed|onEventPushed|onTweenCompleted|onTimerCompleted|onSoundFinished|onRecalculateRating|onCountdownStarted|then|tween)\\b)\\w+(ed|ing|en|ght)\\b"
+          "match": "(?i)\\b(?!(elapsed|onEventPushed|onTweenCompleted|onTimerCompleted|onSoundFinished|onRecalculateRating|onCountdownStarted|then|tween|animated?|clicked|pressed|released|between|rating|running)\\b)\\w+(ed|ing|en|ght)\\b"
         },
         {
           "name": "zs.purple.zs",
@@ -191,7 +191,7 @@
         },
         {
           "name": "zs.red.zs",
-          "match": "(?i)\\b(?!(retry|preUpdateScore|miss|misses|removes?|replaces?|reads?|repr|repeat|resumes?|reverses?|removeprefix|removesuffix|rearranges?)\\b)(mis|out|over|pre|re|un)\\w+\\b"
+          "match": "(?i)\\b(?!(retry|preUpdateScore|miss|misses|removes?|replaces?|reads?|repr|repeat|resumes?|reverses?|removeprefix|removesuffix|rearranges?|restarts?)\\b)(mis|out|over|pre|re|un)\\w+\\b"
         },
         {
           "name": "zs.blue.zs",
@@ -199,7 +199,11 @@
         },
         {
           "name": "zs.yellow.zs",
-          "match": "(?i)\\b(property|sub)\\b"
+          "match": "(?i)\\b(property|sub|dialogue|video|group|method|instance|order|camera|scroll|factor|hitbox|blend|midpoint|graphic|position|pixel|overlap|sprite|animated?|frames?|rate|animation|text|offset|prefix|indices|content|size|width|height|auto|border|color|font|italic|alignment|sound|music|fade|volume|timer?|pitch|shader|path|point|flash|clicked|pressed|released|mouse|key|keyboard|gamepad|id|just|button|analog|tag|score|health|rating|percent|fc|running|scripts?|precache|character|atlas|symbol|countdown)\\b"
+        },
+        {
+          "name": "zs.purple.zs",
+          "match": "(?i)\\b(left|right|x|y|z|angle|alpha|direction)\\b"
         }
       ]
     },

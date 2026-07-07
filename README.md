@@ -26,6 +26,8 @@ The ZS themes are enhanced versions of the built-in Microsoft VS Code themes:
 - Light+
 - Dark High Contrast
 - Light High Contrast
+- Dark 2026
+- Light 2026
 
 *These base themes are Copyright (c) Microsoft Corporation. Used as the foundation for ZS-specific syntax highlighting.*
 

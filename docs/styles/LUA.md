@@ -10,3 +10,6 @@ I don't use LUA often, but I still need instructions on how to use this style:
 - Use `=`, `and` and `with` carefully, because this style prohibits the use of `()` inside functions
 
 I plan to integrate this style into [ZS Engine](https://github.com/SuperHero2010/FNF-ZSEngine), but since I'm alone, I can hardly do it
+
+
+Now you can programme ZS script by Lua style in [ZS Engine](https://github.com/SuperHero2010/FNF-ZSEngine).

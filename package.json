@@ -2,7 +2,7 @@
   "name": "zs-language",
   "displayName": "ZS Language",
   "description": "An extension that helps clarify the codes of the ZS language",
-  "version": "1.3.6",
+  "version": "1.3.7",
   "publisher": "SuperHero2010",
   "license": "MIT or GPL-3.0-only",
   "bugs": {
@@ -51,6 +51,11 @@
         "language": "zs",
         "scopeName": "source.zs",
         "path": "./syntaxes/zs.tmLanguage.json"
+      },
+      {
+        "scopeName": "markdown.zs.codeblock",
+        "path": "./syntaxes/zs-codeblock.json",
+        "injectTo": ["text.html.markdown"]
       }
     ],
     "themes": [

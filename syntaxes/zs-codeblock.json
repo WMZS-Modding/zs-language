@@ -1,0 +1,34 @@
+{
+  "scopeName": "markdown.zs.codeblock",
+  "injectionSelector": "L:text.html.markdown",
+  "patterns": [
+    {
+      "include": "#zs-code-block"
+    }
+  ],
+  "repository": {
+    "zs-code-block": {
+      "begin": "(^|\\G)(\\s*)(`{3,}|~{3,})\\s*(?i:(zs))\\b",
+      "beginCaptures": {
+        "3": {
+          "name": "punctuation.definition.markdown.begin.markdown"
+        },
+        "4": {
+          "name": "fenced_code.block.language.markdown"
+        }
+      },
+      "end": "(^|\\G)(\\s*)(\\3)(?=\\s*$)",
+      "endCaptures": {
+        "3": {
+          "name": "punctuation.definition.markdown.end.markdown"
+        }
+      },
+      "name": "fenced_code.block.markdown",
+      "patterns": [
+        {
+          "include": "source.zs"
+        }
+      ]
+    }
+  }
+}

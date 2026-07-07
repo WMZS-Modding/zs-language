@@ -1,4 +1,5 @@
-# 🛠 What's changed
-Parenthesis Validator:
-- Add mixed case handler
-- Fix brace condition to flag the `()` inside `{}`
+# 🛠 What's new in "The extended Lua update" (1.3.7)
+- 🔨 Add new keywords for Lua: create, name, cancel, any, floatArray, intArray, boolArray, data, code, library, restart, scale, pause, follow, zoom, flush, erase, dialogue, video, group, method, instance, order, camera, scroll, factor, hitbox, blend, midpoint, graphic, position, pixel, overlap, sprite, animate, animated, frame, frames, rate, animation, text, offset, prefix, indices, content, size, width, height, auto, border, color, font, italic, alignment, sound, music, fade, volume, time, timer, pitch, shader, path, point, flash, clicked, pressed, released, mouse, key, keyboard, gamepad, id, just, button, analog, tag, score, health, rating, percent, fc, running, script, scripts, precache, character, atlas, symbol, countdown
+- ➕ Add keywords with `zs.purple.zs`: left, right, x, y, z, angle, alpha, direction
+- 🗂 Add exception keywords to suffixExceptions like 'animated', 'clicked', 'pressed', 'released', 'between', 'rating', 'running', 'restart', 'restarts'
+- 🗃 New `zs-codeblock.json` for Markdown backticks highlighting (Work only in VS Code)
