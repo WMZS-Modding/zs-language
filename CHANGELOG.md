@@ -1,5 +1,5 @@
-# 🛠 What's new in "The extended Lua update" (1.3.7)
-- 🔨 Add new keywords for Lua: create, name, cancel, any, floatArray, intArray, boolArray, data, code, library, restart, scale, pause, follow, zoom, flush, erase, dialogue, video, group, method, instance, order, camera, scroll, factor, hitbox, blend, midpoint, graphic, position, pixel, overlap, sprite, animate, animated, frame, frames, rate, animation, text, offset, prefix, indices, content, size, width, height, auto, border, color, font, italic, alignment, sound, music, fade, volume, time, timer, pitch, shader, path, point, flash, clicked, pressed, released, mouse, key, keyboard, gamepad, id, just, button, analog, tag, score, health, rating, percent, fc, running, script, scripts, precache, character, atlas, symbol, countdown
-- ➕ Add keywords with `zs.purple.zs`: left, right, x, y, z, angle, alpha, direction
-- 🗂 Add exception keywords to suffixExceptions like 'animated', 'clicked', 'pressed', 'released', 'between', 'rating', 'running', 'restart', 'restarts'
-- 🗃 New `zs-codeblock.json` for Markdown backticks highlighting (Work only in VS Code)
+# 🛠 What's new in "The extended math operators update" (1.3.8)
+- 🔨 Add missing keywords for Lua: matrix, indicies, sampler2D, grid, event, value, variable, argument, note, loops, package, miss, misses, save, image, difficulty, forced, offsets, song, duration
+- ➕ Add missing preposition keyword `on`
+- 🗂 Add exception keywords to suffixExceptions like height, overlap, pressed, released, prefix, forced, precache
+- 🔧 New math operators: ±, ∓, ∉, ⊇, ⊃, ⊄, ⊅, ∀, ∃, →, ↔, 𝔸

@@ -61,7 +61,7 @@ export class ZSDiagnosticProvider {
             'using', 'excluding', 'including', 'nothing',
             'overrides', 'overwrites', 'override', 'overwrite',
 
-            'uniform', 'register',
+            'uniform', 'register', 'height', 'overlap', 'prefix', 'forced', 'precache',
             'animated', 'clicked', 'pressed', 'released', 'between', 'rating', 'running', 'restart', 'restarts'
         ]);
     }
