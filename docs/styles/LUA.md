@@ -1,15 +1,13 @@
 # 📜 LUA
-Is a fairly popular language, but less so than C#. It is often used to write scripts for games like Roblox or FNF. Although it does not require `{}`, the many `function` and `end` functions make this language quite difficult to learn. However, with ZS, this will make LUA less difficult than before
+Lua is a popular language, though less widespread than C#. It is commonly used for game scripting in platforms like Roblox and FNF. While Lua does not require `{}`, the frequent use of `function` and `end` keywords makes it challenging to learn. ZS makes Lua-style scripting more accessible.
+
 ## ✏ How to use
-I don't use LUA often, but I still need instructions on how to use this style:
-- This style prohibits the use of `function` and `end`
-- If you want to declare a function, just write the function name followed by a `:`
-- If you want to write "elapsed", then like LUA, use `()` to write it in
-- However, when writing a function name, if you add `()` without writing anything, the system will report an error
-- No need to call one or more functions or scripts, the system will handle it automatically
-- Use `=`, `and` and `with` carefully, because this style prohibits the use of `()` inside functions
+Guidelines for using the Lua style:
+- The use of `function` and `end` keywords is prohibited
+- To declare a function, write the function name followed by `:`
+- For "elapsed" events, use `()` as in Lua syntax
+- Empty parentheses `()` after a function name will cause an error
+- The system automatically handles function and script calls
+- Use `=`, `and`, and `with` carefully, as this style prohibits `()` inside functions
 
-I plan to integrate this style into [ZS Engine](https://github.com/SuperHero2010/FNF-ZSEngine), but since I'm alone, I can hardly do it
-
-
-Now you can programme ZS script by Lua style in [ZS Engine](https://github.com/SuperHero2010/FNF-ZSEngine).
+This style is planned for integration into [ZS Engine](https://github.com/SuperHero2010/FNF-ZSEngine). You can now program ZS scripts using Lua style in [ZS Engine](https://github.com/SuperHero2010/FNF-ZSEngine).

@@ -49,7 +49,7 @@ class ZSModuleValidator {
         const diagnostics = [];
         this.importedModules.clear();
         this.moduleAliases.clear();
-        if (!text.includes('! ZS-PYTHON')) {
+        if (!text.includes('! ZS-PYTHON') || !text.includes('! ZS-LUA') || !text.includes('! ZS-NORMAL')) {
             this.diagnosticCollection.set(document.uri, diagnostics);
             return;
         }
@@ -99,7 +99,7 @@ class ZSModuleValidator {
     provideSemanticTokens(document) {
         if (document.languageId !== 'zs')
             return null;
-        if (!document.getText().includes('! ZS-PYTHON'))
+        if (!document.getText().includes('! ZS-PYTHON') || !document.getText().includes('! ZS-LUA') || !document.getText().includes('! ZS-NORMAL'))
             return null;
         const lines = document.getText().split('\n');
         const tokenBuilder = new vscode.SemanticTokensBuilder();

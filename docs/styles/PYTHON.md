@@ -1,8 +1,10 @@
 # 🌳 PYTHON
-This is a popular and easy-to-learn programming language. This language has strict requirements for indentation, "import" and "from" and "as". However, this language is almost a natural language, very suitable for ZS to be able to create styles according to this language.
-## ✏ How to use
-Very easy, this perfect combination has turned ZS into the natural language of PYTHON. But there are some limitations:
-- Requires `<>` for nouns
-- Unlike PYTHON, importing modules are require `<>` (Example: `math<sqrt>`, `m<sqrt>`, `<sqrt>`). Although you look it's easy, but if you don't careful, your script will be error because of `<>` (Noun symbol) and `module<variables>` (Noun module symbol)
+Python is a popular and easy-to-learn programming language with strict requirements for indentation and module imports (`import`, `from`, `as`). Since Python is almost a natural language, it is well-suited as the foundation for a ZS style.
 
-In short, ZS, like PYTHON, is very easy to learn and use.
+## ✏ How to use
+This combination transforms ZS into a Python-like natural language. However, there are specific requirements:
+- Nouns must use `<>` syntax
+- Unlike Python, module imports require `<>` (Examples: `math<sqrt>`, `m<sqrt>`, `<sqrt>`)
+- Care must be taken to distinguish between `<>` (noun symbol) and `module<variables>` (noun module symbol), as incorrect usage will cause errors
+
+In summary, ZS in Python style is very easy to learn and use, similar to Python itself.

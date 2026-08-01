@@ -1,5 +1,7 @@
 # ⚒ C and C++
-These two languages ​​look similar, but they have differences in functionality. However, C++ is more popular than C. In my observation, C++ language often appears in applications of official languages ​​and hobby languages, appearing after using Unity to build and export games for Windows. However, these two languages ​​are very long, many functions, complex variables, which can be difficult for programmers when they first learn. This style is designed to be simpler and easier to read than the two languages.
+C and C++ are similar languages with functional differences, though C++ is more widely used. C++ commonly appears in official and hobby language applications, particularly after Unity-based games are built and exported for Windows. Both languages are verbose with many functions and complex variables, making them challenging for beginners.
+
+This ZS style is designed to be simpler and more readable than both C and C++.
 
 # Important note
-However, these two languages ​​are very important languages ​​to create applications for ZS. I will spend time to learn, research, and invite other programmers to support.
+C and C++ are important languages for creating ZS applications. Time will be dedicated to learning, researching, and collaborating with other programmers to support this integration.

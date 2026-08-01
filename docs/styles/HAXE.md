@@ -1,5 +1,7 @@
 # ⚙ HAXE
-This is a fairly popular language, with a clean structure. As far as I know, this language is popular in FNF, a game written in HAXE language. Although it is simple, if you do not install enough libraries and apply wrong variables and methods, when you test it, it will continuously report errors. This style is designed to overcome the limitations of HAXE.
+Haxe is a popular language with a clean structure, notably used in FNF (Friday Night Funkin'). While Haxe is relatively simple, insufficient library installation or incorrect variable and method usage can cause continuous errors during testing.
+
+This ZS style is designed to overcome Haxe's limitations.
 
 ## Note
-Although this style is very powerful in terms of better handling, does not require complex variables, is easier to read, and does not confuse users; but due to lack of applications, you cannot test these scripts. Even if it were there, it would not be powerful enough to beat HAXE.
+While this style offers improved handling, requires no complex variables, is easier to read, and reduces user confusion, there are currently no applications to test these scripts. Even if such applications existed, they would not match Haxe's full capabilities.

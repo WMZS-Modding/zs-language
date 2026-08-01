@@ -33,7 +33,7 @@
         },
         {
           "name": "variable.language.zs",
-          "match": "(?i)\\b(itself|new|monobehaviour|unitysystem|uievent|unityengine|it|they|them|themself|true|false|f|n?o?n?local|globals?|lambda|not|or|id|iter|len|locals|map|memoryview|object|oct|ord|repr|round|undo|redo|template|data|code|library|event|value|variable|argument|notes?|loops?|package)\\b"
+          "match": "(?i)\\b(itself|new|monobehaviour|unitysystem|uievent|unityengine|it|they|them|themself|true|false|f|n?o?n?local|globals?|lambda|not|or|id|iter|length|locals|map|memoryview|object|oct|ord|repr|round|undo|redo|template|data|code|library|event|value|variable|argument|notes?|loops?|package)\\b"
         },
         {
           "name": "zs.red.zs",
@@ -210,28 +210,12 @@
     "preprocessor": {
       "patterns": [
         {
+          "name": "zs.grey.zs",
+          "match": "(?i)^\\s*#(if|else if|else|end)\\b"
+        },
+        {
           "name": "meta.preprocessor.zs",
-          "begin": "(?i)^\\s*#if\\b",
-          "beginCaptures": {
-            "0": { "name": "zs.grey.zs" }
-          },
-          "end": "(?i)^\\s*#end\\b",
-          "endCaptures": {
-            "0": { "name": "zs.grey.zs" }
-          },
-          "patterns": [
-            {
-              "name": "zs.grey.zs",
-              "match": "(?i)^\\s*#else if\\b"
-            },
-            {
-              "name": "zs.grey.zs",
-              "match": "(?i)^\\s*#else\\b"
-            },
-            {
-              "include": "source.zs"
-            }
-          ]
+          "match": "(?i)(?<=^\\s*#(if|else if)\\b).*$"
         }
       ]
     },

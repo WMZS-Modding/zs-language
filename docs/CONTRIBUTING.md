@@ -1,10 +1,10 @@
 # 🗂 How to contribute
-- 📒 First, fork my repository
-- ✏ Then, make the changes you want
-- ➕ Next, create a pull request. Choose the appropriate template and fill in the lines of the template you chose
-- 👀 Finally, I will review:
-    + ✔ If your pull request is valid and what I need, I will merge it. If your pull request is valid but has errors, I will submit a change request
-    + ❌ If your pull request is invalid, I will close it and ueey ask for another change
+- 📒 First, fork the repository
+- ✏ Then, make your desired changes
+- ➕ Next, create a pull request. Choose the appropriate template and fill in all required fields
+- 👀 Finally, the review process:
+    + ✔ If your pull request is valid and aligns with project needs, it will be merged. If valid but contains errors, a change request will be submitted
+    + ❌ If your pull request is invalid, it will be closed and you may be asked to submit revised changes
 
 # Note
 ZS Language is built on specific philosophical principles:
@@ -12,4 +12,4 @@ ZS Language is built on specific philosophical principles:
 - Real mathematical symbols over ASCII approximations  
 - Natural language structure over programming syntax
 
-PRs that violate these core principles will be closed.
+Pull requests that violate these core principles will be closed.

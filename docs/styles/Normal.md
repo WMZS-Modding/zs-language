@@ -1,6 +1,7 @@
 # 🌲 Normal
-This is the default style. This style does not borrow any language, it is completely separate language. This style is completely natural language and extremely easy to learn and use
-## ✏ How to use
-Similar to other styles, this style also requires careful use of nouns and verbs. Symbols such as `<>` and `/||\` are noun symbols, which have different uses. However, because this style does not belong to any language. Therefore, just put the verb after the noun like an English sentence and the script will work.
+This is the default ZS style. It does not borrow from any existing language and is completely independent. This style is entirely natural language based, making it extremely easy to learn and use.
 
-However, this language has the limitation of not being able to run scripts because there is no application that can run scripts.
+## ✏ How to use
+Like other styles, this requires careful use of nouns and verbs. The symbols `<>` and `/||\` are noun symbols with different purposes. Since this style is language-independent, simply place verbs after nouns as in English sentences, and the script will function.
+
+**Limitation:** There is currently no application available to run scripts in the Normal style.
