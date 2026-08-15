@@ -67,7 +67,7 @@ class ZSMathSignSelector {
             { label: '∩', description: 'Intersection', detail: 'A ∩ B - Elements in both' },
             { label: '∪', description: 'Union', detail: 'A ∪ B - Elements in either' },
             { label: '∅', description: 'Empty Set', detail: 'The set with no elements' },
-            { label: 'C∨', description: 'Complement', detail: 'C∨A(B) - Complement of B in A' },
+            { label: '∁', description: 'Complement', detail: '∁(<A>, <B>) - Complement of B in A' },
             { label: '∈', description: 'Element of', detail: 'x ∈ A - x is an element of A' },
             { label: '∉', description: 'Not element of' },
             { label: '⊆', description: 'Equal Subset', detail: 'A ⊆ B - A is an equal subset of B' },
