@@ -3,12 +3,14 @@ import { ZSQuoteConverter } from './quotationMarkConverter';
 import { ZSDiagnosticProvider, ZSNounSymbolDiagnosticProvider } from './diagnosticProvider';
 import { ZSMathSignSelector } from './mathSignSelector';
 import { ZSModuleValidator } from './moduleValidator';
+import { ZSIndentationProvider } from './indentationProvider';
 import { ZSParenthesisValidator } from './parenthesisValidator';
 
 let quoteConverter: ZSQuoteConverter;
 let diagnosticProvider: ZSDiagnosticProvider;
 let nounSymbolDiagnosticProvider: ZSNounSymbolDiagnosticProvider;
 let moduleValidator: ZSModuleValidator;
+let indentationProvider: ZSIndentationProvider;
 let parenthesisValidator: ZSParenthesisValidator;
 
 export function activate(context: vscode.ExtensionContext): void {
@@ -16,6 +18,7 @@ export function activate(context: vscode.ExtensionContext): void {
     diagnosticProvider = new ZSDiagnosticProvider(context);
     nounSymbolDiagnosticProvider = new ZSNounSymbolDiagnosticProvider();
     moduleValidator = new ZSModuleValidator();
+    indentationProvider = new ZSIndentationProvider();
     parenthesisValidator = new ZSParenthesisValidator();
 
     quoteConverter.activate(context);
@@ -26,12 +29,14 @@ export function activate(context: vscode.ExtensionContext): void {
     const diagnosticDisposable = vscode.workspace.onDidChangeTextDocument((event) => {
         diagnosticProvider.updateDiagnostics(event.document);
         nounSymbolDiagnosticProvider.updateDiagnostics(event.document);
+        indentationProvider.updateDiagnostics(event.document);
     });
 
     const openDisposable = vscode.workspace.onDidOpenTextDocument((document) => {
         if (document.languageId === 'zs') {
             diagnosticProvider.updateDiagnostics(document);
             nounSymbolDiagnosticProvider.updateDiagnostics(document);
+            indentationProvider.updateDiagnostics(document);
         }
     });
 
@@ -39,6 +44,7 @@ export function activate(context: vscode.ExtensionContext): void {
         if (document.languageId === 'zs') {
             diagnosticProvider.updateDiagnostics(document);
             nounSymbolDiagnosticProvider.updateDiagnostics(document);
+            indentationProvider.updateDiagnostics(document);
         }
     });
 
@@ -54,6 +60,7 @@ export function activate(context: vscode.ExtensionContext): void {
             if (quoteConverter) { quoteConverter.dispose?.(); }
             if (diagnosticProvider) { diagnosticProvider.dispose(); }
             if (nounSymbolDiagnosticProvider) { nounSymbolDiagnosticProvider.dispose(); }
+            if (indentationProvider) { indentationProvider.dispose(); }
         }},
         vscode.languages.registerCodeActionsProvider('zs', diagnosticProvider, {
             providedCodeActionKinds: [vscode.CodeActionKind.QuickFix]
@@ -70,6 +77,9 @@ export function deactivate(): void {
     }
     if (nounSymbolDiagnosticProvider) {
         nounSymbolDiagnosticProvider.dispose();
+    }
+    if (indentationProvider) {
+        indentationProvider.dispose();
     }
 
     ZSMathSignSelector.deactivate();

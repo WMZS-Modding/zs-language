@@ -1,11 +1,36 @@
 import * as vscode from 'vscode';
 
+// ============================================================
+// ZS Indentation Provider
+// Based on Python Indent Extension Logic (Kevin Rose)
+// Adapted for ZS Language
+// ============================================================
+
 export class ZSIndentationProvider {
     private diagnosticCollection: vscode.DiagnosticCollection;
     private blockStack: number[] = [0];
     private currentIndent = 0;
     private expectingBlockContent = false;
     private inBlockComment = false;
+
+    private lastSeenIndenters: {
+        if_: number | undefined;
+        for_: number | undefined;
+        while_: number | undefined;
+        attempt_: number | undefined;
+    } = {
+        if_: undefined,
+        for_: undefined,
+        while_: undefined,
+        attempt_: undefined
+    };
+
+    private dedentKeywords: { [key: string]: string[] } = {
+        'else': ['if', 'for', 'while'],
+        'else if': ['if'],
+        'except': ['attempt'],
+        'ensure': ['attempt']
+    };
 
     constructor() {
         this.diagnosticCollection = vscode.languages.createDiagnosticCollection('zs-indentation');
@@ -24,29 +49,38 @@ export class ZSIndentationProvider {
         this.expectingBlockContent = false;
         this.inBlockComment = false;
 
-        const editor = vscode.window.activeTextEditor;
-        const tabSize = editor?.options.tabSize as number || 4;
+        this.lastSeenIndenters = {
+            if_: undefined,
+            for_: undefined,
+            while_: undefined,
+            attempt_: undefined
+        };
+
+        const tabSize = 4;
 
         for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
             const line = lines[lineIndex];
             const lineDiagnostics = this.validateLine(line, lineIndex, document, tabSize);
             diagnostics.push(...lineDiagnostics);
+
+            this.updateLastSeenIndenters(line);
         }
 
         this.diagnosticCollection.set(document.uri, diagnostics);
     }
 
-    private validateLine(line: string, lineIndex: number, document: vscode.TextDocument, tabSize: number): vscode.Diagnostic[] {
+    private validateLine(
+        line: string,
+        lineIndex: number,
+        document: vscode.TextDocument,
+        tabSize: number
+    ): vscode.Diagnostic[] {
         const diagnostics: vscode.Diagnostic[] = [];
 
         const expandedLine = line.replace(/\t/g, ' '.repeat(tabSize));
-
         const hasNonSpaceChar = /\S/.test(expandedLine);
 
         if (!hasNonSpaceChar) {
-            this.blockStack = [0];
-            this.currentIndent = 0;
-            this.expectingBlockContent = false;
             return [];
         }
 
@@ -70,8 +104,36 @@ export class ZSIndentationProvider {
             return [];
         }
 
-        if (this.isBlockStarter(trimmedLine)) {
-            this.blockStack.push(this.currentIndent);
+        let isDedentKeyword = false;
+        for (const [keyword] of Object.entries(this.dedentKeywords)) {
+            if (trimmedLine.startsWith(keyword + ' ') || trimmedLine === keyword || trimmedLine.startsWith(keyword + ':')) {
+                isDedentKeyword = true;
+                break;
+            }
+        }
+
+        if (isDedentKeyword) {
+            this.currentIndent = indentLevel;
+            this.expectingBlockContent = true;
+            return diagnostics;
+        }
+
+        if (trimmedLine.endsWith(':') && !this.expectingBlockContent) {
+            this.blockStack.push(indentLevel);
+            this.currentIndent = indentLevel;
+            this.expectingBlockContent = true;
+            return diagnostics;
+        }
+
+        if (trimmedLine.includes(' then') && (trimmedLine.startsWith('if ') || trimmedLine.startsWith('else if '))) {
+            this.blockStack.push(indentLevel);
+            this.currentIndent = indentLevel;
+            this.expectingBlockContent = true;
+            return diagnostics;
+        }
+
+        if (trimmedLine.includes(' do') && (trimmedLine.startsWith('for ') || trimmedLine.startsWith('while '))) {
+            this.blockStack.push(indentLevel);
             this.currentIndent = indentLevel;
             this.expectingBlockContent = true;
             return diagnostics;
@@ -89,6 +151,7 @@ export class ZSIndentationProvider {
                     document
                 ));
             }
+
             this.expectingBlockContent = false;
             this.currentIndent = indentLevel;
             return diagnostics;
@@ -96,39 +159,58 @@ export class ZSIndentationProvider {
 
         if (indentLevel !== this.currentIndent) {
             if (indentLevel < this.currentIndent) {
+                let found = false;
                 for (let i = this.blockStack.length - 1; i >= 0; i--) {
                     if (this.blockStack[i] === indentLevel) {
                         this.currentIndent = indentLevel;
                         this.blockStack = this.blockStack.slice(0, i + 1);
+                        found = true;
                         return diagnostics;
                     }
                 }
-            }
 
-            diagnostics.push(this.createDiagnostic(
-                lineIndex,
-                this.currentIndent,
-                indentLevel,
-                'Incorrect indentation',
-                document
-            ));
+                if (!found) {
+                    diagnostics.push(this.createDiagnostic(
+                        lineIndex,
+                        this.currentIndent,
+                        indentLevel,
+                        'Incorrect dedent (no matching parent indent)',
+                        document
+                    ));
+                    this.currentIndent = indentLevel;
+                }
+            } else {
+                diagnostics.push(this.createDiagnostic(
+                    lineIndex,
+                    this.currentIndent,
+                    indentLevel,
+                    'Unexpected indentation',
+                    document
+                ));
+                this.currentIndent = indentLevel;
+            }
+        } else {
+            this.currentIndent = indentLevel;
         }
 
         return diagnostics;
     }
 
-    private isBlockStarter(trimmedLine: string): boolean {
-        if (trimmedLine.endsWith(':')) return true;
-        if (trimmedLine.startsWith('if ') && (trimmedLine.endsWith(':') || trimmedLine.includes(' then'))) return true;
-        if (trimmedLine.startsWith('else if ') && (trimmedLine.endsWith(':') || trimmedLine.includes(' then'))) return true;
-        if (trimmedLine === 'else' || trimmedLine === 'else:') return true;
-        if (trimmedLine.startsWith('for ') && (trimmedLine.endsWith(':') || trimmedLine.includes(' do'))) return true;
-        if (trimmedLine.startsWith('while ') && (trimmedLine.endsWith(':') || trimmedLine.includes(' do'))) return true;
-        if (trimmedLine.startsWith('repeat ') && trimmedLine.endsWith(' times:')) return true;
-        // attempt-except blocks (ZS's replacement for try-catch)
-        if (trimmedLine === 'attempt:' || trimmedLine.startsWith('except ')) return true;
+    private updateLastSeenIndenters(line: string): void {
+        const trimmed = line.trim();
 
-        return false;
+        if (trimmed.startsWith('if ') || trimmed === 'if:' || trimmed.startsWith('if:')) {
+            this.lastSeenIndenters.if_ = this.currentIndent;
+        }
+        if (trimmed.startsWith('for ') || trimmed === 'for:' || trimmed.startsWith('for:')) {
+            this.lastSeenIndenters.for_ = this.currentIndent;
+        }
+        if (trimmed.startsWith('while ') || trimmed === 'while:' || trimmed.startsWith('while:')) {
+            this.lastSeenIndenters.while_ = this.currentIndent;
+        }
+        if (trimmed.startsWith('attempt') || trimmed === 'attempt:') {
+            this.lastSeenIndenters.attempt_ = this.currentIndent;
+        }
     }
 
     private createDiagnostic(

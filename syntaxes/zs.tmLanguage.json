@@ -255,7 +255,7 @@
       "patterns": [
         {
           "name": "keyword.other.language-type.zs",
-          "match": "^\\!\\s*(ZS-CSHARP|ZS-LUA|ZS-PYTHON|ZS-C|ZS-CPP|ZS-JAVA|ZS-HAXE|ZS-NORMAL)\\b"
+          "match": "^\\!\\s*(ZS-CSHARP|ZS-LUA|ZS-PYTHON|ZS-C|ZS-CPP|ZS-JAVA|ZS-HAXE|ZS-NORMAL|WESTERN|ORIENT)\\b"
         }
       ]
     }
