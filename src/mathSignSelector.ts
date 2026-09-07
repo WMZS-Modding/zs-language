@@ -92,6 +92,9 @@ export class ZSMathSignSelector {
             { label: 'ρ', description: 'Rho' },
             { label: 'τ', description: 'Tau' },
 
+            { label: '‹›', description: 'Single Guillemet' },
+            { label: '«»', description: 'Double Guillemet' },
+
             { label: '+∞', description: 'Positive Infinity', detail: 'Limit approaching infinity' },
             { label: '−∞', description: 'Negative Infinity', detail: 'Limit approaching negative infinity' }
         ];

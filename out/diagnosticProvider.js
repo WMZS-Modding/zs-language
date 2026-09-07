@@ -85,7 +85,8 @@ class ZSDiagnosticProvider {
             'using', 'excluding', 'including', 'nothing',
             'overrides', 'overwrites', 'override', 'overwrite',
             'uniform', 'register', 'height', 'overlap', 'prefix', 'forced', 'precache',
-            'animated', 'clicked', 'pressed', 'released', 'between', 'rating', 'running', 'restart', 'restarts'
+            'animated', 'clicked', 'pressed', 'released', 'between', 'rating', 'running', 'restart', 'restarts',
+            'false', 'wrong'
         ]);
     }
     shouldFlagAsInvalid(matchedText) {

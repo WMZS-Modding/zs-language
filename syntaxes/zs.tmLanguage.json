@@ -18,7 +18,8 @@
     { "include": "#function" },
     { "include": "#specialwords" },
     { "include": "#preprocessor"},
-    { "include": "#prepositions" }
+    { "include": "#prepositions" },
+    { "include": "#true-false" }
   ],
   "repository": {
     "keywords": {
@@ -33,7 +34,7 @@
         },
         {
           "name": "variable.language.zs",
-          "match": "(?i)\\b(itself|new|monobehaviour|unitysystem|uievent|unityengine|it|they|them|themself|true|false|f|n?o?n?local|globals?|lambda|not|or|id|iter|length|locals|map|memoryview|object|oct|ord|repr|round|undo|redo|template|data|code|library|event|value|variable|argument|notes?|loops?|package)\\b"
+          "match": "(?i)\\b(itself|new|monobehaviour|unitysystem|uievent|unityengine|it|they|them|themself|f|n?o?n?local|globals?|lambda|not|or|id|iter|length|locals|map|memoryview|object|oct|ord|repr|round|undo|redo|template|data|code|library|event|value|variable|argument|notes?|loops?|package)\\b"
         },
         {
           "name": "zs.red.zs",
@@ -63,9 +64,31 @@
           ]
         },
         {
+          "name": "string.quoted.double.zs",
+          "begin": "«",
+          "end": "»",
+          "patterns": [
+            {
+              "name": "constant.character.escape.zs",
+              "match": "\\\\."
+            }
+          ]
+        },
+        {
           "name": "string.quoted.single.zs",
           "begin": "‘",
           "end": "’",
+          "patterns": [
+            {
+              "name": "constant.character.escape.zs",
+              "match": "\\\\."
+            }
+          ]
+        },
+        {
+          "name": "string.quoted.single.zs",
+          "begin": "‹",
+          "end": "›",
           "patterns": [
             {
               "name": "constant.character.escape.zs",
@@ -256,6 +279,18 @@
         {
           "name": "keyword.other.language-type.zs",
           "match": "^\\!\\s*(ZS-CSHARP|ZS-LUA|ZS-PYTHON|ZS-C|ZS-CPP|ZS-JAVA|ZS-HAXE|ZS-NORMAL|WESTERN|ORIENT)\\b"
+        }
+      ]
+    },
+    "true-false": {
+      "patterns": [
+        {
+          "name": "zs.red.zs",
+          "match": "(?i)\\b(false|wrong)\\b"
+        },
+        {
+          "name": "zs.green.zs",
+          "match": "(?i)\\b(true|correct)\\b"
         }
       ]
     }
